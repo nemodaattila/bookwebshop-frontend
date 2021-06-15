@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class BookMetaDataService extends ServiceParentService implements OnInit{
+export class BookMetaDataService extends ServiceParentService implements OnInit {
 
   constructor(private http: HttpClient) {
     super();
@@ -17,24 +17,21 @@ export class BookMetaDataService extends ServiceParentService implements OnInit{
     this.checkMetaDataInLocalStorage();
   }
 
-  private checkMetaDataInLocalStorage()
-  {
+  private checkMetaDataInLocalStorage() {
     const metadata = localStorage.getItem('metadata');
-    if (metadata)
-    {
+    if (metadata) {
       console.log('van')
-    }
-    else
+    } else
       this.readBookMetaData().subscribe(value => {
         console.log(value)
 
       }, error => {
-        console.log(error)
+        console.dir(error)
       });
   }
 
-  private readBookMetaData(): Observable<any>
-  {
+  private readBookMetaData(): Observable<any> {
+    console.log(this._backendUrl + '/metadata')
     return this.http.get<any>(this._backendUrl + '/metadata');
   }
 }
