@@ -1,13 +1,40 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {ServiceParentService} from "./service-parent.service";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookMetaDataService extends ServiceParentService{
+export class BookMetaDataService extends ServiceParentService implements OnInit{
 
-  constructor() {
+  constructor(private http: HttpClient) {
     super();
+    this.checkMetaDataInLocalStorage();
+  }
 
+  ngOnInit() {
+    this.checkMetaDataInLocalStorage();
+  }
+
+  private checkMetaDataInLocalStorage()
+  {
+    const metadata = localStorage.getItem('metadata');
+    if (metadata)
+    {
+      console.log('van')
+    }
+    else
+      this.readBookMetaData().subscribe(value => {
+        console.log(value)
+
+      }, error => {
+        console.log(error)
+      });
+  }
+
+  private readBookMetaData(): Observable<any>
+  {
+    return this.http.get<any>(this._backendUrl + '/metadata');
   }
 }
