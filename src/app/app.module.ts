@@ -6,6 +6,7 @@ import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { BrowseComponent } from './browse/browse.component';
 import {RouterModule} from "@angular/router";
 import {ApproutingModule} from "./approuting/approuting.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {ApproutingModule} from "./approuting/approuting.module";
   ],
     imports: [
         ApproutingModule,
+        HttpClientModule,
         BrowserModule,
         RouterModule
     ],
