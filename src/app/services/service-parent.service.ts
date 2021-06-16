@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ServiceParentService {
 
 
-  protected _backendUrl: string = 'http://localhost:80/BookWebShopBackend/';
+  protected _backendUrl: string = "http://localhost:80/BookWebShopBackend/";
 
   set backendUrl(value: string) {
     this._backendUrl = value;

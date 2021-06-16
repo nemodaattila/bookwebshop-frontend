@@ -31,7 +31,6 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   }
 
   private readBookMetaData(): Observable<any> {
-    console.log(this._backendUrl + '/metadata')
     return this.http.get<any>(this._backendUrl + '/metadata');
   }
 }
