@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {ServiceParentService} from "./service-parent.service";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {BookMetaData} from "../models/book-meta-data";
 
 @Injectable({
@@ -10,9 +10,12 @@ import {BookMetaData} from "../models/book-meta-data";
 export class BookMetaDataService extends ServiceParentService implements OnInit {
 
   metaData?: BookMetaData;
+  metaDataReady = new Subject<any>();
 
   constructor(private http: HttpClient) {
+
     super();
+    localStorage.setItem('metadata','');
 
     this.checkMetaDataInLocalStorage();
   }
@@ -22,10 +25,10 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   }
 
   private checkMetaDataInLocalStorage() {
+
     let date;
 
     let metadata = localStorage.getItem('metadata');
-    console.log(metadata)
     if (metadata) {
 
       [metadata, date] = JSON.parse(metadata);
@@ -36,17 +39,17 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
         this.getMetaDataFromServer()
       } else
         this.saveMetaToModel(metadata)
+      this.metaDataReady.next();
     } else
       this.getMetaDataFromServer()
   }
 
   private getMetaDataFromServer() {
-    console.log("metadatarefresh")
     this.http.get<any>(this._backendUrl + '/metadata').subscribe(data => {
-
       if ((data.hasOwnProperty('success') && data.success === true)) {
         this.metaData = data.data;
         this.saveMetaDataToLocalStorage()
+        this.metaDataReady.next()
       }
     }, error => {
       alert(error.error.text)

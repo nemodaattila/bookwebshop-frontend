@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookMetaDataService} from "../services/book-meta-data.service";
+import {BookSearchService} from "../services/book-search.service";
 
 @Component({
   selector: 'app-browse',
@@ -8,7 +9,7 @@ import {BookMetaDataService} from "../services/book-meta-data.service";
 })
 export class BrowseComponent implements OnInit {
 
-  constructor(private bookmeta: BookMetaDataService) { }
+  constructor(private bookMeta: BookMetaDataService, searchEngine: BookSearchService) { }
 
   ngOnInit(): void {
   }
