@@ -46,10 +46,16 @@ export class BookSearchService extends ServiceParentService {
     }
   }
 
+  /**
+   *
+   * @param searchParams
+   * @private
+   * @DO check phpstorm angularjs + wampserver apache - cors problem with content-type : application/JSON
+   */
   private searchForBooks(searchParams: object):Observable<any>
   {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded',
     });
     console.log(searchParams)
     return this.http.post<any>(this._backendUrl + '/booklist', searchParams ,{headers: headers});
