@@ -55,7 +55,7 @@ export class BookSearchService extends ServiceParentService {
   private searchForBooks(searchParams: object):Observable<any>
   {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'text/plain',
     });
     console.log(searchParams)
     return this.http.post<any>(this._backendUrl + '/booklist', searchParams ,{headers: headers});

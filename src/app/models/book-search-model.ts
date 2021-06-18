@@ -37,7 +37,7 @@ export class BookSearchModel {
 
   getSearchParams() {
     return {
-      criterium: JSON.stringify(this.crit),
+      criterium: this.crit,
       offset: this.offset,
       limit: this.limit,
       order: this.order,
