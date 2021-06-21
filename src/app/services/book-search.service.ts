@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+
 import {ServiceParentService} from "./service-parent.service";
 import {BookSearchModel} from "../models/book-search-model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {Injectable} from "@angular/core";
+import {isObject} from "rxjs/internal-compatibility";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ import {Observable} from "rxjs";
 export class BookSearchService extends ServiceParentService {
 
   private searchParams : BookSearchModel
+  public isbnListArrived = new Subject<any>();
 
   constructor(private http: HttpClient) {
     super();
@@ -26,8 +29,11 @@ export class BookSearchService extends ServiceParentService {
     let isLocal = this.localOrderChecker();
     let params = this.searchParams.getSearchParams();
     if (isLocal === false) {
-      this.searchForBooks(params).subscribe(booklist=>{
-        console.log(booklist)
+      this.searchForBooks(params).subscribe(bookList=>{
+        console.log (typeof bookList)
+        console.log (isObject(bookList))
+        console.log (bookList.data)
+        this.isbnListArrived.next(bookList)
       }, error => {
         console.log(error)
         console.dir(error.error.text ??  error.error)
@@ -58,7 +64,7 @@ export class BookSearchService extends ServiceParentService {
       'Content-Type': 'text/plain',
     });
     console.log(searchParams)
-    return this.http.post<any>(this._backendUrl + '/booklist', searchParams ,{headers: headers});
+    return this.http.post<any>(this._backendUrl + '\\booklist', searchParams ,{headers: headers});
   }
 
   //DO create

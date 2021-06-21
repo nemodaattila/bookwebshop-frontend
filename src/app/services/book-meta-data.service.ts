@@ -1,16 +1,16 @@
-import {Injectable, OnInit} from '@angular/core';
 import {ServiceParentService} from "./service-parent.service";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {BookMetaData} from "../models/book-meta-data";
+import {Injectable, OnInit} from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookMetaDataService extends ServiceParentService implements OnInit {
 
-  metaData?: BookMetaData;
-  metaDataReady = new Subject<any>();
+  private metaData?: BookMetaData;
+  private metaDataReady = new Subject<any>();
 
   constructor(private http: HttpClient) {
 
@@ -47,7 +47,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   }
 
   private getMetaDataFromServer() {
-    this.http.get<any>(this._backendUrl + '/metadata').subscribe(data => {
+    this.http.get<any>(this._backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
         console.log(data)
         this.metaData = data.data;
