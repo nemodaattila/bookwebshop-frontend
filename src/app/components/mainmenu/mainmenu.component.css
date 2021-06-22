@@ -1,0 +1,53 @@
+body > header {
+  height: 90px;
+  border: solid 1px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/*#titlediv {*/
+
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*#titlediv > * {*/
+/*  margin: 5px;*/
+/*}*/
+
+/*#headimg {*/
+/*  width: 80px;*/
+/*  height: 80px;*/
+/*}*/
+
+#loginform {
+  margin-block-end: 0em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav {
+  padding: 10px;
+  border: solid 1px;
+}
+
+nav > span {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+nav > span > span {
+  margin: 0px -5px;
+}
+
+nav > span > span > * {
+  margin: 0px 5px;
+}
+
+nav form {
+  margin-block-end: 0em;
+}
