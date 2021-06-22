@@ -31,7 +31,7 @@ export class LocalLibraryService extends ServiceParentService {
 
   fillBookSfromLocalStorage() {
     let localLibrary = localStorage.getItem('localLibrary');
-    localLibrary = null
+    // localLibrary = null
     if (localLibrary !== null) {
       this.localLibrary.fillFromLocalStorage(localLibrary)
       this.saveLocalLibraryToLocalStorage();
