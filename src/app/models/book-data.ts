@@ -19,4 +19,8 @@ export class BookData {
   addSecondaryData(secondaryData: object) {
     this.secondaryData = new BookSecondaryData(secondaryData)
   }
+
+  getPrimaryData(): BookPrimaryData {
+    return <BookPrimaryData>this.primaryData;
+  }
 }

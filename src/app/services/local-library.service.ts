@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subject, Subscription} from "rxjs";
 import {BookSearchService} from "./book-search.service";
 import {LocalLibraryModel} from "../models/local-library-model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceParentService} from "./service-parent.service";
 import {isObject} from "rxjs/internal-compatibility";
 import {BookData} from "../models/book-data";
+import {BookPrimaryData} from "../models/book-primary-data";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ import {BookData} from "../models/book-data";
 export class LocalLibraryService extends ServiceParentService {
 
   isbnListSubscription: object = Subscription.EMPTY;
-
+  public libraryRefreshed = new Subject<null>();
   localLibrary: LocalLibraryModel;
 
   constructor(private bookSearch: BookSearchService, private http: HttpClient) {
     super();
+    console.log('locallibservice constructor');
+
     this.localLibrary = new LocalLibraryModel();
 
     this.fillBookSfromLocalStorage();
@@ -28,7 +31,7 @@ export class LocalLibraryService extends ServiceParentService {
 
   fillBookSfromLocalStorage() {
     let localLibrary = localStorage.getItem('localLibrary');
-    // localLibrary = null
+    localLibrary = null
     if (localLibrary !== null) {
       this.localLibrary.fillFromLocalStorage(localLibrary)
       this.saveLocalLibraryToLocalStorage();
@@ -62,5 +65,12 @@ export class LocalLibraryService extends ServiceParentService {
 
   private saveLocalLibraryToLocalStorage() {
     localStorage.setItem('localLibrary',JSON.stringify(this.localLibrary))
+    console.log('refresh')
+    this.libraryRefreshed.next()
+  }
+
+  public getPrimaryData(isbn: string): BookPrimaryData {
+    if (!this.localLibrary.checkBookInLibrary(isbn)) return new BookPrimaryData([])
+    return this.localLibrary.getPrimaryData(isbn)
   }
 }

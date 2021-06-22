@@ -15,7 +15,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   constructor(private http: HttpClient) {
 
     super();
-    localStorage.setItem('metadata','');
+    // localStorage.setItem('metadata','');
 
     this.checkMetaDataInLocalStorage();
   }
@@ -42,14 +42,13 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
         this.saveMetaToModel(metadata)
       this.metaDataReady.next(this.metaData);
     } else
-      console.log('getMeta')
       this.getMetaDataFromServer()
   }
 
   private getMetaDataFromServer() {
     this.http.get<any>(this._backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
-        console.log(data)
+
         this.metaData = data.data;
         this.saveMetaDataToLocalStorage()
         this.metaDataReady.next(this.metaData)

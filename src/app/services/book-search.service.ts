@@ -30,9 +30,6 @@ export class BookSearchService extends ServiceParentService {
     let params = this.searchParams.getSearchParams();
     if (isLocal === false) {
       this.searchForBooks(params).subscribe(bookList=>{
-        console.log (typeof bookList)
-        console.log (isObject(bookList))
-        console.log (bookList.data)
         this.isbnListArrived.next(bookList)
       }, error => {
         console.log(error)

@@ -1,4 +1,5 @@
 import {BookData} from "./book-data";
+import {BookPrimaryData} from "./book-primary-data";
 
 export class LocalLibraryModel {
   private books: { [isbn: string]: BookData }={};
@@ -39,4 +40,7 @@ export class LocalLibraryModel {
     }
   }
 
+  getPrimaryData(isbn: string):BookPrimaryData {
+      return this.books[isbn].getPrimaryData();
+  }
 }
