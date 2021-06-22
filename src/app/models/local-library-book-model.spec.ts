@@ -1,7 +1,7 @@
-import { LocalLibraryBookModel } from './local-library-book-model';
+import { BookData } from './book-data';
 
 describe('LocalLibraryBookModel', () => {
   it('should create an instance', () => {
-    expect(new LocalLibraryBookModel()).toBeTruthy();
+    expect(new BookData()).toBeTruthy();
   });
 });
