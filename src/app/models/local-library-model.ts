@@ -27,12 +27,10 @@ export class LocalLibraryModel {
         this.fillOne(isbn, localLibrary[isbn])
       }
     }
-    console.log(this.books)
   }
 
   private fillOne(isbn: string, data: any)
   {
-    console.log(data)
     this.createNewBook(isbn, data.creationTime)
     this.books[isbn].addPrimaryData(data.primaryData)
     if (this.books[isbn] !== undefined)

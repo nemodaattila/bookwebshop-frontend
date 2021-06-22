@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import {BrowseComponent} from "../components/browse/browse.component";
 import {RouterModule, Routes} from "@angular/router";
-import {BrowseComponent} from "../browse/browse.component";
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
 
 const routes: Routes = [
   {path: 'browse', component: BrowseComponent },

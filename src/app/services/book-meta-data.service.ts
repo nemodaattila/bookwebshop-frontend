@@ -10,7 +10,7 @@ import {Injectable, OnInit} from "@angular/core";
 export class BookMetaDataService extends ServiceParentService implements OnInit {
 
   private metaData?: BookMetaData;
-  private metaDataReady = new Subject<any>();
+  public metaDataReady = new Subject<BookMetaData>();
 
   constructor(private http: HttpClient) {
 
@@ -40,7 +40,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
         this.getMetaDataFromServer()
       } else
         this.saveMetaToModel(metadata)
-      this.metaDataReady.next();
+      this.metaDataReady.next(this.metaData);
     } else
       console.log('getMeta')
       this.getMetaDataFromServer()
@@ -52,7 +52,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
         console.log(data)
         this.metaData = data.data;
         this.saveMetaDataToLocalStorage()
-        this.metaDataReady.next()
+        this.metaDataReady.next(this.metaData)
       }
     }, error => {
       alert(error.error.text)
