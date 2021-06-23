@@ -29,7 +29,6 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
     let date;
 
     let metadata = localStorage.getItem('metadata');
-    metadata = null;
     if (metadata) {
 
       [metadata, date] = JSON.parse(metadata);
@@ -48,7 +47,6 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   private getMetaDataFromServer() {
     this.http.get<any>(this._backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
-
         this.metaData = data.data;
         this.saveMetaDataToLocalStorage()
         this.metaDataReady.next(this.metaData)

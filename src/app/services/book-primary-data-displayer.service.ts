@@ -1,6 +1,6 @@
 import {Injectable, Input} from '@angular/core';
 import {LocalLibraryService} from "./local-library.service";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {BookSearchService} from "./book-search.service";
 
 @Injectable({
@@ -13,6 +13,7 @@ export class BookPrimaryDataDisplayerService {
 
   private actualIsbnListSubscription: object = Subscription.EMPTY;
   private localLibraryRefreshSubscription: any = Subscription.EMPTY;
+  public actualBookDataRedreshed = new Subject<null>();
 
    private _actualIsbnList: Array<string> =[];
    private actualBookData: any={};
@@ -21,12 +22,13 @@ export class BookPrimaryDataDisplayerService {
   console.log('primdataservice controller');
     this.localLibraryRefreshSubscription=this.localLibrary.libraryRefreshed.subscribe(()=>{
     console.log('refreshprim')
-    this.getPrimaryDataForActualBooks()
+      this.getPrimaryDataForActualBooks()
+
   })
     this.actualIsbnListSubscription = <object>this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
       console.log('isbnlistarrived')
       this._actualIsbnList = isbnList.list
-      // this.getPrimaryDataForActualBooks()
+      this.getPrimaryDataForActualBooks()
     })
   }
 
@@ -34,6 +36,10 @@ export class BookPrimaryDataDisplayerService {
   {
     for (let isbn of this._actualIsbnList)
       this.actualBookData[isbn] = this.localLibrary.getPrimaryData(isbn)
+      if (this.actualBookData.length !== null)
+      {
+        this.actualBookDataRedreshed.next();
+      }
   }
 
   public getPrimaryDataByISBN(isbn: string)

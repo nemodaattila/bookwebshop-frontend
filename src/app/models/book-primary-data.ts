@@ -47,13 +47,13 @@ export class BookPrimaryData {
   }
 
   constructor(data: object | any ) {
-    this._author = data.author ?? 'UNKNOWN';
-    this._categoryId = parseInt(data.category_id);
-    this._coverThumbnail = data.cover_thumbnail;
-    this._discount = parseInt(data.discount) ?? 0;
-    this._isbn = data.isbn ?? 'UNKNOWN';
-    this._price = parseInt(data.price) ?? 0;
-    this._title = data.title ?? "UNKNOWN"
-    this._typeId = parseInt(data.type_id);
+    this._author = data.author ?? data._author ??'UNKNOWN';
+    this._categoryId = parseInt(data.category_id) ?? parseInt(data._categoryId);
+    this._coverThumbnail = data.cover_thumbnail ?? data._coverThumbnail;
+    this._discount = parseInt(data.discount) ?? parseInt(data._discount) ?? 0;
+    this._isbn = data.isbn ?? data._isbn ?? 'UNKNOWN';
+    this._price = parseInt(data.price) ?? parseInt(data._price) ?? 0;
+    this._title = data.title ?? data._title ?? "UNKNOWN"
+    this._typeId = parseInt(data.type_id) ?? parseInt(data._typeId);
   }
 }

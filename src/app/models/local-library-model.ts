@@ -41,6 +41,6 @@ export class LocalLibraryModel {
   }
 
   getPrimaryData(isbn: string):BookPrimaryData {
-      return this.books[isbn].getPrimaryData();
+    return this.books[isbn].getPrimaryData();
   }
 }

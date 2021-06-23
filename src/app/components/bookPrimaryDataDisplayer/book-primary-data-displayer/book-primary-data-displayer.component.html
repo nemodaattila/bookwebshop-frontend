@@ -1,5 +1,5 @@
 <div id="mainBookDiv">
-  <div *ngFor="let isbn of getIsbnList()">
+  <div *ngFor="let isbn of isbnList">
     <app-induvidual-book-primary-data-displayer
       [primaryData]="getPrimaryDataByISBN(isbn)"></app-induvidual-book-primary-data-displayer>
   </div>

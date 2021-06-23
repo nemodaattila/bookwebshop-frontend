@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookPrimaryDataDisplayerService} from "../../../services/book-primary-data-displayer.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-book-primary-data-displayer',
@@ -8,12 +9,16 @@ import {BookPrimaryDataDisplayerService} from "../../../services/book-primary-da
 })
 export class BookPrimaryDataDisplayerComponent implements OnInit {
 
-  constructor(private displayerService: BookPrimaryDataDisplayerService) { }
-
-  getIsbnList()
-  {
-    return this.displayerService.actualIsbnList
+  constructor(private displayerService: BookPrimaryDataDisplayerService) {
+    this.isbnListener = this.displayerService.actualBookDataRedreshed.subscribe(()=>
+    {
+      this.isbnList = this.displayerService.actualIsbnList
+    })
   }
+
+  private isbnListener: any = Subscription.EMPTY;
+
+  public isbnList: Array<string> =[];
 
   getPrimaryDataByISBN(isbn: string)
   {
