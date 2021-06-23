@@ -16,6 +16,11 @@ export class BookMetaData {
     return this._subCategory;
   }
 
+  public getTypeById(id: number): string
+  {
+    return this.type![id] as string;
+  }
+
   constructor(data: any) {
 
     this.format = data.format;
@@ -25,5 +30,6 @@ export class BookMetaData {
     this.tag = data.tag;
     this.targetAudience = data.targetAudience;
     this.type = data.type;
+    console.log(this)
   }
 }

@@ -10,9 +10,15 @@
       </p>
       <p>{{primaryData.title}}</p>
       <p>{{primaryData.isbn}}</p>
-      <p>{{primaryData.typeId}}</p>
+      <p>Típus : {{typeString}}</p>
 
     </section>
-    <section id = "priceSection"></section>
+    <section id = "priceSection">
+      <p>Ár: {{primaryData.price}}</p>
+      <div *ngIf="primaryData.discount !== 0">
+        <p>Kedvezmény: {{primaryData.discount}}</p>
+        <p>Kedvezményes ár: {{(primaryData.price/100) * (100-primaryData.discount)}}</p>
+      </div>
+    </section>
   </section>
 </article>

@@ -66,4 +66,9 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   private saveMetaToModel(model: any) {
     this.metaData = new BookMetaData(model)
   }
+
+  public getTypeById(id: number): string
+  {
+    return this.metaData!.getTypeById(id);
+  }
 }

@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BookPrimaryData} from "../../../models/book-primary-data";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {BookMetaDataService} from "../../../services/book-meta-data.service";
 
 @Component({
   selector: 'app-induvidual-book-primary-data-displayer',
@@ -12,8 +13,9 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
   @Input() primaryData?: BookPrimaryData;
   public safeImgURl?: SafeResourceUrl;
   public authorIds: Array<string>= []
+  public typeString?: string
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private metaService: BookMetaDataService) {
   }
 
 
@@ -23,7 +25,8 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
     if (this.primaryData?.coverThumbnail !== undefined) {
       this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.primaryData.coverThumbnail);
       this.authorIds = Object.keys(this.primaryData.author)
-      console.log(this.primaryData)
+      this.typeString = this.metaService.getTypeById(this.primaryData.typeId)
+      // console.log(this.primaryData)
     }
   }
 
