@@ -11,6 +11,7 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
 
   @Input() primaryData?: BookPrimaryData;
   public safeImgURl?: SafeResourceUrl;
+  public authorIds: Array<string>= []
 
   constructor(private sanitizer: DomSanitizer) {
   }
@@ -21,6 +22,8 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
   ngOnChanges(changes: SimpleChanges): void {
     if (this.primaryData?.coverThumbnail !== undefined) {
       this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.primaryData.coverThumbnail);
+      this.authorIds = Object.keys(this.primaryData.author)
+      console.log(this.primaryData)
     }
   }
 

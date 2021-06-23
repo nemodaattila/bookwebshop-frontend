@@ -1,5 +1,18 @@
 <!--<p *ngIf="primaryData !== undefined">{{primaryData.title}}</p>-->
-<div class="bookDiv" *ngIf="primaryData !== undefined">
-  <div id = "imageDiv"><img [src]="safeImgURl"></div>
-  <div id = "dataDiv">data</div>
-</div>
+<article class="bookArticle" *ngIf="primaryData !== undefined">
+  <section id = "imageSection"><img [src]="safeImgURl"></section>
+  <section id = "dataSection">
+    <section id = "infoSection">
+      <p>
+        <span *ngFor="let key of authorIds; let index = index">
+          {{ primaryData.author[$any(key)] }} <span *ngIf="index!==authorIds.length-1">-</span>
+        </span>
+      </p>
+      <p>{{primaryData.title}}</p>
+      <p>{{primaryData.isbn}}</p>
+      <p>{{primaryData.typeId}}</p>
+
+    </section>
+    <section id = "priceSection"></section>
+  </section>
+</article>

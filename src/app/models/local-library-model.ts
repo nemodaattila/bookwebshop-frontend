@@ -33,6 +33,7 @@ export class LocalLibraryModel {
   private fillOne(isbn: string, data: any)
   {
     this.createNewBook(isbn, data.creationTime)
+    console.log(data.primaryData)
     this.books[isbn].addPrimaryData(data.primaryData)
     if (this.books[isbn] !== undefined)
     {

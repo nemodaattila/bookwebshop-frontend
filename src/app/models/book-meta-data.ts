@@ -1,10 +1,10 @@
 export class BookMetaData {
-  private format?:{}[];
+  private format?: {}[];
   private language?: [];
-  private _mainCategory?:Array<string>;
-  private _subCategory?:{}[];
-  private tag?:{}[];
-  private targetAudience?:{}[];
+  private _mainCategory?: Array<string>;
+  private _subCategory?: {}[];
+  private tag?: {}[];
+  private targetAudience?: {}[];
   private type?: {}[];
 
 
@@ -21,7 +21,7 @@ export class BookMetaData {
     this.format = data.format;
     this.language = data.language;
     this._mainCategory = data._mainCategory;
-    this._subCategory = data._subCategory ;
+    this._subCategory = data._subCategory;
     this.tag = data.tag;
     this.targetAudience = data.targetAudience;
     this.type = data.type;

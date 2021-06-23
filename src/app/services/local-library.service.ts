@@ -35,7 +35,7 @@ export class LocalLibraryService extends ServiceParentService {
     // localLibrary = null
     if (localLibrary !== null) {
       this.localLibrary.fillFromLocalStorage(localLibrary)
-      // console.log(this.localLibrary)
+      console.log(this.localLibrary)
       this.saveLocalLibraryToLocalStorage();
     }
   }
@@ -66,6 +66,7 @@ export class LocalLibraryService extends ServiceParentService {
   }
 
   private saveLocalLibraryToLocalStorage() {
+    console.log(this.localLibrary)
     localStorage.setItem('localLibrary',JSON.stringify(this.localLibrary))
     this.libraryRefreshed.next()
   }

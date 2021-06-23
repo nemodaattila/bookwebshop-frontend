@@ -1,4 +1,4 @@
-.bookDiv {
+.bookArticle {
   display: grid;
   grid-template-columns: 150px 200px;
   margin: 10px;
