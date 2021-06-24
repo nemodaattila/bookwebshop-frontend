@@ -11,7 +11,9 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
-import { InduvidualBookPrimaryDataDisplayerComponent } from './components/bookPrimaryDataDisplayer/induvidual-book-primary-data-displaye/induvidual-book-primary-data-displayer.component';
+import { InduvidualBookPrimaryDataDisplayerComponent } from './components/bookPrimaryDataDisplayer/induvidual-book-primary-data-displayer/induvidual-book-primary-data-displayer.component';
+import { MainCategoryBrowserComponent } from './components/categoryBrowser/main-category-browser/main-category-browser.component';
+import { SubCategoryBrowserComponent } from './components/categoryBrowser/sub-category-browser/sub-category-browser.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { InduvidualBookPrimaryDataDisplayerComponent } from './components/bookPr
     BrowseComponent,
     BookThemeCategoryBrowserComponent,
     BookPrimaryDataDisplayerComponent,
-    InduvidualBookPrimaryDataDisplayerComponent
+    InduvidualBookPrimaryDataDisplayerComponent,
+    MainCategoryBrowserComponent,
+    SubCategoryBrowserComponent
   ],
     imports: [
         ApproutingModule,

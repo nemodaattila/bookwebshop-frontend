@@ -9,8 +9,7 @@ import {LocalLibraryService} from "../../services/local-library.service";
 })
 export class BrowseComponent implements OnInit {
 
-  constructor( private searchEngine: BookSearchService,
-              ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

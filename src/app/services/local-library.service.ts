@@ -16,11 +16,10 @@ export class LocalLibraryService extends ServiceParentService {
   isbnListSubscription: object = Subscription.EMPTY;
   public libraryRefreshed = new Subject<null>();
   localLibrary: LocalLibraryModel;
+  private readyState: boolean = false;
 
   constructor(private bookSearch: BookSearchService, private http: HttpClient) {
     super();
-    console.log('locallibservice constructor');
-
     this.localLibrary = new LocalLibraryModel();
 
     this.fillBookSfromLocalStorage();
@@ -29,18 +28,24 @@ export class LocalLibraryService extends ServiceParentService {
     })
   }
 
+  public checkReadyState()
+  {
+    return this.readyState;
+  }
+
   fillBookSfromLocalStorage() {
     let localLibrary = localStorage.getItem('localLibrary');
 
     // localLibrary = null
     if (localLibrary !== null) {
       this.localLibrary.fillFromLocalStorage(localLibrary)
-      console.log(this.localLibrary)
       this.saveLocalLibraryToLocalStorage();
+
     }
   }
 
   checkListInLocalLibrary(isbnList: Array<string>) {
+    console.log(isbnList)
     isbnList.map((isbn: string) => {
       this.checkIsbnInLocalLibrary(isbn)
     })
@@ -49,7 +54,6 @@ export class LocalLibraryService extends ServiceParentService {
   private checkIsbnInLocalLibrary(isbn: string) {
     let bookExists
     bookExists = this.localLibrary.checkBookInLibrary(isbn)
-    console.log(bookExists)
     if (!bookExists) {
       this.getBookPrimaryData(isbn).subscribe(({success, data}) => {
         this.localLibrary.addBookPrimaryData(isbn, data)
@@ -66,8 +70,9 @@ export class LocalLibraryService extends ServiceParentService {
   }
 
   private saveLocalLibraryToLocalStorage() {
-    console.log(this.localLibrary)
     localStorage.setItem('localLibrary',JSON.stringify(this.localLibrary))
+    console.log('locallrefresh')
+    this.readyState = true;
     this.libraryRefreshed.next()
   }
 

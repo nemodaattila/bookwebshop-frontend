@@ -1,0 +1,24 @@
+<!--<p *ngIf="primaryData !== undefined">{{primaryData.title}}</p>-->
+<article class="bookArticle" *ngIf="primaryData !== undefined">
+  <section class = "imageSection"><img [src]="safeImgURl"></section>
+  <section class = "dataSection">
+    <section class= "infoSection">
+      <p>
+        <span *ngFor="let key of authorIds; let index = index">
+          {{ primaryData.getAuthorByID(key) }} <span *ngIf="index!==authorIds.length-1">-</span>
+        </span>
+      </p>
+      <p>{{primaryData.getTitle()}}</p>
+      <p>{{primaryData.getIsbn()}}</p>
+      <p>Típus : {{typeString}}</p>
+
+    </section>
+    <section class= "priceSection">
+      <p>Ár: {{primaryData.getPrice()}}</p>
+      <div *ngIf="primaryData.getDiscount() !== 0">
+        <p>Kedvezmény: {{primaryData.getDiscount()}}</p>
+        <p>Kedvezményes ár: {{(primaryData.getPrice()/100) * (100-primaryData.getPrice())}}</p>
+      </div>
+    </section>
+  </section>
+</article>

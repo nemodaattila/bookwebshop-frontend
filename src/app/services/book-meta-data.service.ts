@@ -11,6 +11,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
 
   private metaData?: BookMetaData;
   public metaDataReady = new Subject<BookMetaData>();
+  private readyState: boolean = false;
 
   constructor(private http: HttpClient) {
 
@@ -24,11 +25,17 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
     this.checkMetaDataInLocalStorage();
   }
 
+  public checkReadyState()
+  {
+    return this.readyState;
+  }
+
   private checkMetaDataInLocalStorage() {
 
     let date;
 
     let metadata = localStorage.getItem('metadata');
+    // metadata = null
     if (metadata) {
 
       [metadata, date] = JSON.parse(metadata);
@@ -38,7 +45,9 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
       if (metaDataTimeStamp > 3600000) {
         this.getMetaDataFromServer()
       } else
+        console.log('locale')
         this.saveMetaToModel(metadata)
+      this.readyState = true
       this.metaDataReady.next(this.metaData);
     } else
       this.getMetaDataFromServer()
@@ -47,8 +56,9 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   private getMetaDataFromServer() {
     this.http.get<any>(this._backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
-        this.metaData = data.data;
+        this.saveMetaToModel(data.data);
         this.saveMetaDataToLocalStorage()
+        this.readyState = true;
         this.metaDataReady.next(this.metaData)
       }
     }, error => {
@@ -69,6 +79,17 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
 
   public getTypeById(id: number): string
   {
-    return this.metaData!.getTypeById(id);
+    if (this.metaData !== undefined) {
+      return this.metaData.getTypeById(id);
+    }
+    return '';
+  }
+
+  public getCategories()
+  {
+    return {
+      mainCategory: this.metaData?.getMainCategory(),
+      subCategory: this.metaData?.getSubCategory()
+    }
   }
 }

@@ -12,7 +12,7 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
 
   @Input() primaryData?: BookPrimaryData;
   public safeImgURl?: SafeResourceUrl;
-  public authorIds: Array<string>= []
+  public authorIds: Array<number>= []
   public typeString?: string
 
   constructor(private sanitizer: DomSanitizer, private metaService: BookMetaDataService) {
@@ -22,10 +22,11 @@ export class InduvidualBookPrimaryDataDisplayerComponent implements OnInit, OnCh
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.primaryData?.coverThumbnail !== undefined) {
-      this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.primaryData.coverThumbnail);
-      this.authorIds = Object.keys(this.primaryData.author)
-      this.typeString = this.metaService.getTypeById(this.primaryData.typeId)
+    if (this.primaryData?.getCoverThumbnail() !== undefined) {
+      this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.primaryData.getCoverThumbnail());
+      const aIDs = Object.keys(this.primaryData.getAuthor())
+      this.authorIds = aIDs.map(value => parseInt(value))
+      this.typeString = this.metaService.getTypeById(this.primaryData.getTypeId())
       // console.log(this.primaryData)
     }
   }

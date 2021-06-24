@@ -3,3 +3,8 @@
   grid-template-columns: 150px 200px;
   margin: 10px;
 }
+
+.bookArticle section {
+  margin: 10px 10px auto;
+}
+

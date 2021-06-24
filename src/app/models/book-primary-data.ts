@@ -1,60 +1,63 @@
 export class BookPrimaryData {
 
-  private _author: Array<string>;
-  private _categoryId: number;
-  private _coverThumbnail: string;
-  private _discount: number;
-  private _isbn: string;
-  private _price :number;
-  private _title: string;
-  private _typeId: number
+  private author: {[index: number]:string} = {};
+  private categoryId: number;
+  private coverThumbnail: string;
+  private discount: number;
+  private isbn: string;
+  private price :number;
+  private title: string;
+  private typeId: number
 
-
-  set coverThumbnail(value: string) {
-    this._coverThumbnail = value;
+  setCoverThumbnail(value: string) {
+    this.coverThumbnail = value;
   }
 
-  get author(): Array<string> {
-    return this._author;
+  getAuthor(): {[index: number]:string}  {
+    return this.author;
   }
 
-  get categoryId(): number {
-    return this._categoryId;
+  getAuthorByID(id: number): string
+  {
+      return this.author[id];
   }
 
-  get discount(): number {
-    return this._discount;
+  getCategoryId(): number {
+    return this.categoryId;
   }
 
-  get isbn(): string {
-    return this._isbn;
+  getDiscount(): number {
+    return this.discount;
   }
 
-  get price(): number {
-    return this._price;
+  getIsbn(): string {
+    return this.isbn;
   }
 
-  get title(): string {
-    return this._title;
+  getPrice(): number {
+    return this.price;
   }
 
-  get typeId(): number {
-    return this._typeId;
+  getTitle(): string {
+    return this.title;
   }
 
-  get coverThumbnail(): string {
-    return this._coverThumbnail;
+  getTypeId(): number {
+    return this.typeId;
+  }
+
+  getCoverThumbnail(): string {
+    return this.coverThumbnail;
   }
 
   constructor(data: object | any ) {
-
-    this._author = data.author ?? data._author ??'UNKNOWN';
-    this._categoryId = parseInt(data.category_id ?? data._categoryId);
-    this._coverThumbnail = data.cover_thumbnail ?? data._coverThumbnail;
-    this._discount = parseInt(data.discount ?? data._discount) ?? 0;
-    this._isbn = data.isbn ?? data._isbn ?? 'UNKNOWN';
-    this._price = parseInt(data.price ?? data._price) ?? 0;
-    this._title = data.title ?? data._title ?? "UNKNOWN"
-    this._typeId = parseInt(data.type_id ?? data._typeId);
+    this.author = (data.author ?? ['UNKNOWN']) as Array<string>;
+    this.categoryId = parseInt(data.category_id ?? data.categoryId);
+    this.coverThumbnail = data.cover_thumbnail ?? data.coverThumbnail;
+    this.discount = parseInt(data.discount ?? data.discount) ?? 0;
+    this.isbn = data.isbn ?? data.isbn ?? 'UNKNOWN';
+    this.price = parseInt(data.price ?? data.price) ?? 0;
+    this.title = data.title ?? data.title ?? "UNKNOWN"
+    this.typeId = parseInt(data.type_id ?? data.typeId);
   }
 }

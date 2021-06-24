@@ -13,23 +13,72 @@ export class BookSearchService extends ServiceParentService {
 
   private searchParams : BookSearchModel
   public isbnListArrived = new Subject<any>();
+  public searchParamRequestSubject = new Subject<null>();
+
+  private registeredServices: number = 0;
+
+  private answeredRegisteredServices: number = 0;
+  private setToDefault: boolean = true
 
   constructor(private http: HttpClient) {
     super();
     this.searchParams = new BookSearchModel()
-
-    this.initSearch()
+    this.createAndSendRequest()
   }
+
+  registerSearchSourceService()
+  {
+    this.registeredServices ++;
+  }
+
+  setSearchCriterium(type: string |null, value: number | null) {
+   console.log(type, value)
+
+
+    if (type === 'MainCategory')
+    {
+      this.searchParams.delCrit('SubCategory')
+    }
+    if (type === 'SubCategory')
+    {
+      this.searchParams.delCrit('MainCategory')
+    }
+    if (type === null)
+    {
+      this.searchParams.delCrit('SubCategory')
+      this.searchParams.delCrit('MainCategory')
+    }
+    else
+      this.searchParams.setCrit(type, value as number)
+    this.answeredRegisteredServices++;
+    this.checkRegisterSourceCount()
+  };
 
   public initSearch(setDefault: boolean = true) {
     this.searchParams.setPrevCrit()
     if (setDefault) this.searchParams.setDefault();
+      this.answeredRegisteredServices = 0;
+      this.setToDefault = setDefault;
+      this.searchParamRequestSubject.next(null);
+  }
+
+  checkRegisterSourceCount()
+  {
+    if (this.registeredServices === this.answeredRegisteredServices)
+      this.createAndSendRequest()
+  }
+
+  private createAndSendRequest() {
+
+
     // this.collectCriteriums();
     this.searchParams.setNewCrit();
     let isLocal = this.localOrderChecker();
     let params = this.searchParams.getSearchParams();
     if (isLocal === false) {
+
       this.searchForBooks(params).subscribe(bookList=>{
+        console.log(bookList)
         this.isbnListArrived.next(bookList)
       }, error => {
         console.log(error)
@@ -60,7 +109,7 @@ export class BookSearchService extends ServiceParentService {
     const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
     });
-    console.log(searchParams)
+    // console.log(searchParams)
     return this.http.post<any>(this._backendUrl + '\\booklist', searchParams ,{headers: headers});
   }
 

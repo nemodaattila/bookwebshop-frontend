@@ -12,9 +12,19 @@ export class BookSearchModel {
 
   private newCrit: [string?, number?]=[];
 
-  private crit: {} = {};
+  private crit: {[index: string]:any} = {};
 
-  //  _criteriumSourceObject = [];
+  setCrit(type: string, value: number)               //keresési kritérium beállítása
+  {
+    this.crit[type] = value;
+
+  };
+
+  delCrit(type: string)                     //keresési kritérium beállítása
+  {
+    if (this.crit[type] !== undefined)
+      delete this.crit[type]
+  };
 
   setDefault() {
     this.offset = 0;
