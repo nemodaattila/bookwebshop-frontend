@@ -17,6 +17,7 @@ export class BookPrimaryDataDisplayerService {
   private metaDataReadySubscription: any = Subscription.EMPTY;
   public actualBookDataRedreshed = new Subject<null>();
 
+  private allFoundCount: number = Infinity;
    private _actualIsbnList: Array<string> =[];
    private actualBookData: any={};
    private allReady: Array<number>=[0,0,0];
@@ -28,6 +29,7 @@ export class BookPrimaryDataDisplayerService {
 
   })
     this.actualIsbnListSubscription = <object>this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
+      this.allFoundCount = isbnList.count
       this._actualIsbnList = isbnList.list
       this.increaseReadyVariable(2)
     })
@@ -38,6 +40,11 @@ export class BookPrimaryDataDisplayerService {
     })
     this.checkServiceReadyStates();
 
+  }
+
+  public getAllCount():number
+  {
+    return this.allFoundCount;
   }
 
   private checkServiceReadyStates() {

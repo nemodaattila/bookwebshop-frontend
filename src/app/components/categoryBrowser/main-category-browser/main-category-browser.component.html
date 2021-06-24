@@ -1,4 +1,13 @@
 <div>
   <span class ="searchLabel"(click)="categorySearch()">{{label}}</span>
-  <input class ="subCatButton" type="button" value="+" (click)="subCategoryButtonEvent()">
+  <input class ="subCatButton" type="button" value="{{buttonValue}}" (click)="subCategoryButtonEvent()">
+  <div *ngIf="areSubCategoriesVisible" class="catNav">
+    <div  *ngFor="let cat of subCategoryIds; index as key">
+      <app-sub-category-browser [id]="cat" [label]="getSubcatLabelByID(cat)" (subSearchNotify)="onSubComponentNotify($event)">
+      </app-sub-category-browser>
+<!--      <app-main-category-browser [mainCategoryID]="key+1" [label]="mainCategory[key+1]"-->
+<!--                                 [subcategories]="getSubCategoryById(key+1)" (searchNotify)="onSubComponentNotify($event)">-->
+<!--      </app-main-category-browser>-->
+    </div>
+  </div>
 </div>

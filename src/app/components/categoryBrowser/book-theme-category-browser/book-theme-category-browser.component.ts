@@ -41,6 +41,10 @@ export class BookThemeCategoryBrowserComponent implements OnInit {
       if (this.bookSearchParameter.length !== 0) {
         this.bookSearch.setSearchCriterium(this.bookSearchParameter[0] as string,this.bookSearchParameter[1] as number)
       }
+      else
+      {
+        this.bookSearch.setSearchCriterium(null, null)
+      }
   }
 
   private setCategories(metaData: any)
@@ -60,7 +64,9 @@ export class BookThemeCategoryBrowserComponent implements OnInit {
   }
 
   initAllSearch() {
-
+    console.log('allsearcj')
+    this.bookSearchParameter = []
+    this.bookSearch.initSearch(false)
   }
 
   onSubComponentNotify(searchParam: [string, number]) {

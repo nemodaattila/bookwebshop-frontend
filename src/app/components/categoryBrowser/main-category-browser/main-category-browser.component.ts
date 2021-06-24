@@ -10,9 +10,12 @@ export class MainCategoryBrowserComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  @Input() subcategories: {[index: number]:string} ={}
+  @Input() public subcategories: {[index: number]:string} ={}
   @Input() mainCategoryID: number = 0;
   @Input() label?: string;
+  public subCategoryIds: Array<number>=[]
+  public areSubCategoriesVisible: boolean = false
+  public buttonValue: string='+';
 
   @Output() searchNotify: EventEmitter<[string, number]> = new EventEmitter<[string, number]>();
 
@@ -20,13 +23,24 @@ export class MainCategoryBrowserComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
+  getSubcatLabelByID(id: number): string
+  {
+    return this.subcategories[id]
+  }
+
   ngOnChanges() {
-  console.log(this)
+    const ids = Object.keys(this.subcategories);
+    this.subCategoryIds = ids.map(value => parseInt(value))
   }
 
   subCategoryButtonEvent()
   {
+    this.areSubCategoriesVisible=!this.areSubCategoriesVisible
+    this.buttonValue=this.areSubCategoriesVisible?'-':'+';
+  }
 
+  onSubComponentNotify(searchParam: [string, number]) {
+    this.searchNotify.emit(searchParam)
   }
 
   categorySearch()

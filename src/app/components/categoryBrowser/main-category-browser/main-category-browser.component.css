@@ -1,13 +1,10 @@
-.searchLabel:hover, a:hover {
-  color: green;
-  background-color: #b697bd;
-  border-radius: 6px;
+.catNav {
+  margin: 5px;
+  border: 1px solid black;
+  padding-inline-start: 5px;
 }
 
-.searchLink:visited, .searchLink:link {
-  color: darkslateblue;
-}
-
-.subCatButton {
-  margin: 1px;
+.catNav > .searchLabel {
+  margin: 2px;
+  cursor: pointer;
 }

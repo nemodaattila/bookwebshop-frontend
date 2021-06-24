@@ -13,12 +13,14 @@ export class BookPrimaryDataDisplayerComponent implements OnInit {
     this.isbnListener = this.displayerService.actualBookDataRedreshed.subscribe(()=>
     {
       this.isbnList = this.displayerService.actualIsbnList
+      this.allFound = this.displayerService.getAllCount();
     })
   }
 
   private isbnListener: any = Subscription.EMPTY;
 
   public isbnList: Array<string> =[];
+  public allFound: number =Infinity;
 
   getPrimaryDataByISBN(isbn: string)
   {

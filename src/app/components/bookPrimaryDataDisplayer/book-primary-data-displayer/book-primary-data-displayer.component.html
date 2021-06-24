@@ -1,8 +1,11 @@
-<div id="mainBookDiv">
+<div *ngIf="allFound !== 0; else emptylist" id="mainBookDiv">
   <div *ngFor="let isbn of isbnList">
     <app-induvidual-book-primary-data-displayer
       [primaryData]="getPrimaryDataByISBN(isbn)"></app-induvidual-book-primary-data-displayer>
   </div>
 </div>
+<ng-template #emptylist>
+  <p> Nincs találat</p>
+</ng-template>
 
 

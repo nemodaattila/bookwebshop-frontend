@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+.searchLabel:hover, a:hover {
+  color: green;
+  background-color: #b697bd;
+  border-radius: 6px;
+}
+
+.searchLink:visited, .searchLink:link {
+  color: darkslateblue;
+}
+
+.subCatButton {
+  margin: 1px;
+}
+
+body {
+  background-color: #F5F5DC;
+}
