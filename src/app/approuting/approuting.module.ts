@@ -17,8 +17,6 @@ const routes: Routes = [
   // {path: 'entryeditor/:id', component: EntryeditorComponent, canActivate: [AuthenticationUserGuard]},
   // {path: 'moderateentry/:id', component: EntrymoderatorComponent, canActivate: [AuthenticationAdminGuard]},
   // {path: 'howtouse', component: HowtouseComponent},
-  // {path: '', redirectTo: '/guestbook', pathMatch: 'full'},
-  // {path: '**', redirectTo: '/guestbook', pathMatch: 'full'}
 ];
 
 @NgModule({

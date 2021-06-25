@@ -1,0 +1,9 @@
+#secondarySearchBar
+{
+  margin: 1.1em;
+}
+
+#secondarySearchBar *
+{
+  margin: 0px 5px;
+}

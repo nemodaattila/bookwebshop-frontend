@@ -1,0 +1,22 @@
+<div id="secondarySearchBar">
+  <label>Rendezés: </label>
+  <select #OACSortSelect id="OACSortSelect" (change)="parameterRefresh(OACSortSelect.id, OACSortSelect.value)">
+    <option value="Title">Cím</option>
+    <option value="Author">Iró</option>
+    <option value="Price">Price</option>
+    <option value="Year">Év</option>
+  </select>
+  <label>Rendezési irány:</label>
+  <select #OACDirSelect id="OACDirSelect" (change)="parameterRefresh(OACDirSelect.id, OACDirSelect.value)">
+    <option value="ASC">Növekvő</option>
+    <option value="DESC">Csökkenő</option>
+  </select>
+  <label>Megjelenített darabszám</label>
+  <select #OACQuantitySelect id="OACQuantitySelect" (change)="parameterRefresh(OACQuantitySelect.id, OACQuantitySelect.value)">
+    <option>10</option>
+    <option>20</option>
+    <option>50</option>
+    <option>100</option>
+  </select>
+
+</div>
