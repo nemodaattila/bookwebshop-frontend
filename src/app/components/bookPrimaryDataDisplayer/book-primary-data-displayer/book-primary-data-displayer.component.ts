@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {BookPrimaryDataDisplayerService} from "../../../services/book-primary-data-displayer.service";
 import {Subscription} from "rxjs";
 
@@ -7,27 +7,46 @@ import {Subscription} from "rxjs";
   templateUrl: './book-primary-data-displayer.component.html',
   styleUrls: ['./book-primary-data-displayer.component.css']
 })
-export class BookPrimaryDataDisplayerComponent implements OnInit {
 
+/**
+ * frame, datasource, and connection for displaying multiple book primary data
+ */
+export class BookPrimaryDataDisplayerComponent {
+
+  /**
+   * event listener for isbn list -> displayerService
+   * @private
+   */
+  private isbnListener: any = Subscription.EMPTY;
+
+  /**
+   * list of isbn of books actually displayed
+   */
+  public isbnList: Array<string> = [];
+
+  /**
+   * count of all books that meets search criteria
+   */
+  public allFound: number = Infinity;
+
+  /**
+   * subscribes for service, when actual books' (from isbn list) data are loaded
+   * @param displayerService service for displaying data for books that have been returned by
+   * bookSearchService
+   */
   constructor(private displayerService: BookPrimaryDataDisplayerService) {
-    this.isbnListener = this.displayerService.actualBookDataRedreshed.subscribe(()=>
-    {
+    this.isbnListener = this.displayerService.actualBookDataRedreshed.subscribe(() => {
       this.isbnList = this.displayerService.actualIsbnList
       this.allFound = this.displayerService.getAllCount();
     })
   }
 
-  private isbnListener: any = Subscription.EMPTY;
-
-  public isbnList: Array<string> =[];
-  public allFound: number =Infinity;
-
-  getPrimaryDataByISBN(isbn: string)
-  {
+  /**
+   * asks the displayerService for a book's primary data by isbn and returns it
+   * @param isbn  requested book's isbn
+   */
+  getPrimaryDataByISBN(isbn: string) {
     return this.displayerService.getPrimaryDataByISBN(isbn)
-  }
-
-  ngOnInit(): void {
   }
 
 }

@@ -4,6 +4,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 
+/**
+ * routing Path
+ */
 const routes: Routes = [
   {path: 'browse', component: BrowseComponent },
   {path: '', redirectTo: '/browse', pathMatch: 'full'},
@@ -27,4 +30,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class ApproutingModule { }
+export class AppRoutingModule { }

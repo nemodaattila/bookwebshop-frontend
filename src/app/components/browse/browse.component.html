@@ -1,13 +1,17 @@
 <main class="tableMain">
   <h3>Böngészés kategóriákban</h3>
-  <section id=secondarySearchBar><app-search-order-and-count-handler (pageResetRequest)="pageNavReset()"></app-search-order-and-count-handler></section>
+  <section id=secondarySearchBar>
+    <app-search-order-and-count-handler (pageResetRequest)="pageNavReset()"></app-search-order-and-count-handler>
+  </section>
   <section id=catNav>
     <app-book-theme-category-browser (pageResetRequest)="pageNavReset()"></app-book-theme-category-browser>
   </section>
   <section id="primaryDataSection">
-  <app-book-primary-data-displayer></app-book-primary-data-displayer>
+    <app-book-primary-data-displayer></app-book-primary-data-displayer>
   </section>
   <section></section>
-  <section id="pageNav"><app-page-navigator [pageResetRequest]="pageNavResetRequestSent"></app-page-navigator></section>
+  <section id="pageNav">
+    <app-page-navigator [pageResetRequest]="pageNavResetRequestSent"></app-page-navigator>
+  </section>
 </main>
 

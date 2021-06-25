@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InduvidualBookPrimaryDataDisplayerComponent } from './induvidual-book-primary-data-displayer.component';
+import { IndividualBookPrimaryDataDisplayerComponent } from './individual-book-primary-data-displayer.component';
 
 describe('InduvidualBookPrimaryDataDisplayeComponent', () => {
-  let component: InduvidualBookPrimaryDataDisplayerComponent;
-  let fixture: ComponentFixture<InduvidualBookPrimaryDataDisplayerComponent>;
+  let component: IndividualBookPrimaryDataDisplayerComponent;
+  let fixture: ComponentFixture<IndividualBookPrimaryDataDisplayerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InduvidualBookPrimaryDataDisplayerComponent ]
+      declarations: [ IndividualBookPrimaryDataDisplayerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InduvidualBookPrimaryDataDisplayerComponent);
+    fixture = TestBed.createComponent(IndividualBookPrimaryDataDisplayerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
