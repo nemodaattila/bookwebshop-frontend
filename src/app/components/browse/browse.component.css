@@ -2,3 +2,9 @@
   display: grid;
   grid-template-columns: 20% 80%;
 }
+
+#pageNav {
+  text-align: center;
+  display: block;
+  padding: 10px;
+}

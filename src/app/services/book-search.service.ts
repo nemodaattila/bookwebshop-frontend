@@ -29,12 +29,11 @@ export class BookSearchService extends ServiceParentService {
   registerSearchSourceService()
   {
     this.registeredServices ++;
+    console.log(this.registeredServices)
   }
 
   setSearchCriterium(type: string |null, value: number | null) {
    console.log(type, value)
-
-
     if (type === 'MainCategory')
     {
       this.searchParams.delCrit('Category')
@@ -50,9 +49,21 @@ export class BookSearchService extends ServiceParentService {
     }
     else
       this.searchParams.setCrit(type, value as number)
+    this.increaseAnswered()
+  };
+
+  public setOffsetCrit(offset: number)
+  {
+    console.log(offset)
+    this.searchParams.setOffset(offset)
+    this.increaseAnswered()
+  }
+
+  private increaseAnswered()
+  {
     this.answeredRegisteredServices++;
     this.checkRegisterSourceCount()
-  };
+  }
 
   public initSearch(setDefault: boolean = true) {
     this.searchParams.setPrevCrit()
@@ -64,6 +75,7 @@ export class BookSearchService extends ServiceParentService {
 
   checkRegisterSourceCount()
   {
+    console.log([this.registeredServices, this.answeredRegisteredServices])
     if (this.registeredServices === this.answeredRegisteredServices)
       this.createAndSendRequest()
   }
@@ -111,6 +123,10 @@ export class BookSearchService extends ServiceParentService {
     });
     // console.log(searchParams)
     return this.http.post<any>(this._backendUrl + '\\booklist', searchParams ,{headers: headers});
+  }
+
+  getQuantityPerPage() {
+    return this.searchParams.getLimit()
   }
 
   //DO create

@@ -14,6 +14,15 @@ export class BookSearchModel {
 
   private crit: {[index: string]:any} = {};
 
+  public getLimit(): number{
+    return this.limit
+  }
+
+  public setOffset(offset: number)
+  {
+    this.offset = offset
+  }
+
   setCrit(type: string, value: number)               //keresési kritérium beállítása
   {
     this.crit[type] = value;

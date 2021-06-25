@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BookMetaDataService} from "../../../services/book-meta-data.service";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {BookSearchService} from "../../../services/book-search.service";
 
 @Component({
@@ -16,7 +16,7 @@ export class BookThemeCategoryBrowserComponent implements OnInit {
   public mainCategoryIndex: Array<string>=[];
   private subCategory: {[index: number]:{[index: number]:string}} = {}
   private bookSearchParameter: [string?, number?] = [];
-
+  @Output() pageResetRequest: EventEmitter<null> = new EventEmitter<null>();
   constructor(private metaDateService: BookMetaDataService, private bookSearch: BookSearchService) {
     this.bookSearch.registerSearchSourceService()
     this.metaSubscription= this.metaDateService.metaDataReady.subscribe((metaData)=>
@@ -66,11 +66,13 @@ export class BookThemeCategoryBrowserComponent implements OnInit {
   initAllSearch() {
     console.log('allsearcj')
     this.bookSearchParameter = []
+    this.pageResetRequest.emit();
     this.bookSearch.initSearch(false)
   }
 
   onSubComponentNotify(searchParam: [string, number]) {
     this.bookSearchParameter = searchParam
+    this.pageResetRequest.emit();
     this.bookSearch.initSearch(false)
   }
 

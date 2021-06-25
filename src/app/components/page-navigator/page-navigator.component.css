@@ -1,0 +1,30 @@
+
+
+.navMain {
+  display: block;
+}
+
+ul {
+  display: inline;
+  background-color: lightsalmon;
+  border: 1px solid black;
+  list-style-type: none;
+  padding-inline-start: 0px;
+  padding: 0px 5px;
+  border-radius: 10px;
+}
+
+.actpage {
+  background-color: #DCDCF5;
+}
+
+.navButton:hover {
+  cursor: pointer;
+  color: red
+}
+
+li {
+  display: inline;
+  margin: 5px;
+  text-align: center;
+}
