@@ -37,15 +37,15 @@ export class BookSearchService extends ServiceParentService {
 
     if (type === 'MainCategory')
     {
-      this.searchParams.delCrit('SubCategory')
+      this.searchParams.delCrit('Category')
     }
-    if (type === 'SubCategory')
+    if (type === 'Category')
     {
       this.searchParams.delCrit('MainCategory')
     }
     if (type === null)
     {
-      this.searchParams.delCrit('SubCategory')
+      this.searchParams.delCrit('Category')
       this.searchParams.delCrit('MainCategory')
     }
     else
