@@ -1,6 +1,6 @@
 <main class="tableMain">
   <h3>Böngészés kategóriákban</h3>
-  <section id=secondarySearchBar></section>
+  <section id=secondarySearchBar><app-search-order-and-count-handler (pageResetRequest)="pageNavReset()"></app-search-order-and-count-handler></section>
   <section id=catNav>
     <app-book-theme-category-browser (pageResetRequest)="pageNavReset()"></app-book-theme-category-browser>
   </section>

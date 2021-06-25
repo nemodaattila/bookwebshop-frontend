@@ -129,6 +129,12 @@ export class BookSearchService extends ServiceParentService {
     return this.searchParams.getLimit()
   }
 
+  setOrderAndLimit(order: string, orderDir: string, limit:number)
+  {
+    this.searchParams.setOrderAndLimit(order,orderDir,limit);
+    this.increaseAnswered()
+  }
+
   //DO create
   private localOrderChecker() {
     return false

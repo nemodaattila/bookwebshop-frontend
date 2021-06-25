@@ -15,6 +15,7 @@ import { InduvidualBookPrimaryDataDisplayerComponent } from './components/bookPr
 import { MainCategoryBrowserComponent } from './components/categoryBrowser/main-category-browser/main-category-browser.component';
 import { SubCategoryBrowserComponent } from './components/categoryBrowser/sub-category-browser/sub-category-browser.component';
 import { PageNavigatorComponent } from './components/page-navigator/page-navigator.component';
+import { SearchOrderAndCountHandlerComponent } from './components/search-order-and-count-handler/search-order-and-count-handler.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PageNavigatorComponent } from './components/page-navigator/page-navigat
     MainCategoryBrowserComponent,
     SubCategoryBrowserComponent,
     PageNavigatorComponent,
+    SearchOrderAndCountHandlerComponent,
   ],
     imports: [
         ApproutingModule,

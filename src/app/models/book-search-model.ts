@@ -54,6 +54,13 @@ export class BookSearchModel {
     this.newCrit[1] = this.limit;
   }
 
+  setOrderAndLimit(order: string, orderDir: string, limit:number)
+  {
+    this.order = order
+    this.orderDir = orderDir
+    this.limit = limit
+  }
+
   getSearchParams() {
     return {
       criterium: this.crit,
