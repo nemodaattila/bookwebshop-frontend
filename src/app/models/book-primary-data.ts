@@ -1,25 +1,66 @@
+/**
+ * model class for storing primary data of books
+ */
 export class BookPrimaryData {
 
-  private author: {[index: number]:string} = {};
-  private categoryId: number;
+  /**
+   * name(s) of author(s), with id as index
+   * @private
+   */
+  private readonly author: { [index: number]: string } = {};
+
+  /**
+   * sub theme category id of a book
+   * @private
+   */
+  private readonly categoryId: number;
+
+  /**
+   * thumbnail of a book cover in string form
+   * @private
+   */
   private coverThumbnail: string;
-  private discount: number;
-  private isbn: string;
-  private price :number;
-  private title: string;
-  private typeId: number
+
+  /**
+   * discount applying to a book
+   * @private
+   */
+  private readonly discount: number;
+
+  /**
+   * isbn of a book
+   * @private
+   */
+  private readonly isbn: string;
+
+  /**
+   * price of a book
+   * @private
+   */
+  private readonly price: number;
+
+  /**
+   * title of a book
+   * @private
+   */
+  private readonly title: string;
+
+  /**
+   * type id of a book (book / audio / ebook)
+   * @private
+   */
+  private readonly typeId: number
 
   setCoverThumbnail(value: string) {
     this.coverThumbnail = value;
   }
 
-  getAuthor(): {[index: number]:string}  {
+  getAuthor(): { [index: number]: string } {
     return this.author;
   }
 
-  getAuthorByID(id: number): string
-  {
-      return this.author[id];
+  getAuthorByID(id: number): string {
+    return this.author[id];
   }
 
   getCategoryId(): number {
@@ -50,7 +91,7 @@ export class BookPrimaryData {
     return this.coverThumbnail;
   }
 
-  constructor(data: object | any ) {
+  constructor(data: object | any) {
     this.author = (data.author ?? ['UNKNOWN']) as Array<string>;
     this.categoryId = parseInt(data.category_id ?? data.categoryId);
     this.coverThumbnail = data.cover_thumbnail ?? data.coverThumbnail;

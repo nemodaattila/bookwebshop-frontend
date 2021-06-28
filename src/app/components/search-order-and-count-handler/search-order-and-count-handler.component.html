@@ -12,7 +12,8 @@
     <option value="DESC">Csökkenő</option>
   </select>
   <label>Megjelenített darabszám</label>
-  <select #OACQuantitySelect id="OACQuantitySelect" (change)="parameterRefresh(OACQuantitySelect.id, OACQuantitySelect.value)">
+  <select #OACQuantitySelect id="OACQuantitySelect"
+          (change)="parameterRefresh(OACQuantitySelect.id, OACQuantitySelect.value)">
     <option>10</option>
     <option>20</option>
     <option>50</option>

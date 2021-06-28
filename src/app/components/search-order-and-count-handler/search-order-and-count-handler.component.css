@@ -1,9 +1,7 @@
-#secondarySearchBar
-{
+#secondarySearchBar {
   margin: 1.1em;
 }
 
-#secondarySearchBar *
-{
-  margin: 0px 5px;
+#secondarySearchBar * {
+  margin: 0 5px;
 }

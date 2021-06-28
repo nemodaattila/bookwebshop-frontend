@@ -35,8 +35,8 @@ export class BookPrimaryDataDisplayerComponent {
    * bookSearchService
    */
   constructor(private displayerService: BookPrimaryDataDisplayerService) {
-    this.isbnListener = this.displayerService.actualBookDataRedreshed.subscribe(() => {
-      this.isbnList = this.displayerService.actualIsbnList
+    this.isbnListener = this.displayerService.actualBookDataRefreshed.subscribe(() => {
+      this.isbnList = this.displayerService.getActualIsbnList()
       this.allFound = this.displayerService.getAllCount();
     })
   }

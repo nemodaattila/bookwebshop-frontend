@@ -1,15 +1,42 @@
+/**
+ * model class for PageNavigator
+ */
 export class PageNavigatorModel {
 
+  /**
+   * query offset, from which result to display
+   * @private
+   */
   private offset: number = 0;
 
+  /**
+   * number of displayed results of the actual search
+   * @private
+   */
   private actualCount: number = 0;
 
+  /**
+   * number of all possible result, that meets criteria
+   * @private
+   */
   private allCount: number = 0;
 
+  /**
+   * number of pages based on allCount
+   * @private
+   */
   private pageNumber: number = 0;
 
+  /**
+   * the number of actually loaded page
+   * @private
+   */
   private actualPage: number = 1;
 
+  /**
+   * the number of results displayed on the actual page
+   * @private
+   */
   private quantityPerPage: number = 10;
 
   getOffset() {
@@ -44,12 +71,20 @@ export class PageNavigatorModel {
     this.offset = num;
   }
 
+  /**
+   * increases/decreases the offset for loading next/ prev page
+   * @param num number to increase/decrease with (*10)
+   */
   incDecPageNumber(num: number) {
     this.offset += this.quantityPerPage * num;
   }
 
-  setStartByClick(pagenum: number) {
-    this.offset = pagenum * this.quantityPerPage;
+  /**
+   * set the offset according to page number
+   * @param pageNum number to increase/decrease with (*10)
+   */
+  setStartByClick(pageNum: number) {
+    this.offset = pageNum * this.quantityPerPage;
   }
 
 }

@@ -1,23 +1,50 @@
-
 import {ServiceParentService} from "./service-parent.service";
 import {BookSearchModel} from "../models/book-search-model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {Injectable} from "@angular/core";
-import {isObject} from "rxjs/internal-compatibility";
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * creates and sends a request to the server for searching books in database
+ * based on multiple search parameter
+ */
 export class BookSearchService extends ServiceParentService {
 
-  private searchParams : BookSearchModel
+  /**
+   * pushes the actual isbn list
+   */
   public isbnListArrived = new Subject<any>();
+
+  /**
+   * aks registered components for search parameters
+   */
   public searchParamRequestSubject = new Subject<null>();
 
-  private registeredServices: number = 0;
+  /**
+   * search parameters in object model form
+   * @private
+   */
+  private searchParams: BookSearchModel
 
-  private answeredRegisteredServices: number = 0;
+  /**
+   * count of registered components as parameter source
+   * @private
+   */
+  private registeredSourceComponents: number = 0;
+
+  /**
+   * count of registered components that answered after a parameter call
+   * @private
+   */
+  private answeredRegisteredComponents: number = 0;
+
+  /**
+   * parameters are o be reseted or not
+   * @private
+   */
   private setToDefault: boolean = true
 
   constructor(private http: HttpClient) {
@@ -26,83 +53,87 @@ export class BookSearchService extends ServiceParentService {
     this.createAndSendRequest()
   }
 
-  registerSearchSourceService()
-  {
-    this.registeredServices ++;
-    console.log(this.registeredServices)
+  /**
+   * register a new parameter source component
+   * simple increases to counter
+   */
+  registerSearchSourceService() {
+    this.registeredSourceComponents++;
   }
 
-  setSearchCriterium(type: string |null, value: number | null) {
-   console.log(type, value)
-    if (type === 'MainCategory')
-    {
-      this.searchParams.delCrit('Category')
+  /**
+   * saves source criteria, deletes criteria if needed
+   * @param type type of criteria
+   * @param value value of criteria
+   */
+  setSearchCriteria(type: string | null, value: number | null) {
+    if (type === 'MainCategory') {
+      this.searchParams.delCriteria('Category')
     }
-    if (type === 'Category')
-    {
-      this.searchParams.delCrit('MainCategory')
+    if (type === 'Category') {
+      this.searchParams.delCriteria('MainCategory')
     }
-    if (type === null)
-    {
-      this.searchParams.delCrit('Category')
-      this.searchParams.delCrit('MainCategory')
-    }
-    else
-      this.searchParams.setCrit(type, value as number)
+    if (type === null) {
+      this.searchParams.delCriteria('Category')
+      this.searchParams.delCriteria('MainCategory')
+    } else
+      this.searchParams.setCriteria(type, value as number)
     this.increaseAnswered()
   };
 
-  public setOffsetCrit(offset: number)
-  {
-    console.log(offset)
+  /**
+   * sets the offset parameter of the search model
+   * @param offset
+   */
+  public setOffsetCriteria(offset: number) {
     this.searchParams.setOffset(offset)
     this.increaseAnswered()
   }
 
-  private increaseAnswered()
-  {
-    this.answeredRegisteredServices++;
+  /**
+   * increases the counter for components that registered as source, when they answered for
+   * parameter call
+   * @private
+   */
+  private increaseAnswered() {
+    this.answeredRegisteredComponents++;
     this.checkRegisterSourceCount()
   }
 
   public initSearch(setDefault: boolean = true) {
-    this.searchParams.setPrevCrit()
+    this.searchParams.setPrevCriteria()
     if (setDefault) this.searchParams.setDefault();
-      this.answeredRegisteredServices = 0;
-      this.setToDefault = setDefault;
-      this.searchParamRequestSubject.next(null);
+    this.answeredRegisteredComponents = 0;
+    this.setToDefault = setDefault;
+    this.searchParamRequestSubject.next(null);
   }
 
-  checkRegisterSourceCount()
-  {
-    console.log([this.registeredServices, this.answeredRegisteredServices])
-    if (this.registeredServices === this.answeredRegisteredServices)
+  /**
+   * if the number answered calls equals the registered component's number, calls
+   * request creator function
+   */
+  checkRegisterSourceCount() {
+    if (this.registeredSourceComponents === this.answeredRegisteredComponents)
       this.createAndSendRequest()
   }
 
+  /**
+   * creates and calls http request, based on search parameters, for book search
+   * on response it passes the isbn list through a Subject
+   * in case of ordering or result count change, checks if the ordering is possible
+   * without request call
+   * @private
+   */
   private createAndSendRequest() {
-
-
-    // this.collectCriteriums();
-    this.searchParams.setNewCrit();
+    this.searchParams.setNewCriteria();
     let isLocal = this.localOrderChecker();
     let params = this.searchParams.getSearchParams();
-    if (isLocal === false) {
-
-      this.searchForBooks(params).subscribe(bookList=>{
-        console.log(bookList)
+    if (!isLocal) {
+      this.searchForBooks(params).subscribe(bookList => {
         this.isbnListArrived.next(bookList)
       }, error => {
-        console.log(error)
-        console.dir(error.error.text ??  error.error)
+        console.dir(error.error.text ?? error.error)
       })
-      // let ac = new AjaxCaller()
-      // ac.targetUrl = JSCore.getRoot() + "/book/withParameter/";
-      // ac.requestType = 'POST';
-      // ac.addCustomHeader('Content-Type', 'application/json')
-      // ac.postFields = params;
-      // ac._subscriptionCallWord = "getBooks";
-      // ac.send();
     } else {
       //DO
       // if (ContentHandler !== undefined)
@@ -111,31 +142,40 @@ export class BookSearchService extends ServiceParentService {
   }
 
   /**
-   *
+   * http request for book search
    * @param searchParams
    * @private
-   * @DO check phpstorm angularjs + wampserver apache - cors problem with content-type : application/JSON
    */
-  private searchForBooks(searchParams: object):Observable<any>
-  {
+  private searchForBooks(searchParams: object): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
     });
-    // console.log(searchParams)
-    return this.http.post<any>(this._backendUrl + '\\booklist', searchParams ,{headers: headers});
+    return this.http.post<any>(this._backendUrl + '\\booklist', searchParams, {headers: headers});
   }
 
+  /**
+   * returns the set number of result per page
+   */
   getQuantityPerPage() {
     return this.searchParams.getLimit()
   }
 
-  setOrderAndLimit(order: string, orderDir: string, limit:number)
-  {
-    this.searchParams.setOrderAndLimit(order,orderDir,limit);
+  /**
+   * sets the property of order, order dir and search limit in the model
+   * @param order order attribute
+   * @param orderDir directory of order
+   * @param limit number of results to be displyed
+   */
+  setOrderAndLimit(order: string, orderDir: string, limit: number) {
+    this.searchParams.setOrderAndLimit(order, orderDir, limit);
     this.increaseAnswered()
   }
 
   //DO create
+  /**
+   * checks if displaying new data can be possible without http request
+   * @private
+   */
   private localOrderChecker() {
     return false
   }

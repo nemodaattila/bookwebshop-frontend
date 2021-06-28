@@ -1,18 +1,51 @@
+/**
+ * model class, containing parameters for book search
+ */
+
 export class BookSearchModel {
 
+  /**
+   * query offset, from which result to query
+   * @private
+   */
   private offset: number = 0;
 
+  /**
+   * query limit, how many result to get
+   * @private
+   */
   private limit: number = 10;
 
+  /**
+   * order parameter of result (sql table parameter)
+   * @private
+   */
   private order: string = "Title"
 
+  /**
+   * direction of order (ASC/ DESC)
+   * @private
+   */
   private orderDir: string = "ASC";
 
-  private prevCrit: [string?, number?]=[];
+  /**
+   * criteria of the last search (needed for offline ordering)
+   * @private
+   */
+  private prevCriteria: [string?, number?]=[];
 
-  private newCrit: [string?, number?]=[];
+  /**
+   *  criteria of the new search (needed for offline ordering)
+   * obsolete ???
+   * @private
+   */
+  private newCriteria: [string?, number?]=[];
 
-  private crit: {[index: string]:any} = {};
+  /**
+   * multiple criteria of the search e.g: category,price, with criteria type as index
+   * @private
+   */
+  private criteria: {[index: string]:any} = {};
 
   public getLimit(): number{
     return this.limit
@@ -23,37 +56,55 @@ export class BookSearchModel {
     this.offset = offset
   }
 
-  setCrit(type: string, value: number)               //keresési kritérium beállítása
+  setCriteria(type: string, value: number)
   {
-    this.crit[type] = value;
+    this.criteria[type] = value;
 
   };
 
-  delCrit(type: string)                     //keresési kritérium beállítása
+  /**
+   * removing a criteria type
+   * @param type
+   */
+  delCriteria(type: string)
   {
-    if (this.crit[type] !== undefined)
-      delete this.crit[type]
+    if (this.criteria[type] !== undefined)
+      delete this.criteria[type]
   };
 
+  /**
+   * resetting parameters
+   */
   setDefault() {
     this.offset = 0;
     this.limit = 10;
     this.order = "Title";
     this.orderDir = "ASC";
-    this.crit = {};
+    this.criteria = {};
   };
 
-  setPrevCrit() {
-    this.prevCrit[0] = JSON.stringify(this.crit);
-    this.prevCrit[1] = this.limit;
+  /**
+   * saving the previous search criteria for comparison for local ordering
+   */
+  setPrevCriteria() {
+    this.prevCriteria[0] = JSON.stringify(this.criteria);
+    this.prevCriteria[1] = this.limit;
   }
 
-  setNewCrit() {
-
-    this.newCrit[0] = JSON.stringify(this.crit);
-    this.newCrit[1] = this.limit;
+  /*
+  *saving the new search criteria for comparison for local ordering
+  */
+  setNewCriteria() {
+    this.newCriteria[0] = JSON.stringify(this.criteria);
+    this.newCriteria[1] = this.limit;
   }
 
+  /**
+   * setting order and limit parameter
+   * @param order parameter for order type
+   * @param orderDir direction of order: asc/desc
+   * @param limit num of requested results
+   */
   setOrderAndLimit(order: string, orderDir: string, limit:number)
   {
     this.order = order
@@ -61,9 +112,12 @@ export class BookSearchModel {
     this.limit = limit
   }
 
+  /**
+   * return all search parameters
+   */
   getSearchParams() {
     return {
-      criterium: this.crit,
+      criteria: this.criteria,
       offset: this.offset,
       limit: this.limit,
       order: this.order,

@@ -1,5 +1,4 @@
 
-
 .navMain {
   display: block;
 }
@@ -9,12 +8,12 @@ ul {
   background-color: lightsalmon;
   border: 1px solid black;
   list-style-type: none;
-  padding-inline-start: 0px;
-  padding: 0px 5px;
+  padding-inline-start: 0;
+  padding: 0 5px;
   border-radius: 10px;
 }
 
-.actpage {
+.actualPage {
   background-color: #DCDCF5;
 }
 
