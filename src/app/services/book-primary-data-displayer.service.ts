@@ -89,6 +89,9 @@ export class BookPrimaryDataDisplayerService {
     })
     this.checkServiceReadyStates();
 
+    this.bookSearch.localOrderingRequest.subscribe((data) => {
+      this.localOrder(data)
+    })
   }
 
   /**
@@ -138,5 +141,34 @@ export class BookPrimaryDataDisplayerService {
    */
   public getPrimaryDataByISBN(isbn: string) {
     return this.localLibrary.getPrimaryData(isbn);
+  }
+
+  /**
+   * sorts the actual isbn list based in order parameters
+   * @param data order parameters order attribute and order direction
+   * @private
+   */
+  private localOrder(data: [string, string]) {
+    let [order, dir] = data;
+    this.actualIsbnList.sort((isbn1, isbn2) => {
+      let param1, param2
+
+      if (order === "Title") {
+        param1 = this.actualBookData[isbn1].getTitle();
+        param2 = this.actualBookData[isbn2].getTitle();
+      }
+      if (order === "Author") {
+        param1 = Object.values(this.actualBookData[isbn1].getAuthor())[0];
+        param2 = Object.values(this.actualBookData[isbn2].getAuthor())[0];
+      }
+      if (order === "Price") {
+        param1 = this.actualBookData[isbn1].getPrice();
+        param2 = this.actualBookData[isbn2].getPrice();
+
+      }
+      if (param1 > param2) return (dir === 'DESC') ? -1 : 1;
+      if (param1 < param2) return (dir === 'DESC') ? 1 : -1;
+      return 0;
+    })
   }
 }

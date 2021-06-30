@@ -10,7 +10,9 @@
     </ng-template>
   </li>
   <li class="navButton" *ngIf=" navModel.getActualPage()!==navModel.getPageNumber()" (click)="nextPrevClicked(1)">Következő</li>
+
 </ul>
 </span>
+<span>Összes találat: {{navModel.getAllCount()}} db</span>
 
 

@@ -32,20 +32,37 @@ export class BookSearchModel {
    * criteria of the last search (needed for offline ordering)
    * @private
    */
-  private prevCriteria: [string?, number?]=[];
+  private prevCriteria: [string, number]=['{}',10];
 
   /**
    *  criteria of the new search (needed for offline ordering)
    * obsolete ???
    * @private
    */
-  private newCriteria: [string?, number?]=[];
+  private newCriteria: [string, number]=['{}',10];
 
   /**
    * multiple criteria of the search e.g: category,price, with criteria type as index
    * @private
    */
   private criteria: {[index: string]:any} = {};
+
+  private lastSearchAllResultCount: number = Infinity;
+
+  public setLastSearchAllResultCount(count: number)
+  {
+    this.lastSearchAllResultCount = count
+  }
+
+  public getLastSearchAllResultCount(): number
+  {
+    return this.lastSearchAllResultCount
+  }
+
+  public getOrder(): string
+  {
+    return this.order
+  }
 
   public getLimit(): number{
     return this.limit
@@ -59,8 +76,17 @@ export class BookSearchModel {
   setCriteria(type: string, value: number)
   {
     this.criteria[type] = value;
-
   };
+
+  getNewCriteria(): [string, number]
+  {
+    return this.newCriteria
+  }
+
+  getPrevCriteria(): [string, number]
+  {
+    return this.prevCriteria
+  }
 
   /**
    * removing a criteria type

@@ -19,9 +19,11 @@ export class BookSearchService extends ServiceParentService {
   public isbnListArrived = new Subject<any>();
 
   /**
-   * aks registered components for search parameters
+   * asks registered components for search parameters
    */
   public searchParamRequestSubject = new Subject<null>();
+
+  public localOrderingRequest = new Subject<[string, string]>();
 
   /**
    * search parameters in object model form
@@ -131,13 +133,12 @@ export class BookSearchService extends ServiceParentService {
     if (!isLocal) {
       this.searchForBooks(params).subscribe(bookList => {
         this.isbnListArrived.next(bookList)
+        this.searchParams.setLastSearchAllResultCount(bookList.data.count)
       }, error => {
         console.dir(error.error.text ?? error.error)
       })
     } else {
-      //DO
-      // if (ContentHandler !== undefined)
-      //   ContentHandler.offlineOrderer(params.order, params.orderDir)
+      this.localOrderingRequest.next([params.order, params.orderDir])
     }
   }
 
@@ -164,19 +165,28 @@ export class BookSearchService extends ServiceParentService {
    * sets the property of order, order dir and search limit in the model
    * @param order order attribute
    * @param orderDir directory of order
-   * @param limit number of results to be displyed
+   * @param limit number of results to be displayed
    */
   setOrderAndLimit(order: string, orderDir: string, limit: number) {
     this.searchParams.setOrderAndLimit(order, orderDir, limit);
     this.increaseAnswered()
   }
 
-  //DO create
   /**
    * checks if displaying new data can be possible without http request
    * @private
    */
   private localOrderChecker() {
-    return false
+    if (this.searchParams.getOrder()==="Year") return false;
+    let prevCriteria=this.searchParams.getPrevCriteria();
+    let newCriteria=this.searchParams.getNewCriteria();
+    let count=this.searchParams.getLastSearchAllResultCount()
+    if (prevCriteria[0]===newCriteria[0]) {
+      if ((count <= 10) || (count <= prevCriteria[1]) && (prevCriteria[1] <= newCriteria[1]) && (count<=newCriteria[1]))
+      {
+        return true
+      }
+    }
+    return false;
   }
 }

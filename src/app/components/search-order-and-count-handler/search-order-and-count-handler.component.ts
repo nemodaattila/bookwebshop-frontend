@@ -74,7 +74,7 @@ export class SearchOrderAndCountHandlerComponent {
     }
     if (parameter === "OACQuantitySelect") {
       def = true
-      this.quantity = value as number;
+      this.quantity = Number(value);
       this.pageResetRequest.emit();
     }
     this.bookSearch.initSearch(def)
