@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {BookSearchService} from "../../services/book-search.service";
 import {Subject, Subscription} from "rxjs";
 import {PageNavigatorModel} from "../../models/page-navigator-model";
@@ -11,7 +11,7 @@ import {PageNavigatorModel} from "../../models/page-navigator-model";
 /**
  * displays a menu for switching pages in browsing of found books
  */
-export class PageNavigatorComponent implements OnInit {
+export class PageNavigatorComponent implements OnInit, OnDestroy {
 
   /**
    * subscription for the BookSearchService's parameter collector call
@@ -23,7 +23,7 @@ export class PageNavigatorComponent implements OnInit {
    * subscribing for the BookSearchService's isbn list broadcast
    * @private
    */
-  private actualIsbnListSubscription: object = Subscription.EMPTY;
+  private actualIsbnListSubscription: Subscription = Subscription.EMPTY;
 
   /**
    * model class for the PageNavigator
@@ -92,6 +92,12 @@ export class PageNavigatorComponent implements OnInit {
   public nextPrevClicked(num: number) {
     this.navModel.incDecPageNumber(num)
     this.bookSearch.initSearch(false)
+  }
+
+  ngOnDestroy(): void {
+    this.actualIsbnListSubscription.unsubscribe()
+    this.bookSearchParamRequest.unsubscribe()
+    this.bookSearch.unRegisterSearchService()
   }
 
 }

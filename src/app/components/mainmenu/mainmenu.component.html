@@ -2,7 +2,7 @@
   <nav>
     <span>
         <span>
-            <a id="indexlink" href="../../../../../ databasetest/index.php">Főoldal</a>
+            <a routerLink="">Főoldal</a>
             <a id="discountlink" href="../../../../../databasetest/index.php">Akciók</a>
             <a id="newreleaselink" href="../../../../../databasetest/index.php">Újdonságok</a>
 
@@ -15,10 +15,10 @@
     </span>
     <span id=bookmanagenav></span>
     <span>
-        <a href="../../../../../databasetest/index.php" id="browselink">Böngészés</a>
+        <a id = "browseLink" routerLink="browse">Böngészés</a>
         <form method="POST" action="../../../../../databasetest/index.php"><label for="quicksearch">Egyszerű keresés (író vagy cím):&nbsp;</label><input
           id="quicksearch" name="quicksearch" type="text"><input type="submit" value="keresés"></form>
-        <a id="complexsearchlink" href="../../../../../databasetest/index.php">Részletes keresés</a>
+        <a id = "detSearchLink" routerLink="detailedSearch" >Részletes keresés</a>
     </span>
   </nav>
 </header>

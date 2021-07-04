@@ -14,6 +14,7 @@ import {MainCategoryBrowserComponent} from './components/categoryBrowser/main-ca
 import {SubCategoryBrowserComponent} from './components/categoryBrowser/sub-category-browser/sub-category-browser.component';
 import {PageNavigatorComponent} from './components/page-navigator/page-navigator.component';
 import {SearchOrderAndCountHandlerComponent} from './components/search-order-and-count-handler/search-order-and-count-handler.component';
+import { DetailedSearchComponent } from './components/detailed-search/detailed-search.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {SearchOrderAndCountHandlerComponent} from './components/search-order-and
     SubCategoryBrowserComponent,
     PageNavigatorComponent,
     SearchOrderAndCountHandlerComponent,
+    DetailedSearchComponent,
   ],
   imports: [
     AppRoutingModule,

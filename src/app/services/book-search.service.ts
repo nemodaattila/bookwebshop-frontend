@@ -52,7 +52,7 @@ export class BookSearchService extends ServiceParentService {
   constructor(private http: HttpClient) {
     super();
     this.searchParams = new BookSearchModel()
-    this.createAndSendRequest()
+    // this.createAndSendRequest()
   }
 
   /**
@@ -61,6 +61,11 @@ export class BookSearchService extends ServiceParentService {
    */
   registerSearchSourceService() {
     this.registeredSourceComponents++;
+  }
+
+  unRegisterSearchService()
+  {
+    this.registeredSourceComponents--;
   }
 
   /**
@@ -103,6 +108,7 @@ export class BookSearchService extends ServiceParentService {
   }
 
   public initSearch(setDefault: boolean = true) {
+
     this.searchParams.setPrevCriteria()
     if (setDefault) this.searchParams.setDefault();
     this.answeredRegisteredComponents = 0;
@@ -130,6 +136,7 @@ export class BookSearchService extends ServiceParentService {
     this.searchParams.setNewCriteria();
     let isLocal = this.localOrderChecker();
     let params = this.searchParams.getSearchParams();
+    console.log(params)
     if (!isLocal) {
       this.searchForBooks(params).subscribe(bookList => {
         this.isbnListArrived.next(bookList)

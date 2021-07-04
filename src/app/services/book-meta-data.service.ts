@@ -87,6 +87,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
         this.saveMetaDataToLocalStorage()
         this.readyState = true;
         this.metaDataReady.next(this.metaData)
+        console.log(this.metaData)
       }
     }, error => {
       console.dir(error.error.text)

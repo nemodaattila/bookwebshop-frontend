@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {BookMetaDataService} from "../../../services/book-meta-data.service";
 import { Subscription} from "rxjs";
 import {BookSearchService} from "../../../services/book-search.service";
@@ -13,7 +13,7 @@ import {BookMetaData} from "../../../models/book-meta-data";
 /**
  * parent component for browsing books by category
  */
-export class BookThemeCategoryBrowserComponent{
+export class BookThemeCategoryBrowserComponent implements OnDestroy{
 
   /**
    * subscription for getting meta data from book metaDataService
@@ -136,6 +136,12 @@ export class BookThemeCategoryBrowserComponent{
     this.bookSearchParameter = searchParam
     this.pageResetRequest.emit();
     this.bookSearch.initSearch(false)
+  }
+
+  ngOnDestroy(): void {
+    this.metaSubscription.unsubscribe();
+    this.bookSearchParamRequest.unsubscribe()
+    this.bookSearch.unRegisterSearchService()
   }
 
 }
