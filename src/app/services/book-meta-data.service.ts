@@ -81,7 +81,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
    * @private
    */
   private getMetaDataFromServer() {
-    this.http.get<any>(this._backendUrl + '\\metadata').subscribe(data => {
+    this.http.get<any>(this.backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
         this.saveMetaToModel(data.data);
         this.saveMetaDataToLocalStorage()

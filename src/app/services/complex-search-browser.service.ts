@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {BookSearchService} from "./book-search.service";
 import {Subscription} from "rxjs";
+import {ServiceParentService} from "./service-parent.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ComplexSearchBrowserService {
+export class ComplexSearchBrowserService extends ServiceParentService{
 
   private critTypes: { } = {
     "ISBN": "ISBN",
@@ -33,10 +34,8 @@ export class ComplexSearchBrowserService {
 
   private bookSearchParamRequest = Subscription.EMPTY
   constructor(private bookSearch: BookSearchService) {
-    this.bookSearch.registerSearchSourceService()
-    this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
-      this.passParameterToBookSearchService()
-    })
+    super();
+
   }
 
   getSelectedCrits(): Array<string>
@@ -48,12 +47,20 @@ export class ComplexSearchBrowserService {
   {
       if (this.isTextOption(this.selectedCrits[index]))
         return 'text'
+    if (this.isTextOptionWithDataList(this.selectedCrits[index]))
+      return 'textWithDataList'
       return undefined
   }
 
   isTextOption(type: string):boolean
   {
     return  (this.textOption.findIndex((stype) => {
+      return stype === type
+    })) !== -1
+  }
+  isTextOptionWithDataList(type: string):boolean
+  {
+    return  (this.textWithDatalistOption.findIndex((stype) => {
       return stype === type
     })) !== -1
   }
@@ -79,6 +86,18 @@ export class ComplexSearchBrowserService {
         params[this.selectedCrits[key]] =  this.selectedCritValues[key]
       }
     this.bookSearch.setSearchCriteria(params)
+  }
+
+  public subscribeForBookSearch(): void {
+    this.bookSearch.registerSearchSourceService()
+    this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
+      this.passParameterToBookSearchService()
+    })
+  }
+
+  public unsubscribeForBookSearch(): void {
+    this.bookSearch.unRegisterSearchService()
+    this.bookSearchParamRequest.unsubscribe()
   }
 }
 

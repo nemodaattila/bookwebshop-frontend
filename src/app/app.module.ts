@@ -19,7 +19,8 @@ import { ComplexSearchBrowserComponent } from './components/complexSearchBrowser
 import { CriteriaSelectorComponent } from './components/complexSearchBrowser/criteria-selector/criteria-selector.component';
 import { CriteriaSelectElementComponent } from './components/complexSearchBrowser/criteria-select-element/criteria-select-element.component';
 import {FormsModule} from "@angular/forms";
-import { ComplexSearchInputTextComponent } from './components/complexSearchBrowser/complex-search-input-text/complex-search-input-text.component';
+import { CriteriaInputTextComponent } from './components/complexSearchBrowser/criteria-input-text/criteria-input-text.component';
+import { CriteriaInputTextWithDataListComponent } from './components/complexSearchBrowser/criteria-input-text-with-data-list/criteria-input-text-with-data-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { ComplexSearchInputTextComponent } from './components/complexSearchBrows
     ComplexSearchBrowserComponent,
     CriteriaSelectorComponent,
     CriteriaSelectElementComponent,
-    ComplexSearchInputTextComponent,
+    CriteriaInputTextComponent,
+    CriteriaInputTextWithDataListComponent,
+
   ],
   imports: [
     AppRoutingModule,

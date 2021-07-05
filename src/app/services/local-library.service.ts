@@ -105,7 +105,7 @@ export class LocalLibraryService extends ServiceParentService {
    * @private
    */
   private getBookPrimaryData(isbn: string): Observable<{ success: any, data: object }> {
-    return this.http.get<{ success: any, data: object }>(this._backendUrl + "\\primaryData\\" + isbn);
+    return this.http.get<{ success: any, data: object }>(this.backendUrl + "\\primaryData\\" + isbn);
   }
 
   /**

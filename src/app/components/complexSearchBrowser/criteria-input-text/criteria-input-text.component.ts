@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/complex-search-browser.service";
 
 @Component({
-  selector: 'app-complex-search-input-text',
-  templateUrl: './complex-search-input-text.component.html',
-  styleUrls: ['./complex-search-input-text.component.css']
+  selector: 'app-criteria-input-text',
+  templateUrl: './criteria-input-text.component.html',
+  styleUrls: ['./criteria-input-text.component.css']
 })
-export class ComplexSearchInputTextComponent implements OnInit {
+export class CriteriaInputTextComponent implements OnInit {
 
   constructor(public complexSearchService: ComplexSearchBrowserService) { }
 

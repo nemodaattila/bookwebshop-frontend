@@ -6,6 +6,7 @@ import {ComplexSearchBrowserService} from "../../../services/complex-search-brow
   templateUrl: './criteria-select-element.component.html',
   styleUrls: ['./criteria-select-element.component.css']
 })
+//DO unique sort directive instead of keyvalue pipe in html
 export class CriteriaSelectElementComponent implements OnInit {
 
   constructor(public complexSearchService: ComplexSearchBrowserService) { }

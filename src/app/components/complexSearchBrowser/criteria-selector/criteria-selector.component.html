@@ -1,4 +1,7 @@
 <app-criteria-select-element [id]="id"></app-criteria-select-element>
 <div *ngIf="selectedCriteriaInputType==='text'">
-  <app-complex-search-input-text [id]="id"></app-complex-search-input-text>
+  <app-criteria-input-text [id]="id"></app-criteria-input-text>
+</div>
+<div *ngIf="selectedCriteriaInputType==='textWithDataList'">
+  <app-criteria-input-text-with-data-list [id]="id"></app-criteria-input-text-with-data-list>
 </div>

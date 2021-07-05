@@ -171,7 +171,7 @@ export class BookSearchService extends ServiceParentService {
     const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
     });
-    return this.http.post<any>(this._backendUrl + '\\booklist', searchParams, {headers: headers});
+    return this.http.post<any>(this.backendUrl + '\\booklist', searchParams, {headers: headers});
   }
 
   /**

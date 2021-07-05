@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComplexSearchInputTextComponent } from './complex-search-input-text.component';
+import { CriteriaInputTextComponent } from './criteria-input-text.component';
 
 describe('ComplexSearchInputTextComponent', () => {
-  let component: ComplexSearchInputTextComponent;
-  let fixture: ComponentFixture<ComplexSearchInputTextComponent>;
+  let component: CriteriaInputTextComponent;
+  let fixture: ComponentFixture<CriteriaInputTextComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComplexSearchInputTextComponent ]
+      declarations: [ CriteriaInputTextComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ComplexSearchInputTextComponent);
+    fixture = TestBed.createComponent(CriteriaInputTextComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

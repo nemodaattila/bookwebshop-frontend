@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/complex-search-browser.service";
 import {BookSearchService} from "../../../services/book-search.service";
 
@@ -7,14 +7,14 @@ import {BookSearchService} from "../../../services/book-search.service";
   templateUrl: './complex-search-browser.component.html',
   styleUrls: ['./complex-search-browser.component.css']
 })
-export class ComplexSearchBrowserComponent implements OnInit {
+export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
 
 
   constructor(private bookSearch: BookSearchService, private complexSearchService: ComplexSearchBrowserService) {
   }
 
   ngOnInit(): void {
-
+    this.complexSearchService.subscribeForBookSearch()
   }
 
   getSelectedCrits(): Array<string>
@@ -25,5 +25,9 @@ export class ComplexSearchBrowserComponent implements OnInit {
   initSearch() {
     console.log('initsearch')
     this.bookSearch.initSearch()
+  }
+
+  ngOnDestroy(): void {
+    this.complexSearchService.unsubscribeForBookSearch()
   }
 }
