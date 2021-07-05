@@ -6,9 +6,9 @@ import {ServiceParentService} from "./service-parent.service";
 @Injectable({
   providedIn: 'root'
 })
-export class ComplexSearchBrowserService extends ServiceParentService{
+export class ComplexSearchBrowserService extends ServiceParentService {
 
-  private critTypes: { } = {
+  private critTypes: {} = {
     "ISBN": "ISBN",
     "Title": "Cím",
     "Author": "Író",
@@ -28,63 +28,67 @@ export class ComplexSearchBrowserService extends ServiceParentService{
   };
   selectedCrits: Array<string> = ["ISBN"];
   selectedCritValues: Array<string | number | null> = [];
-  selectOption: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Format", "Price", "Discount"];
+  selectOption: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Price", "Discount"];
+  selectOptionGroup: Array<string> = ["Category", "Format"]
   textOption: Array<string> = ["ISBN", "Title", "Year"];
-  textWithDatalistOption: Array<string> = ["Author",'Series', 'Publisher']
+  textWithDatalistOption: Array<string> = ["Author", 'Series', 'Publisher']
 
   private bookSearchParamRequest = Subscription.EMPTY
+
   constructor(private bookSearch: BookSearchService) {
     super();
 
   }
 
-  getSelectedCrits(): Array<string>
-  {
+  getSelectedCrits(): Array<string> {
     return this.selectedCrits
   }
 
-  getSelectedCriteriaInputType(index: number): string | undefined
-  {
-      if (this.isTextOption(this.selectedCrits[index]))
-        return 'text'
+  getSelectedCriteriaInputType(index: number): string | undefined {
+    if (this.isTextOption(this.selectedCrits[index]))
+      return 'text'
     if (this.isTextOptionWithDataList(this.selectedCrits[index]))
       return 'textWithDataList'
-      return undefined
+    if (this.isSelectOptionGroup(this.selectedCrits[index]))
+      return 'selectOptionGroup'
+    return undefined
   }
 
-  isTextOption(type: string):boolean
-  {
-    return  (this.textOption.findIndex((stype) => {
-      return stype === type
-    })) !== -1
-  }
-  isTextOptionWithDataList(type: string):boolean
-  {
-    return  (this.textWithDatalistOption.findIndex((stype) => {
+  isTextOption(type: string): boolean {
+    return (this.textOption.findIndex((stype) => {
       return stype === type
     })) !== -1
   }
 
-  public getCriteriaTypes(): {  }
-  {
+  isTextOptionWithDataList(type: string): boolean {
+    return (this.textWithDatalistOption.findIndex((stype) => {
+      return stype === type
+    })) !== -1
+  }
+
+  isSelectOptionGroup(type: string): boolean {
+    return (this.selectOptionGroup.findIndex((stype) => {
+      return stype === type
+    })) !== -1
+  }
+
+  public getCriteriaTypes(): {} {
     return this.critTypes
   }
 
-  public setOneSelectedCriteria(index: number, value: string)
-  {
-    this.selectedCrits[index]=value
+  public setOneSelectedCriteria(index: number, value: string) {
+    this.selectedCrits[index] = value
   }
-  public setOneSelectedCriteriaValue(index: number, value: string|number|null)
-  {
-    this.selectedCritValues[index]=value
+
+  public setOneSelectedCriteriaValue(index: number, value: string | number | null) {
+    this.selectedCritValues[index] = value
   }
 
   private passParameterToBookSearchService() {
-    let params:{[index: string]:any} ={};
-    for (let key in this.selectedCrits)
-      {
-        params[this.selectedCrits[key]] =  this.selectedCritValues[key]
-      }
+    let params: { [index: string]: any } = {};
+    for (let key in this.selectedCrits) {
+      params[this.selectedCrits[key]] = this.selectedCritValues[key]
+    }
     this.bookSearch.setSearchCriteria(params)
   }
 
