@@ -73,7 +73,7 @@ export class BookSearchModel {
     this.offset = offset
   }
 
-  setCriteria(type: string, value: number)
+  setCriteria(type: string, value: any)
   {
     this.criteria[type] = value;
   };

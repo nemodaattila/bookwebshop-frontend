@@ -91,9 +91,9 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy{
    */
   private passParameterToBookSearchService() {
     if (this.bookSearchParameter.length !== 0) {
-      this.bookSearch.setSearchCriteria(this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
+      this.bookSearch.setCategorySearchCriteria(this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
     } else {
-      this.bookSearch.setSearchCriteria(null, null)
+      this.bookSearch.setCategorySearchCriteria(null, null)
     }
   }
 

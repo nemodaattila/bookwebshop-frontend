@@ -1,0 +1,9 @@
+
+    <div *ngFor="let type of getSelectedCrits(); index as key">
+      <app-criteria-selector [id]="key"></app-criteria-selector>
+<!--      <app-sub-category-browser [id]="cat" [label]="getSubCategoryLabelByID(cat)"-->
+<!--                                (subSearchNotify)="onSubComponentNotify($event)">-->
+<!--      </app-sub-category-browser>-->
+    </div>
+<input type="button" value="Keresés" (click)="initSearch()">
+

@@ -73,7 +73,7 @@ export class BookSearchService extends ServiceParentService {
    * @param type type of criteria
    * @param value value of criteria
    */
-  setSearchCriteria(type: string | null, value: number | null) {
+  setCategorySearchCriteria(type: string | null, value: number | null) {
     if (type === 'MainCategory') {
       this.searchParams.delCriteria('Category')
     }
@@ -87,6 +87,16 @@ export class BookSearchService extends ServiceParentService {
       this.searchParams.setCriteria(type, value as number)
     this.increaseAnswered()
   };
+
+  setSearchCriteria(params: {[index: string]:any})
+  {
+    console.log(params)
+    for (let key in params)
+    {
+      this.searchParams.setCriteria(key, params[key])
+    }
+    this.increaseAnswered()
+  }
 
   /**
    * sets the offset parameter of the search model
@@ -121,6 +131,9 @@ export class BookSearchService extends ServiceParentService {
    * request creator function
    */
   checkRegisterSourceCount() {
+    console.log(this.registeredSourceComponents)
+    console.log(this.answeredRegisteredComponents)
+
     if (this.registeredSourceComponents === this.answeredRegisteredComponents)
       this.createAndSendRequest()
   }

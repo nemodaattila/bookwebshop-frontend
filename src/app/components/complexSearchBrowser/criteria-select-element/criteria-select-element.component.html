@@ -1,0 +1,3 @@
+<select [(ngModel)]="selectedCriteria" (change)="changeSelectedCriteria()">
+  <option *ngFor="let crit of complexSearchService.getCriteriaTypes() | keyvalue" [ngValue]="crit.key">{{crit.value}}</option>
+</select>

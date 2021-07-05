@@ -15,6 +15,11 @@ import {SubCategoryBrowserComponent} from './components/categoryBrowser/sub-cate
 import {PageNavigatorComponent} from './components/page-navigator/page-navigator.component';
 import {SearchOrderAndCountHandlerComponent} from './components/search-order-and-count-handler/search-order-and-count-handler.component';
 import { DetailedSearchComponent } from './components/detailed-search/detailed-search.component';
+import { ComplexSearchBrowserComponent } from './components/complexSearchBrowser/complex-search-browser/complex-search-browser.component';
+import { CriteriaSelectorComponent } from './components/complexSearchBrowser/criteria-selector/criteria-selector.component';
+import { CriteriaSelectElementComponent } from './components/complexSearchBrowser/criteria-select-element/criteria-select-element.component';
+import {FormsModule} from "@angular/forms";
+import { ComplexSearchInputTextComponent } from './components/complexSearchBrowser/complex-search-input-text/complex-search-input-text.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,10 @@ import { DetailedSearchComponent } from './components/detailed-search/detailed-s
     PageNavigatorComponent,
     SearchOrderAndCountHandlerComponent,
     DetailedSearchComponent,
+    ComplexSearchBrowserComponent,
+    CriteriaSelectorComponent,
+    CriteriaSelectElementComponent,
+    ComplexSearchInputTextComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -36,6 +45,7 @@ import { DetailedSearchComponent } from './components/detailed-search/detailed-s
     BrowserModule,
     RouterModule,
     CommonModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
