@@ -1,0 +1,4 @@
+<select [(ngModel)]="selectedOption" [selectedIndex]="selectedOption" (change)="valueSelected()">>
+    <option *ngFor="let opt of options; index as key" value="{{key}}">{{opt}}</option>
+</select>
+
