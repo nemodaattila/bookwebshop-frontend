@@ -37,6 +37,7 @@ export class CriteriaInputTextWithDataListComponent implements OnInit {
         if ((data.hasOwnProperty('success') && data.success === true)) {
           this.dataList = data.data
           console.log(this.dataList)
+
           // this.saveMetaToModel(data.data);
           // this.saveMetaDataToLocalStorage()
           // this.readyState = true;
