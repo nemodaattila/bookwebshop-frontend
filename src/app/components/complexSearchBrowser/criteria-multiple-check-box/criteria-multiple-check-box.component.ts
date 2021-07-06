@@ -17,6 +17,7 @@ export class CriteriaMultipleCheckBoxComponent implements OnInit {
   private selectedIndexes: Array<number>=[]
 
   ngOnInit(): void {
+    this.complexSearch.setOneSelectedCriteria(this.id, "Tags")
     this.sortTags(this.metaService.getTags())
   }
 
