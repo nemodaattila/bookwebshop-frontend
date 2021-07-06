@@ -18,8 +18,13 @@ export class CriteriaSelectInputComponent implements OnInit {
   ngOnInit(): void {
     this.critType = this.complexSearch.getSelectedCrits()[this.id]
     this.options = this.complexSearch.getArrayOptions(this.critType)
+    for (let key of this.options)
+    {
+      console.log(typeof key)
+    }
     console.log(this.critType)
     console.log(this.options)
+    this.valueSelected()
   }
 
 
@@ -28,5 +33,10 @@ export class CriteriaSelectInputComponent implements OnInit {
     console.log(this.selectedOption)
     this.complexSearch.setOneSelectedCriteria(this.id, this.critType)
     this.complexSearch.setOneSelectedCriteriaValue(this.id, this.selectedOption)
+  }
+
+  isEmpty(key: number) {
+    console.log(this.options[key] === undefined)
+    return this.options[key] === undefined
   }
 }

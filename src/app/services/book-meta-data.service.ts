@@ -147,4 +147,25 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
       format: this.metaData.getFormat()
     }
   }
+
+  getLanguageAsArray(): Array<string>
+  {
+    // @ts-ignore
+    let lang = this.metaData.getLanguage()
+    return Object.values(lang)
+  }
+
+  getMainCategoryAsArray(): Array<string>
+  {
+    // @ts-ignore
+    let mc = this.metaData?.getMainCategory()
+    let array:Array<string> = []
+    // @ts-ignore
+    for (let key of Object.keys(mc))
+    {
+      // @ts-ignore
+      array[key]=mc[parseInt(key)]
+    }
+    return array
+  }
 }

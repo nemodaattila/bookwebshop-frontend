@@ -62,6 +62,10 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
     return this.type;
   }
 
+  getLanguage(): { [index: number]: string } {
+    return this.language;
+  }
+
   getFormat(): { [index: number]: { [index: number]: string } } {
     return this.format;
   }

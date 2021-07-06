@@ -2,6 +2,7 @@ import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {BookSearchService} from "./book-search.service";
 import {Subscription} from "rxjs";
 import {ServiceParentService} from "./service-parent.service";
+import {BookMetaDataService} from "./book-meta-data.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     "Pages": "Oldalak száma",
     "Format": "Formátum",
     "Tags": "Tagek",
-    "Price": "Ár",
+    "Price": "Teljes Ár",
     "Discount": "Kedvezmény"
   };
   selectedCrits: Array<string> = ["ISBN"];
@@ -35,7 +36,9 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   textInputWithDatalist: Array<string> = ["Author", 'Series', 'Publisher']
 
   public arrayOptions: { [index: string]: Array<string> } = {
-    "Discount": ["0","1-5","6-15","16-30","31-50","51-"]
+    "Discount": ["0","1-5","6-15","16-30","31-50","51-"],
+    "Pages": ["0-100","101-250","251-500","501-1000","1000-"],
+    "Price": ["0-1000","1001-3000","3001-6000","6001-10000","10000-"]
   }
 
   public getArrayOptions(type : string)
@@ -46,12 +49,20 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     {
       return this.arrayOptions[type]
     }
+    if (type === 'Language')
+    {
+      return this.metaDataServ.getLanguageAsArray();
+    }
+    if (type === 'MainCategory')
+    {
+      return this.metaDataServ.getMainCategoryAsArray()
+    }
     return []
   }
 
   private bookSearchParamRequest = Subscription.EMPTY
 
-  constructor(private bookSearch: BookSearchService) {
+  constructor(private bookSearch: BookSearchService, private metaDataServ: BookMetaDataService) {
     super();
 
   }

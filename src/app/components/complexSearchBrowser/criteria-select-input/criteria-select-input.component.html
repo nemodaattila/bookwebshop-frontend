@@ -1,4 +1,6 @@
-<select [(ngModel)]="selectedOption" [selectedIndex]="selectedOption" (change)="valueSelected()">>
-    <option *ngFor="let opt of options; index as key" value="{{key}}">{{opt}}</option>
+<select [(ngModel)]="selectedOption" (change)="valueSelected()">
+  <ng-container *ngFor="let opt of options; index as key" >
+  <option value="{{key}}" *ngIf="!isEmpty(key)">{{opt}}</option>
+  </ng-container>
 </select>
 
