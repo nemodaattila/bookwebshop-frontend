@@ -28,10 +28,26 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   };
   selectedCrits: Array<string> = ["ISBN"];
   selectedCritValues: Array<string | number | null> = [];
-  selectOption: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Price", "Discount"];
-  selectOptionGroup: Array<string> = ["Category", "Format"]
-  textOption: Array<string> = ["ISBN", "Title", "Year"];
-  textWithDatalistOption: Array<string> = ["Author", 'Series', 'Publisher']
+  selectInput: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Price", "Discount"];
+  selectWithOptionGroup: Array<string> = ["Category", "Format"]
+  textInput: Array<string> = ["ISBN", "Title"];
+  numberInput: Array<string> = ["Year"];
+  textInputWithDatalist: Array<string> = ["Author", 'Series', 'Publisher']
+
+  public arrayOptions: { [index: string]: Array<string> } = {
+    "Discount": ["0","1-5","6-15","16-30","31-50","51-"]
+  }
+
+  public getArrayOptions(type : string)
+  {
+    if ((Object.keys(this.arrayOptions).findIndex((stype) => {
+      return stype === type
+    })) !== -1)
+    {
+      return this.arrayOptions[type]
+    }
+    return []
+  }
 
   private bookSearchParamRequest = Subscription.EMPTY
 
@@ -45,29 +61,44 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   }
 
   getSelectedCriteriaInputType(index: number): string | undefined {
-    if (this.isTextOption(this.selectedCrits[index]))
+    if (this.isTextInput(this.selectedCrits[index]))
       return 'text'
-    if (this.isTextOptionWithDataList(this.selectedCrits[index]))
+    if (this.isTextInputWithDataList(this.selectedCrits[index]))
       return 'textWithDataList'
-    if (this.isSelectOptionGroup(this.selectedCrits[index]))
+    if (this.isSelectWithOptionGroup(this.selectedCrits[index]))
       return 'selectOptionGroup'
+    if (this.isNumberInput(this.selectedCrits[index]))
+      return 'number'
+    if (this.isSelectInput(this.selectedCrits[index]))
+      return 'select'
     return undefined
   }
 
-  isTextOption(type: string): boolean {
-    return (this.textOption.findIndex((stype) => {
+  isTextInput(type: string): boolean {
+    return (this.textInput.findIndex((stype) => {
+      return stype === type
+    })) !== -1
+  }
+  isNumberInput(type: string): boolean {
+    return (this.numberInput.findIndex((stype) => {
       return stype === type
     })) !== -1
   }
 
-  isTextOptionWithDataList(type: string): boolean {
-    return (this.textWithDatalistOption.findIndex((stype) => {
+  isTextInputWithDataList(type: string): boolean {
+    return (this.textInputWithDatalist.findIndex((stype) => {
       return stype === type
     })) !== -1
   }
 
-  isSelectOptionGroup(type: string): boolean {
-    return (this.selectOptionGroup.findIndex((stype) => {
+  isSelectInput(type: string): boolean {
+    return (this.selectInput.findIndex((stype) => {
+      return stype === type
+    })) !== -1
+  }
+
+  isSelectWithOptionGroup(type: string): boolean {
+    return (this.selectWithOptionGroup.findIndex((stype) => {
       return stype === type
     })) !== -1
   }

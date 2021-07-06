@@ -21,6 +21,9 @@ import { CriteriaSelectElementComponent } from './components/complexSearchBrowse
 import {FormsModule} from "@angular/forms";
 import { CriteriaInputTextComponent } from './components/complexSearchBrowser/criteria-input-text/criteria-input-text.component';
 import { CriteriaInputTextWithDataListComponent } from './components/complexSearchBrowser/criteria-input-text-with-data-list/criteria-input-text-with-data-list.component';
+import { CriteriaSelectWithOptionGroupComponent } from './components/complexSearchBrowser/criteria-select-with-option-group/criteria-select-with-option-group.component';
+import { CriteriaInputNumberComponent } from './components/complexSearchBrowser/criteria-input-number/criteria-input-number.component';
+import { CriteriaSelectInputComponent } from './components/complexSearchBrowser/criteria-select-input/criteria-select-input.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { CriteriaInputTextWithDataListComponent } from './components/complexSear
     CriteriaSelectElementComponent,
     CriteriaInputTextComponent,
     CriteriaInputTextWithDataListComponent,
+    CriteriaSelectWithOptionGroupComponent,
+    CriteriaInputNumberComponent,
+    CriteriaSelectInputComponent,
 
   ],
   imports: [
