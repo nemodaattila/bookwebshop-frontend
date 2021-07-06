@@ -22,6 +22,7 @@ export class CriteriaSelectWithOptionGroupComponent implements OnInit {
   ngOnInit(): void {
     this.critType = this.complexSearch.getSelectedCrits()[this.id]
     this.getOptions()
+    this.valueSelected()
   }
 
   getOptions() {
@@ -31,10 +32,18 @@ export class CriteriaSelectWithOptionGroupComponent implements OnInit {
       this.groupIndex = Object.keys(this.group)
       this.item = temp.subCategory
     }
+    if (this.critType === "Format") {
+      let temp = this.bookMeta.getFormats()
+      this.group = temp.type
+      this.groupIndex = Object.keys(this.group)
+      this.item = temp.format
+    }
+    // console.log(this)
   }
 
   valueSelected() {
-    this.complexSearch.setOneSelectedCriteria(this.id, "Category")
+    console.log(this.selectedOption)
+    this.complexSearch.setOneSelectedCriteria(this.id, this.critType)
     this.complexSearch.setOneSelectedCriteriaValue(this.id, this.selectedOption)
   }
 

@@ -8,7 +8,7 @@ export class BookMetaData {
    * e.g.: { 1 (book): {1: hardcover, 2: softcover}}, 2 (audio): {3: audioCd, 4: cassette}
    * @private
    */
-  private format?: { [index: number]: { [index: number]: string } } = {}
+  private format: { [index: number]: { [index: number]: string } } = {}
 
   /**
    * possible language of books
@@ -56,6 +56,14 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
 
   getSubCategory(): { [index: number]: { [index: number]: string } } {
     return this.subCategory;
+  }
+
+  getType(): { [index: number]: string } {
+    return this.type;
+  }
+
+  getFormat(): { [index: number]: { [index: number]: string } } {
+    return this.format;
   }
 
   public getTypeById(id: number): string {

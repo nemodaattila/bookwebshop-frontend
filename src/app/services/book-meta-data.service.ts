@@ -137,4 +137,14 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
       subCategory: this.metaData.getSubCategory()
     }
   }
+
+  getFormats()
+  {
+    return {
+      // @ts-ignore
+      type: this.metaData.getType(),
+      // @ts-ignore
+      format: this.metaData.getFormat()
+    }
+  }
 }

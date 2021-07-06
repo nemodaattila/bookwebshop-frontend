@@ -5,6 +5,9 @@
 <div *ngIf="selectedCriteriaInputType==='textWithDataList'">
   <app-criteria-input-text-with-data-list [id]="id"></app-criteria-input-text-with-data-list>
 </div>
+<div *ngIf="selectedCriteriaInputType==='selectOptionGroup'">
+  <app-criteria-select-with-option-group [id]="id"></app-criteria-select-with-option-group>
+</div>
 <div *ngIf="selectedCriteriaInputType==='number'">
   <app-criteria-input-number [id]="id"></app-criteria-input-number>
 </div>
