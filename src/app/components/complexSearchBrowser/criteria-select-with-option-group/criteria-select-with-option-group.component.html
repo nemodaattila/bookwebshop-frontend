@@ -1,0 +1,6 @@
+<p>criteria-select-with-option-group works!</p>
+<select [(ngModel)]="selectedOption" [selectedIndex]="selectedOption" (change)="valueSelected()">>
+  <optgroup *ngFor="let gr of groupIndex" label="{{getGroupByIndex(gr)}}">
+    <option *ngFor="let key of getItemGroupIndexesByindex(gr)" value="{{key}}">{{getItemLabel(gr, key)}}</option>
+  </optgroup>
+</select>
