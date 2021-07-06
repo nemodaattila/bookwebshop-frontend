@@ -158,7 +158,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   getMainCategoryAsArray(): Array<string>
   {
     // @ts-ignore
-    let mc = this.metaData?.getMainCategory()
+    let mc = this.metaData.getMainCategory()
     let array:Array<string> = []
     // @ts-ignore
     for (let key of Object.keys(mc))
@@ -167,5 +167,11 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
       array[key]=mc[parseInt(key)]
     }
     return array
+  }
+
+  getTags()
+  {
+    // @ts-ignore
+    return this.metaData.getTags()
   }
 }

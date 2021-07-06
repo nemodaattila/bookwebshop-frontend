@@ -75,7 +75,12 @@ export class BookSearchModel {
 
   setCriteria(type: string, value: any)
   {
+    console.log('setcriteria')
+    console.log(JSON.parse(JSON.stringify(this.criteria)))
+    console.log(type)
+    console.log(value)
     this.criteria[type] = value;
+    console.log(JSON.parse(JSON.stringify(this.criteria)))
   };
 
   getNewCriteria(): [string, number]
@@ -113,8 +118,14 @@ export class BookSearchModel {
    * saving the previous search criteria for comparison for local ordering
    */
   setPrevCriteria() {
+    console.log('prevcritsAVE')
+    console.log(this.prevCriteria)
+    console.log(this.criteria)
     this.prevCriteria[0] = JSON.stringify(this.criteria);
     this.prevCriteria[1] = this.limit;
+    console.log(this.prevCriteria)
+
+
   }
 
   /*

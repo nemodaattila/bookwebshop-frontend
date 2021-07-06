@@ -58,6 +58,10 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
     return this.subCategory;
   }
 
+  getTags(): { [index: number]: string } {
+    return this.tag;
+  }
+
   getType(): { [index: number]: string } {
     return this.type;
   }

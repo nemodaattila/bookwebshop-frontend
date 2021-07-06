@@ -28,7 +28,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     "Discount": "Kedvezmény"
   };
   selectedCrits: Array<string> = ["ISBN"];
-  selectedCritValues: Array<string | number | null> = [];
+  selectedCritValues: Array<string | number | Array<number> | null> = [];
   selectInput: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Price", "Discount"];
   selectWithOptionGroup: Array<string> = ["Category", "Format"]
   textInput: Array<string> = ["ISBN", "Title"];
@@ -72,6 +72,10 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   }
 
   getSelectedCriteriaInputType(index: number): string | undefined {
+    if (this.selectedCrits[index] === "Tags")
+    {
+      return "tag";
+    }
     if (this.isTextInput(this.selectedCrits[index]))
       return 'text'
     if (this.isTextInputWithDataList(this.selectedCrits[index]))
@@ -122,7 +126,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     this.selectedCrits[index] = value
   }
 
-  public setOneSelectedCriteriaValue(index: number, value: string | number | null) {
+  public setOneSelectedCriteriaValue(index: number, value: string | number | Array<number> | null) {
     this.selectedCritValues[index] = value
   }
 
@@ -131,6 +135,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     for (let key in this.selectedCrits) {
       params[this.selectedCrits[key]] = this.selectedCritValues[key]
     }
+    console.log(params)
     this.bookSearch.setSearchCriteria(params)
   }
 

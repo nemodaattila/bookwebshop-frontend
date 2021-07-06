@@ -24,6 +24,7 @@ import { CriteriaInputTextWithDataListComponent } from './components/complexSear
 import { CriteriaSelectWithOptionGroupComponent } from './components/complexSearchBrowser/criteria-select-with-option-group/criteria-select-with-option-group.component';
 import { CriteriaInputNumberComponent } from './components/complexSearchBrowser/criteria-input-number/criteria-input-number.component';
 import { CriteriaSelectInputComponent } from './components/complexSearchBrowser/criteria-select-input/criteria-select-input.component';
+import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBrowser/criteria-multiple-check-box/criteria-multiple-check-box.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CriteriaSelectInputComponent } from './components/complexSearchBrowser/
     CriteriaSelectWithOptionGroupComponent,
     CriteriaInputNumberComponent,
     CriteriaSelectInputComponent,
+    CriteriaMultipleCheckBoxComponent,
 
   ],
   imports: [

@@ -24,6 +24,7 @@ export class CriteriaSelectInputComponent implements OnInit {
     }
     console.log(this.critType)
     console.log(this.options)
+    this.complexSearch.setOneSelectedCriteria(this.id, this.critType)
     this.valueSelected()
   }
 
@@ -31,7 +32,7 @@ export class CriteriaSelectInputComponent implements OnInit {
 
   valueSelected() {
     console.log(this.selectedOption)
-    this.complexSearch.setOneSelectedCriteria(this.id, this.critType)
+
     this.complexSearch.setOneSelectedCriteriaValue(this.id, this.selectedOption)
   }
 
