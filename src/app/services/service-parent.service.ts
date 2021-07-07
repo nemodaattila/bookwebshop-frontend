@@ -14,6 +14,9 @@ export class ServiceParentService {
    */
   protected backendUrl: string = "http://localhost:80/BookWebShopBackend/";
 
+  /**
+   * returns the backend url
+   */
   public getBackendUrl():string
   {
     return this.backendUrl

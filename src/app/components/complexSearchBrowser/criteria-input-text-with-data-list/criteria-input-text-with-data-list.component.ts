@@ -7,42 +7,56 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './criteria-input-text-with-data-list.component.html',
   styleUrls: ['./criteria-input-text-with-data-list.component.css']
 })
+
+/**
+ * input text type Search Component with datalist, for complex book search
+ */
 export class CriteriaInputTextWithDataListComponent implements OnInit {
 
   constructor(private http: HttpClient, private complexSearch: ComplexSearchBrowserService) {
   }
 
+  /**
+   * serial number of the criteria component
+   */
   @Input() public id: number = 0;
-  critType: string = '';
+
+  /**
+   * type of linked criteria: Publisher, Author, or Series
+   */
+  criteriaType: string = '';
+
+  /**
+   * value of the input text field
+   */
   public textValue: string = '';
+
+  /**
+   * values in the datalist
+   */
   public dataList: Array<string> = [];
 
   ngOnInit(): void {
-    this.critType = this.complexSearch.getSelectedCrits()[this.id]
-    console.log(this)
-
+    this.criteriaType = this.complexSearch.getSelectedCriteria()[this.id]
   }
 
+  /**
+   * passes the value of the input field to the complex search service
+   * initiates data pull for data lists
+   */
   passValueToService() {
-
     this.getDataListFromServer()
     this.complexSearch.setOneSelectedCriteriaValue(this.id, this.textValue)
-
-    console.log(this.textValue)
   }
 
+  /**
+   * retrieves data from server to the datalist based on the values of the input field
+   */
   getDataListFromServer() {
     if (this.textValue.length > 2) {
-      this.http.get<any>(this.complexSearch.getBackendUrl() + '\\datalist\\' + this.critType + "\\" + this.textValue).subscribe(data => {
+      this.http.get<any>(this.complexSearch.getBackendUrl() + '\\datalist\\' + this.criteriaType + "\\" + this.textValue).subscribe(data => {
         if ((data.hasOwnProperty('success') && data.success === true)) {
           this.dataList = data.data
-          console.log(this.dataList)
-
-          // this.saveMetaToModel(data.data);
-          // this.saveMetaDataToLocalStorage()
-          // this.readyState = true;
-          // this.metaDataReady.next(this.metaData)
-          // console.log(this.metaData)
         }
       }, error => {
         console.log(error)

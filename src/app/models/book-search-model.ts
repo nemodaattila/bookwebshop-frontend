@@ -32,64 +32,52 @@ export class BookSearchModel {
    * criteria of the last search (needed for offline ordering)
    * @private
    */
-  private prevCriteria: [string, number]=['{}',10];
+  private prevCriteria: [string, number] = ['{}', 10];
 
   /**
    *  criteria of the new search (needed for offline ordering)
    * obsolete ???
    * @private
    */
-  private newCriteria: [string, number]=['{}',10];
+  private newCriteria: [string, number] = ['{}', 10];
 
   /**
    * multiple criteria of the search e.g: category,price, with criteria type as index
    * @private
    */
-  private criteria: {[index: string]:any} = {};
+  private criteria: { [index: string]: any } = {};
 
   private lastSearchAllResultCount: number = Infinity;
 
-  public setLastSearchAllResultCount(count: number)
-  {
+  public setLastSearchAllResultCount(count: number) {
     this.lastSearchAllResultCount = count
   }
 
-  public getLastSearchAllResultCount(): number
-  {
+  public getLastSearchAllResultCount(): number {
     return this.lastSearchAllResultCount
   }
 
-  public getOrder(): string
-  {
+  public getOrder(): string {
     return this.order
   }
 
-  public getLimit(): number{
+  public getLimit(): number {
     return this.limit
   }
 
-  public setOffset(offset: number)
-  {
+  public setOffset(offset: number) {
     this.offset = offset
   }
 
-  setCriteria(type: string, value: any)
-  {
-    console.log('setcriteria')
-    console.log(JSON.parse(JSON.stringify(this.criteria)))
-    console.log(type)
-    console.log(value)
+  setCriteria(type: string, value: any) {
     this.criteria[type] = value;
-    console.log(JSON.parse(JSON.stringify(this.criteria)))
   };
 
-  getNewCriteria(): [string, number]
-  {
+  getNewCriteria(): [string, number] {
     return this.newCriteria
   }
 
-  getPrevCriteria(): [string, number]
-  {
+  getPrevCriteria(): [string, number] {
     return this.prevCriteria
   }
 
@@ -97,8 +85,7 @@ export class BookSearchModel {
    * removing a criteria type
    * @param type
    */
-  delCriteria(type: string)
-  {
+  delCriteria(type: string) {
     if (this.criteria[type] !== undefined)
       delete this.criteria[type]
   };
@@ -118,13 +105,8 @@ export class BookSearchModel {
    * saving the previous search criteria for comparison for local ordering
    */
   setPrevCriteria() {
-    console.log('prevcritsAVE')
-    console.log(this.prevCriteria)
-    console.log(this.criteria)
     this.prevCriteria[0] = JSON.stringify(this.criteria);
     this.prevCriteria[1] = this.limit;
-    console.log(this.prevCriteria)
-
 
   }
 
@@ -142,8 +124,7 @@ export class BookSearchModel {
    * @param orderDir direction of order: asc/desc
    * @param limit num of requested results
    */
-  setOrderAndLimit(order: string, orderDir: string, limit:number)
-  {
+  setOrderAndLimit(order: string, orderDir: string, limit: number) {
     this.order = order
     this.orderDir = orderDir
     this.limit = limit

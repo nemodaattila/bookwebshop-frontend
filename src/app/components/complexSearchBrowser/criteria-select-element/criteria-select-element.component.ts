@@ -6,27 +6,42 @@ import {ComplexSearchBrowserService} from "../../../services/complex-search-brow
   templateUrl: './criteria-select-element.component.html',
   styleUrls: ['./criteria-select-element.component.css']
 })
-//DO unique sort directive instead of keyvalue pipe in html
+
+/**
+ * component for displaying an input select field, for selecting a criteria type
+ * for complex book search
+ */
 export class CriteriaSelectElementComponent implements OnInit {
 
-  constructor(private complexSearchService: ComplexSearchBrowserService) { }
+  constructor(private complexSearchService: ComplexSearchBrowserService) {
+  }
 
+  /**
+   * serial number of the criteria component
+   */
   @Input() public id: number = 0;
 
+  /**
+   * index/name of the chosen criteria
+   */
   public selectedCriteria: string = ''
 
-  public getCriteriaTypes():{}
-  {
+  /**
+   * retrieves all criteria type from service
+   */
+  public getCriteriaTypes(): {} {
     return this.complexSearchService.getCriteriaTypes(this.id)
 
   }
 
   ngOnInit(): void {
-    this.selectedCriteria = this.complexSearchService.getSelectedCrits()[this.id]
+    this.selectedCriteria = this.complexSearchService.getSelectedCriteria()[this.id]
   }
 
-
-
+  /**
+   * passes the type of the selected criteria (overwriting the earlier data)
+   * sets the value of the criteria in service to null
+   */
   changeSelectedCriteria() {
     this.complexSearchService.setOneSelectedCriteria(this.id, this.selectedCriteria)
     this.complexSearchService.setOneSelectedCriteriaValue(this.id, null)

@@ -1,3 +1,7 @@
-.errorText{
+.errorText {
   color: red;
+}
+
+.bordered {
+  border: 1px solid black;
 }

@@ -1,14 +1,10 @@
-
-    <div *ngFor="let type of getSelectedCrits(); index as key">
-      <app-criteria-selector [id]="key"></app-criteria-selector>
-<!--      <app-sub-category-browser [id]="cat" [label]="getSubCategoryLabelByID(cat)"-->
-<!--                                (subSearchNotify)="onSubComponentNotify($event)">-->
-<!--      </app-sub-category-browser>-->
-      <input type="button" value="Kritéria törlése" *ngIf="key > 0" (click)="deleteCriteria(key)">
-    </div>
-    <div>
-      <input type="button" value="Új kritéria" (click)="addNewCriteria()">
-    </div>
-<input type="button" value="Keresés" (click)="initSearch()">
-    <div class="errorText">{{errorText}}</div>
-
+<div class="bordered">
+  <div *ngFor="let type of getSelectedCriteria(); index as key">
+    <app-criteria-selector [id]="key"></app-criteria-selector>
+  </div>
+  <div>
+    <input type="button" value="Új kritéria" (click)="addNewCriteria()">
+  </div>
+  <input type="button" value="Keresés" (click)="initSearch()">
+  <div class="errorText">{{errorText}}</div>
+</div>

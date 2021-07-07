@@ -127,8 +127,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   /**
    * returns all main and subcategories
    */
-  public getCategories(){
-
+  public getCategories() {
 
     return {
       mainCategory: this.metaData.getMainCategory(),
@@ -136,52 +135,63 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
     }
   }
 
-  getFormats()
-  {
+  /**
+   * returns types and formats
+   */
+  getFormats() {
     return {
       type: this.metaData.getType(),
       format: this.metaData.getFormat()
     }
   }
 
-  getLanguageAsArray(): Array<string>
-  {
+  /**
+   * return languages as an array
+   */
+  getLanguageAsArray(): Array<string> {
     let lang = this.metaData.getLanguage()
     return Object.values(lang)
   }
 
-  getMainCategoryAsArray(): Array<string>
-  {
+  /**
+   * returns main categories as array
+   */
+  getMainCategoryAsArray(): Array<string> {
     let mc = this.metaData.getMainCategory()
-    let array:Array<string> = []
-    for (let key of Object.keys(mc))
-    {
-      array[parseInt(key)]=mc[parseInt(key)]
+    let array: Array<string> = []
+    for (let key of Object.keys(mc)) {
+      array[parseInt(key)] = mc[parseInt(key)]
     }
     return array
   }
 
-  getTags()
-  {
+  /**
+   * returns all tags
+   */
+  getTags() {
     return this.metaData.getTags()
   }
 
+  /**
+   * returns all Target audience categories as array
+   */
   getTargetAudienceAsArray() {
     let ta = this.metaData.getTargetAudience()
-    let array:Array<string> = []
-    for (let key of Object.keys(ta))
-    {
-      array[parseInt(key)]=ta[parseInt(key)]
+    let array: Array<string> = []
+    for (let key of Object.keys(ta)) {
+      array[parseInt(key)] = ta[parseInt(key)]
     }
     return array
   }
 
+  /**
+   * returns all book types as array
+   */
   getTypeAsArray() {
     let tp = this.metaData.getType()
-    let array:Array<string> = []
-    for (let key of Object.keys(tp))
-    {
-      array[parseInt(key)]=tp[parseInt(key)]
+    let array: Array<string> = []
+    for (let key of Object.keys(tp)) {
+      array[parseInt(key)] = tp[parseInt(key)]
     }
     return array
   }

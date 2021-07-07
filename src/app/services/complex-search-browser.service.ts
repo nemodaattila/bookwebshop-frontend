@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BookSearchService} from "./book-search.service";
 import {Subscription} from "rxjs";
 import {ServiceParentService} from "./service-parent.service";
@@ -7,182 +7,304 @@ import {BookMetaDataService} from "./book-meta-data.service";
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * service for complex book search ( on multiple criteria)
+ */
 export class ComplexSearchBrowserService extends ServiceParentService {
 
-  private critTypes:  { [index: string]: string } = {
-    "ISBN": "ISBN",
-    "Title": "Cím",
-    "Author": "Író",
-    "Type": "Típus",
-    "MainCategory": "Főkategória",
+  /**
+   * types of criteria key: name, value: label
+   * @private
+   */
+  private criteriaTypes: { [index: string]: string } = {
     "Category": "Alkategória",
     "TargetAudience": "Célközönség",
-    "Publisher": "Kiadó",
-    "Series": "Sorozat",
-    "Language": "Nyelv",
-    "Year": "Kiadás éve",
-    "Pages": "Oldalak száma",
+    "Title": "Cím",
     "Format": "Formátum",
+    "MainCategory": "Főkategória",
+    "ISBN": "ISBN",
+    "Author": "Író",
+    "Discount": "Kedvezmény",
+    "Year": "Kiadás éve",
+    "Publisher": "Kiadó",
+    "Language": "Nyelv",
+    "Pages": "Oldalak száma",
+    "Series": "Sorozat",
     "Tags": "Tagek",
     "Price": "Teljes Ár",
-    "Discount": "Kedvezmény"
+    "Type": "Típus",
   };
-  selectedCrits: Array<string> = [];
-  selectedCritValues: Array<string | number | Array<number> | null> = [];
+
+  /**
+   * array of selected criteria (through components)
+   */
+  selectedCriteria: Array<string> = [];
+
+  /**
+   * values linked to selectedCriteria
+   */
+  selectedCriteriaValues: Array<string | number | Array<number> | null> = [];
+
+  /**
+   * criteria types with select input type
+   */
   selectInput: Array<string> = ["Type", "MainCategory", "TargetAudience", "Language", "Pages", "Price", "Discount"];
+
+  /**
+   * criteria types with select input type with option group
+   */
   selectWithOptionGroup: Array<string> = ["Category", "Format"]
+
+  /**
+   * criteria types with text input
+   */
   textInput: Array<string> = ["ISBN", "Title"];
+
+  /**
+   * criteria type with number input
+   */
   numberInput: Array<string> = ["Year"];
+
+  /**
+   * criteria type with text input implemented with datalist
+   */
   textInputWithDatalist: Array<string> = ["Author", 'Series', 'Publisher']
 
-  public ignoredSelectableCriteria: Array<string>=[]
+  /**
+   * criteria type not displayed in criteria type selector' options (CriteriaSelectElementComponent),
+   * in the second and further selectors
+   */
+  public ignoredSelectableCriteria: Array<string> = []
 
+  /**
+   * select options for selected criteria types
+   */
   public arrayOptions: { [index: string]: Array<string> } = {
-    "Discount": ["0","1-5","6-15","16-30","31-50","51-"],
-    "Pages": ["0-100","101-250","251-500","501-1000","1000-"],
-    "Price": ["0-1000","1001-3000","3001-6000","6001-10000","10000-"]
+    "Discount": ["0", "1-5", "6-15", "16-30", "31-50", "51-"],
+    "Pages": ["0-100", "101-250", "251-500", "501-1000", "1000-"],
+    "Price": ["0-1000", "1001-3000", "3001-6000", "6001-10000", "10000-"]
   }
 
+  /**
+   * subscription for BookSearchService's data query request
+   * @private
+   */
   private bookSearchParamRequest = Subscription.EMPTY
 
   constructor(private bookSearch: BookSearchService, private metaDataServ: BookMetaDataService) {
     super();
-    this.selectedCrits.push(this.critTypes[Object.keys(this.critTypes)[0]])
+    this.selectedCriteria.push(Object.keys(this.criteriaTypes)[0])
   }
+
+  /**
+   * adds a new Search criteria input (CriteriaSelectorComponent)
+   */
   addNewSearchCriteria() {
-    if (this.selectedCrits.length!==Object.keys(this.critTypes).length) {
-      this.ignoredSelectableCriteria.push(this.selectedCrits[this.selectedCrits.length - 1])
-      this.selectedCrits.push(this.getFirstNotIgnored())
+    if (this.selectedCriteria.length !== Object.keys(this.criteriaTypes).length) {
+      this.ignoredSelectableCriteria.push(this.selectedCriteria[this.selectedCriteria.length - 1])
+      this.selectedCriteria.push(this.getFirstNotIgnored())
     }
   }
 
+  /**
+   * removes a Search criteria input (CriteriaSelectorComponent)
+   * @param key index number of the input
+   */
   deleteCriteria(key: number) {
-    this.ignoredSelectableCriteria=this.ignoredSelectableCriteria.filter(item => item !== this.selectedCrits[key])
-    this.selectedCrits.splice(key,1)
+    this.ignoredSelectableCriteria = this.ignoredSelectableCriteria.filter(item => item !== this.selectedCriteria[key])
+    this.selectedCriteria.splice(key, 1)
   }
 
-  getFirstNotIgnored(num: number = 0): string
-  {
-      let objKey = Object.keys(this.critTypes)[num]
-    if (this.selectedCrits.findIndex((stype) => {
-      return stype === objKey
-    }) !== -1)
-    {
+  /**
+   * returns the first criteria type which is not in selectedCriteria
+   * @param num
+   */
+  getFirstNotIgnored(num: number = 0): string {
+    let objKey = Object.keys(this.criteriaTypes)[num]
+    if (this.selectedCriteria.findIndex((type) => {
+      return type === objKey
+    }) !== -1) {
       return this.getFirstNotIgnored(++num)
-    }
-    else
+    } else
       return objKey;
   }
 
+  /**
+   * return all criteria types except what is in ignoredSelectableCriteria array
+   * @param id
+   */
   public getCriteriaTypes(id: number): { [index: string]: string } {
-    let critTypes = {...this.critTypes}
-    for (let key in this.ignoredSelectableCriteria)
-    {
-      if (parseInt(key) < id)
-      delete critTypes[this.ignoredSelectableCriteria[key]]
+    let criteriaTypes = {...this.criteriaTypes}
+    for (let key in this.ignoredSelectableCriteria) {
+      if (this.ignoredSelectableCriteria.hasOwnProperty(key))
+        if (parseInt(key) < id)
+          delete criteriaTypes[this.ignoredSelectableCriteria[key]]
     }
-    return critTypes
+    return criteriaTypes
   }
 
-  public getArrayOptions(type : string)
-  {
-    if ((Object.keys(this.arrayOptions).findIndex((stype) => {
-      return stype === type
-    })) !== -1)
-    {
+  /**
+   * queries metaDataService for data, depending on criteriaType
+   * @param criteriaType type of criteria
+   */
+  getGroupedOptions(criteriaType: string): Array<any> {
+
+    let group, groupIndex, items
+    if (criteriaType === "Category") {
+      let temp = this.metaDataServ.getCategories()
+      group = temp.mainCategory
+      groupIndex = Object.keys(group)
+      items = temp.subCategory
+    }
+    if (criteriaType === "Format") {
+      let temp = this.metaDataServ.getFormats()
+      group = temp.type
+      groupIndex = Object.keys(group)
+      items = temp.format
+    }
+    return [group, groupIndex, items]
+  }
+
+  /**
+   * gets options for select input type criteria (from variable or from metaDataService), depending on type
+   * @param type criteria
+   */
+  public getArrayOptions(type: string) {
+    if ((Object.keys(this.arrayOptions).findIndex((option) => {
+      return option === type
+    })) !== -1) {
       return this.arrayOptions[type]
     }
-    if (type === 'Language')
-    {
+    if (type === 'Language') {
       return this.metaDataServ.getLanguageAsArray();
     }
-    if (type === 'MainCategory')
-    {
+    if (type === 'MainCategory') {
       return this.metaDataServ.getMainCategoryAsArray()
     }
-    if (type === 'TargetAudience')
-    {
+    if (type === 'TargetAudience') {
       return this.metaDataServ.getTargetAudienceAsArray()
     }
-    if (type === 'Type')
-    {
+    if (type === 'Type') {
       return this.metaDataServ.getTypeAsArray()
     }
 
     return []
   }
 
-
-
-  getSelectedCrits(): Array<string> {
-    return this.selectedCrits
+  /**
+   * returns selected criteria
+   */
+  getSelectedCriteria(): Array<string> {
+    return this.selectedCriteria
   }
 
+  /**
+   * return the type of the criteria (as string), based on index (component serial number)
+   * @param index
+   */
   getSelectedCriteriaInputType(index: number): string | undefined {
-    if (this.selectedCrits[index] === "Tags")
-    {
+    if (this.selectedCriteria[index] === "Tags") {
       return "tag";
     }
-    if (this.isTextInput(this.selectedCrits[index]))
+    if (this.isTextInput(this.selectedCriteria[index]))
       return 'text'
-    if (this.isTextInputWithDataList(this.selectedCrits[index]))
+    if (this.isTextInputWithDataList(this.selectedCriteria[index]))
       return 'textWithDataList'
-    if (this.isSelectWithOptionGroup(this.selectedCrits[index]))
+    if (this.isSelectWithOptionGroup(this.selectedCriteria[index]))
       return 'selectOptionGroup'
-    if (this.isNumberInput(this.selectedCrits[index]))
+    if (this.isNumberInput(this.selectedCriteria[index]))
       return 'number'
-    if (this.isSelectInput(this.selectedCrits[index]))
+    if (this.isSelectInput(this.selectedCriteria[index]))
       return 'select'
     return undefined
   }
 
+  /**
+   * checks if criteria type is text
+   * @param type criteria name
+   */
   isTextInput(type: string): boolean {
-    return (this.textInput.findIndex((stype) => {
-      return stype === type
+    return (this.textInput.findIndex((value) => {
+      return value === type
     })) !== -1
   }
+
+  /**
+   * checks if criteria type is number
+   * @param type criteria name
+   */
   isNumberInput(type: string): boolean {
-    return (this.numberInput.findIndex((stype) => {
-      return stype === type
+    return (this.numberInput.findIndex((value) => {
+      return value === type
     })) !== -1
   }
 
+  /**
+   * checks if criteria type is datalist
+   * @param type criteria name
+   */
   isTextInputWithDataList(type: string): boolean {
-    return (this.textInputWithDatalist.findIndex((stype) => {
-      return stype === type
+    return (this.textInputWithDatalist.findIndex((value) => {
+      return value === type
     })) !== -1
   }
 
+  /**
+   * checks if criteria type is select
+   * @param type criteria name
+   */
   isSelectInput(type: string): boolean {
-    return (this.selectInput.findIndex((stype) => {
-      return stype === type
+    return (this.selectInput.findIndex((value) => {
+      return value === type
     })) !== -1
   }
 
+  /**
+   * checks if criteria type is selectWithOptionGroup
+   * @param type criteria name
+   */
   isSelectWithOptionGroup(type: string): boolean {
-    return (this.selectWithOptionGroup.findIndex((stype) => {
-      return stype === type
+    return (this.selectWithOptionGroup.findIndex((value) => {
+      return value === type
     })) !== -1
   }
 
-
-
+  /**
+   * set a criteria type in selectedCriteria array
+   * @param index index of the component
+   * @param value type of criteria
+   */
   public setOneSelectedCriteria(index: number, value: string) {
-    this.selectedCrits[index] = value
+    this.selectedCriteria[index] = value
   }
 
+  /**
+   * sets a criteria value
+   * @param index serial number of the criteria
+   * @param value value connected to the criteria
+   */
   public setOneSelectedCriteriaValue(index: number, value: string | number | Array<number> | null) {
-    this.selectedCritValues[index] = value
+    this.selectedCriteriaValues[index] = value
   }
 
+  /**
+   * passes data (search criteria types and values) to the BookSearchService
+   * @private
+   */
   private passParameterToBookSearchService() {
     let params: { [index: string]: any } = {};
-    for (let key in this.selectedCrits) {
-        params[this.selectedCrits[key]] = this.selectedCritValues[key]
+    for (let key in this.selectedCriteria) {
+      if (this.selectedCriteria.hasOwnProperty(key))
+        params[this.selectedCriteria[key]] = this.selectedCriteriaValues[key]
     }
     this.bookSearch.setSearchCriteria(params)
   }
 
+  /**
+   * registers to BookSearchService as source object
+   * registers to BookSearchService for search data call
+   */
   public subscribeForBookSearch(): void {
     this.bookSearch.registerSearchSourceService()
     this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
@@ -190,21 +312,25 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     })
   }
 
+  /**
+   * unregisters from BookSearchService as source object
+   * unregisters from BookSearchService for search data call
+   */
   public unsubscribeForBookSearch(): void {
     this.bookSearch.unRegisterSearchService()
     this.bookSearchParamRequest.unsubscribe()
   }
 
+  /**
+   *  validates all criteria values
+   *  they must be filled
+   */
   validateValues(): boolean {
-    console.log('validate')
-    console.log(this.selectedCritValues)
-    for (let value of this.selectedCritValues) {
-      console.log(value)
+    for (let value of this.selectedCriteriaValues) {
       if (value === undefined || value === "" || value === null || value === [])
         return false
     }
     return true
-
   }
 
 }

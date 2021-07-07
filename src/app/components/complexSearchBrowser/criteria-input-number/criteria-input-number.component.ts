@@ -6,22 +6,33 @@ import {ComplexSearchBrowserService} from "../../../services/complex-search-brow
   templateUrl: './criteria-input-number.component.html',
   styleUrls: ['./criteria-input-number.component.css']
 })
+/**
+ * input number type Criteria Component for complex search
+ */
 export class CriteriaInputNumberComponent implements OnInit {
 
-  constructor(public complexSearchService: ComplexSearchBrowserService) { }
+  constructor(public complexSearchService: ComplexSearchBrowserService) {
+  }
 
+  /**
+   * serial number of the criteria component
+   */
   @Input() public id: number = 0;
+
+  /**
+   * value of the input number field
+   */
   public numberValue: number = 0;
 
   ngOnInit(): void {
     this.passValueToService()
   }
 
-  passValueToService()
-  {
+  /**
+   * passes the value of the input field to the complex search service
+   */
+  passValueToService() {
     this.complexSearchService.setOneSelectedCriteriaValue(this.id, this.numberValue)
-    console.log(this.numberValue)
-    console.log(this.complexSearchService)
   }
 
 }

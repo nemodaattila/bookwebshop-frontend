@@ -7,45 +7,65 @@ import {BookSearchService} from "../../../services/book-search.service";
   templateUrl: './complex-search-browser.component.html',
   styleUrls: ['./complex-search-browser.component.css']
 })
+/**
+ * component for displaying complex search browser/ multiple search criteria
+ */
 export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
 
-
+  /**
+   * message in case of validation error
+   */
   public errorText: string = ''
 
   constructor(private bookSearch: BookSearchService, private complexSearchService: ComplexSearchBrowserService) {
   }
 
+  /**
+   * initiates registration for book search service as parameter source
+   */
   ngOnInit(): void {
     this.complexSearchService.subscribeForBookSearch()
   }
 
-  getSelectedCrits(): Array<string>
-  {
-    return this.complexSearchService.getSelectedCrits()
+  /**
+   * retrieves selected criteria(s) from complex search service
+   */
+  getSelectedCriteria(): Array<string> {
+    return this.complexSearchService.getSelectedCriteria()
   }
 
+  /**
+   * calls input validation
+   * if validation is OK, initiates book search
+   * else displays error message
+   */
   initSearch() {
     this.errorText = ''
     const ok: boolean = this.complexSearchService.validateValues();
-    console.log(ok)
     if (ok) {
-      console.log('initsearch')
       this.bookSearch.initSearch()
-    }
-    else {
+    } else {
       this.errorText = 'Minden Input mezőt töltsön ki, Tagek-nél legalább 1-et jelöljön be'
     }
   }
 
+  /**
+   * unsubscribes from book search
+   */
   ngOnDestroy(): void {
     this.complexSearchService.unsubscribeForBookSearch()
   }
 
+  /**
+   * creates a new criteria (CriteriaSelector component)
+   */
   addNewCriteria() {
     this.complexSearchService.addNewSearchCriteria()
   }
 
-  deleteCriteria(key: number) {
-    this.complexSearchService.deleteCriteria(key)
-  }
+  /**
+   * removes a criteria (CriteriaSelector component)
+   * @param key the key of the criteria to be removed
+   */
+
 }

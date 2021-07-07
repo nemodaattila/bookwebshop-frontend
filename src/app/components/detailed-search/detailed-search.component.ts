@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -6,11 +6,14 @@ import {Router} from '@angular/router';
   templateUrl: './detailed-search.component.html',
   styleUrls: ['./detailed-search.component.css']
 })
-export class DetailedSearchComponent implements OnInit {
 
-  constructor(private router: Router) { }
+/**
+ * component for displaying a complex search menu with multiple criteria, page navigator, ordering menu
+ * and a result section
+ */
+export class DetailedSearchComponent {
 
-  ngOnInit(): void {
+  constructor() {
   }
 
 }

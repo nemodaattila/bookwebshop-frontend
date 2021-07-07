@@ -52,7 +52,6 @@ export class BookSearchService extends ServiceParentService {
   constructor(private http: HttpClient) {
     super();
     this.searchParams = new BookSearchModel()
-    // this.createAndSendRequest()
   }
 
   /**
@@ -63,8 +62,7 @@ export class BookSearchService extends ServiceParentService {
     this.registeredSourceComponents++;
   }
 
-  unRegisterSearchService()
-  {
+  unRegisterSearchService() {
     this.registeredSourceComponents--;
   }
 
@@ -88,22 +86,13 @@ export class BookSearchService extends ServiceParentService {
     this.increaseAnswered()
   };
 
-  setSearchCriteria(params: {[index: string]:any})
-  {
-    console.log(params)
-    for (let key in params)
-    {
-      console.log('searchParams')
-      console.log(JSON.parse(JSON.stringify(this.searchParams)))
-      console.log(key)
-      console.log(params)
-     if (typeof params[key] === 'object')
-     {
-       this.searchParams.setCriteria(key,{...params[key]})
+  setSearchCriteria(params: { [index: string]: any }) {
+    for (let key in params) {
+      if (typeof params[key] === 'object') {
+        this.searchParams.setCriteria(key, {...params[key]})
 
-     }
-     else
-      this.searchParams.setCriteria(key, params[key])
+      } else
+        this.searchParams.setCriteria(key, params[key])
     }
     this.increaseAnswered()
   }
@@ -128,7 +117,6 @@ export class BookSearchService extends ServiceParentService {
   }
 
   public initSearch(setDefault: boolean = true) {
-    console.log(JSON.parse(JSON.stringify(this.searchParams)))
     this.searchParams.setPrevCriteria()
     if (setDefault) this.searchParams.setDefault();
     this.answeredRegisteredComponents = 0;
@@ -141,9 +129,6 @@ export class BookSearchService extends ServiceParentService {
    * request creator function
    */
   checkRegisterSourceCount() {
-    console.log(this.registeredSourceComponents)
-    console.log(this.answeredRegisteredComponents)
-
     if (this.registeredSourceComponents === this.answeredRegisteredComponents)
       this.createAndSendRequest()
   }
@@ -157,9 +142,6 @@ export class BookSearchService extends ServiceParentService {
    */
   private createAndSendRequest() {
     this.searchParams.setNewCriteria();
-    console.log(JSON.parse(JSON.stringify(this.searchParams)))
-    console.log(JSON.parse(JSON.stringify(this.searchParams.getPrevCriteria())))
-    console.log(JSON.parse(JSON.stringify(this.searchParams.getNewCriteria())))
     let isLocal = this.localOrderChecker();
     let params = this.searchParams.getSearchParams();
     console.log(params)
@@ -211,14 +193,13 @@ export class BookSearchService extends ServiceParentService {
    * @private
    */
   private localOrderChecker() {
-    if (this.searchParams.getOrder()==="Year") return false;
-    let prevCriteria=this.searchParams.getPrevCriteria();
-    let newCriteria=this.searchParams.getNewCriteria();
-    let count=this.searchParams.getLastSearchAllResultCount()
+    if (this.searchParams.getOrder() === "Year") return false;
+    let prevCriteria = this.searchParams.getPrevCriteria();
+    let newCriteria = this.searchParams.getNewCriteria();
+    let count = this.searchParams.getLastSearchAllResultCount()
 
-    if (prevCriteria[0]===newCriteria[0]) {
-      if ((count <= 10) || (count <= prevCriteria[1]) && (prevCriteria[1] <= newCriteria[1]) && (count<=newCriteria[1]))
-      {
+    if (prevCriteria[0] === newCriteria[0]) {
+      if ((count <= 10) || (count <= prevCriteria[1]) && (prevCriteria[1] <= newCriteria[1]) && (count <= newCriteria[1])) {
         return true
       }
     }
