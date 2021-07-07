@@ -178,7 +178,6 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   private passParameterToBookSearchService() {
     let params: { [index: string]: any } = {};
     for (let key in this.selectedCrits) {
-      if (this.selectedCritValues[key] !== undefined && this.selectedCritValues[key] !== "")
         params[this.selectedCrits[key]] = this.selectedCritValues[key]
     }
     this.bookSearch.setSearchCriteria(params)
@@ -196,6 +195,17 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     this.bookSearchParamRequest.unsubscribe()
   }
 
+  validateValues(): boolean {
+    console.log('validate')
+    console.log(this.selectedCritValues)
+    for (let value of this.selectedCritValues) {
+      console.log(value)
+      if (value === undefined || value === "" || value === null || value === [])
+        return false
+    }
+    return true
+
+  }
 
 }
 

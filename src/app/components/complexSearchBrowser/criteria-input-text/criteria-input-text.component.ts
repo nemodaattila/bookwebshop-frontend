@@ -11,6 +11,7 @@ export class CriteriaInputTextComponent implements OnInit {
   constructor(public complexSearchService: ComplexSearchBrowserService) { }
 
   ngOnInit(): void {
+    this.complexSearchService.setOneSelectedCriteriaValue(this.id, this.textValue)
   }
 
   @Input() public id: number = 0;

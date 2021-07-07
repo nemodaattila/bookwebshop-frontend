@@ -10,6 +10,8 @@ import {BookSearchService} from "../../../services/book-search.service";
 export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
 
 
+  public errorText: string = ''
+
   constructor(private bookSearch: BookSearchService, private complexSearchService: ComplexSearchBrowserService) {
   }
 
@@ -23,8 +25,16 @@ export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
   }
 
   initSearch() {
-    console.log('initsearch')
-    this.bookSearch.initSearch()
+    this.errorText = ''
+    const ok: boolean = this.complexSearchService.validateValues();
+    console.log(ok)
+    if (ok) {
+      console.log('initsearch')
+      this.bookSearch.initSearch()
+    }
+    else {
+      this.errorText = 'Minden Input mezőt töltsön ki, Tagek-nél legalább 1-et jelöljön be'
+    }
   }
 
   ngOnDestroy(): void {

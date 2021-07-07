@@ -14,6 +14,7 @@ export class CriteriaInputNumberComponent implements OnInit {
   public numberValue: number = 0;
 
   ngOnInit(): void {
+    this.passValueToService()
   }
 
   passValueToService()
