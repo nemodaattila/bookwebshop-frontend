@@ -174,4 +174,17 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
     // @ts-ignore
     return this.metaData.getTags()
   }
+
+  getTargetAudienceAsArray() {
+    // @ts-ignore
+    let ta = this.metaData?.getTargetAudience()
+    let array:Array<string> = []
+    // @ts-ignore
+    for (let key of Object.keys(ta))
+    {
+      // @ts-ignore
+      array[key]=ta[parseInt(key)]
+    }
+    return array
+  }
 }

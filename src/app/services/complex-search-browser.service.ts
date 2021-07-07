@@ -16,7 +16,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     "Type": "Típus",
     "MainCategory": "Főkategória",
     "Category": "Alkategória",
-    "Targetaudience": "Célközönség",
+    "TargetAudience": "Célközönség",
     "Publisher": "Kiadó",
     "Series": "Sorozat",
     "Language": "Nyelv",
@@ -29,7 +29,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   };
   selectedCrits: Array<string> = ["ISBN"];
   selectedCritValues: Array<string | number | Array<number> | null> = [];
-  selectInput: Array<string> = ["Type", "MainCategory", "Targetaudience", "Language", "Pages", "Price", "Discount"];
+  selectInput: Array<string> = ["Type", "MainCategory", "TargetAudience", "Language", "Pages", "Price", "Discount"];
   selectWithOptionGroup: Array<string> = ["Category", "Format"]
   textInput: Array<string> = ["ISBN", "Title"];
   numberInput: Array<string> = ["Year"];
@@ -57,6 +57,11 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     {
       return this.metaDataServ.getMainCategoryAsArray()
     }
+    if (type === 'TargetAudience')
+    {
+      return this.metaDataServ.getTargetAudienceAsArray()
+    }
+
     return []
   }
 

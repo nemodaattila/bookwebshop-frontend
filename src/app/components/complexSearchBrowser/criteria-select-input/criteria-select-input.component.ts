@@ -8,27 +8,23 @@ import {ComplexSearchBrowserService} from "../../../services/complex-search-brow
 })
 export class CriteriaSelectInputComponent implements OnInit {
 
-  constructor(private complexSearch: ComplexSearchBrowserService) { }
+  constructor(private complexSearch: ComplexSearchBrowserService) {
+  }
 
   @Input() public id: number = 0;
   critType: string = '';
   public selectedOption: number = 1;
-  public options : Array<string> = []
+  public options: Array<string> = []
 
   ngOnInit(): void {
     this.critType = this.complexSearch.getSelectedCrits()[this.id]
+    if (this.critType === 'TargetAudience') this.selectedOption = 11
     this.options = this.complexSearch.getArrayOptions(this.critType)
-    for (let key of this.options)
-    {
-      console.log(typeof key)
-    }
     console.log(this.critType)
     console.log(this.options)
     this.complexSearch.setOneSelectedCriteria(this.id, this.critType)
     this.valueSelected()
   }
-
-
 
   valueSelected() {
     console.log(this.selectedOption)
@@ -37,7 +33,6 @@ export class CriteriaSelectInputComponent implements OnInit {
   }
 
   isEmpty(key: number) {
-    console.log(this.options[key] === undefined)
     return this.options[key] === undefined
   }
 }
