@@ -17,7 +17,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
    * model for storing metadata
    * @private
    */
-  private metaData?: BookMetaData;
+  private metaData: BookMetaData = new BookMetaData([]);
 
   /**
    * subject for notifying about the readiness of the metadata
@@ -131,9 +131,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
 
 
     return {
-      // @ts-ignore
       mainCategory: this.metaData.getMainCategory(),
-      // @ts-ignore
       subCategory: this.metaData.getSubCategory()
     }
   }
@@ -141,49 +139,49 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
   getFormats()
   {
     return {
-      // @ts-ignore
       type: this.metaData.getType(),
-      // @ts-ignore
       format: this.metaData.getFormat()
     }
   }
 
   getLanguageAsArray(): Array<string>
   {
-    // @ts-ignore
     let lang = this.metaData.getLanguage()
     return Object.values(lang)
   }
 
   getMainCategoryAsArray(): Array<string>
   {
-    // @ts-ignore
     let mc = this.metaData.getMainCategory()
     let array:Array<string> = []
-    // @ts-ignore
     for (let key of Object.keys(mc))
     {
-      // @ts-ignore
-      array[key]=mc[parseInt(key)]
+      array[parseInt(key)]=mc[parseInt(key)]
     }
     return array
   }
 
   getTags()
   {
-    // @ts-ignore
     return this.metaData.getTags()
   }
 
   getTargetAudienceAsArray() {
-    // @ts-ignore
-    let ta = this.metaData?.getTargetAudience()
+    let ta = this.metaData.getTargetAudience()
     let array:Array<string> = []
-    // @ts-ignore
     for (let key of Object.keys(ta))
     {
-      // @ts-ignore
-      array[key]=ta[parseInt(key)]
+      array[parseInt(key)]=ta[parseInt(key)]
+    }
+    return array
+  }
+
+  getTypeAsArray() {
+    let tp = this.metaData.getType()
+    let array:Array<string> = []
+    for (let key of Object.keys(tp))
+    {
+      array[parseInt(key)]=tp[parseInt(key)]
     }
     return array
   }

@@ -83,6 +83,7 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
     return this.targetAudience;
   }
 
+
   constructor(data: any) {
     this.format = data.format;
     this.language = data.language;

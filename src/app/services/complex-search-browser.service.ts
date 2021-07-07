@@ -61,6 +61,10 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     {
       return this.metaDataServ.getTargetAudienceAsArray()
     }
+    if (type === 'Type')
+    {
+      return this.metaDataServ.getTypeAsArray()
+    }
 
     return []
   }
