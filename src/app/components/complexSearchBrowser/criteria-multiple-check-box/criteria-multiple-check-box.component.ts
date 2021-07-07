@@ -21,6 +21,8 @@ export class CriteriaMultipleCheckBoxComponent implements OnInit {
     this.sortTags(this.metaService.getTags())
   }
 
+
+
   sortTags(tags: {[index: number]: string})
   {
     console.log(tags)

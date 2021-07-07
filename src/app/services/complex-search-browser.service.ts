@@ -9,7 +9,7 @@ import {BookMetaDataService} from "./book-meta-data.service";
 })
 export class ComplexSearchBrowserService extends ServiceParentService {
 
-  private critTypes: {} = {
+  private critTypes:  { [index: string]: string } = {
     "ISBN": "ISBN",
     "Title": "Cím",
     "Author": "Író",
@@ -27,7 +27,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     "Price": "Teljes Ár",
     "Discount": "Kedvezmény"
   };
-  selectedCrits: Array<string> = ["ISBN"];
+  selectedCrits: Array<string> = [];
   selectedCritValues: Array<string | number | Array<number> | null> = [];
   selectInput: Array<string> = ["Type", "MainCategory", "TargetAudience", "Language", "Pages", "Price", "Discount"];
   selectWithOptionGroup: Array<string> = ["Category", "Format"]
@@ -35,10 +35,54 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   numberInput: Array<string> = ["Year"];
   textInputWithDatalist: Array<string> = ["Author", 'Series', 'Publisher']
 
+  public ignoredSelectableCriteria: Array<string>=[]
+
   public arrayOptions: { [index: string]: Array<string> } = {
     "Discount": ["0","1-5","6-15","16-30","31-50","51-"],
     "Pages": ["0-100","101-250","251-500","501-1000","1000-"],
     "Price": ["0-1000","1001-3000","3001-6000","6001-10000","10000-"]
+  }
+
+  private bookSearchParamRequest = Subscription.EMPTY
+
+  constructor(private bookSearch: BookSearchService, private metaDataServ: BookMetaDataService) {
+    super();
+    this.selectedCrits.push(this.critTypes[Object.keys(this.critTypes)[0]])
+  }
+  addNewSearchCriteria() {
+    if (this.selectedCrits.length!==Object.keys(this.critTypes).length) {
+      this.ignoredSelectableCriteria.push(this.selectedCrits[this.selectedCrits.length - 1])
+      this.selectedCrits.push(this.getFirstNotIgnored())
+      console.log(this.selectedCrits)
+    }
+  }
+
+  getFirstNotIgnored(num: number = 0): string
+  {
+    console.log(num)
+    console.log(this.selectedCrits)
+      let objKey = Object.keys(this.critTypes)[num]
+    console.log(objKey)
+    if (this.selectedCrits.findIndex((stype) => {
+      return stype === objKey
+    }) !== -1)
+    {
+      return this.getFirstNotIgnored(++num)
+    }
+    else
+      return objKey;
+  }
+
+  public getCriteriaTypes(id: number): { [index: string]: string } {
+    let critTypes = {...this.critTypes}
+    for (let key in this.ignoredSelectableCriteria)
+    {
+      if (parseInt(key) < id)
+      delete critTypes[this.ignoredSelectableCriteria[key]]
+    }
+    console.log(this.ignoredSelectableCriteria)
+    console.log(this.critTypes)
+    return critTypes
   }
 
   public getArrayOptions(type : string)
@@ -69,12 +113,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     return []
   }
 
-  private bookSearchParamRequest = Subscription.EMPTY
 
-  constructor(private bookSearch: BookSearchService, private metaDataServ: BookMetaDataService) {
-    super();
-
-  }
 
   getSelectedCrits(): Array<string> {
     return this.selectedCrits
@@ -127,9 +166,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     })) !== -1
   }
 
-  public getCriteriaTypes(): {} {
-    return this.critTypes
-  }
+
 
   public setOneSelectedCriteria(index: number, value: string) {
     this.selectedCrits[index] = value
@@ -159,5 +196,7 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     this.bookSearch.unRegisterSearchService()
     this.bookSearchParamRequest.unsubscribe()
   }
+
+
 }
 

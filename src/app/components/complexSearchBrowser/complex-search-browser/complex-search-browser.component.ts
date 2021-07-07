@@ -30,4 +30,8 @@ export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.complexSearchService.unsubscribeForBookSearch()
   }
+
+  addNewCriteria() {
+    this.complexSearchService.addNewSearchCriteria()
+  }
 }

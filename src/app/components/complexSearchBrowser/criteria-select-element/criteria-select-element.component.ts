@@ -9,15 +9,23 @@ import {ComplexSearchBrowserService} from "../../../services/complex-search-brow
 //DO unique sort directive instead of keyvalue pipe in html
 export class CriteriaSelectElementComponent implements OnInit {
 
-  constructor(public complexSearchService: ComplexSearchBrowserService) { }
+  constructor(private complexSearchService: ComplexSearchBrowserService) { }
 
   @Input() public id: number = 0;
 
-  public selectedCriteria: string = 'ISBN'
+  public selectedCriteria: string = ''
+
+  public getCriteriaTypes()
+  {
+    return this.complexSearchService.getCriteriaTypes(this.id)
+
+  }
 
   ngOnInit(): void {
     this.selectedCriteria = this.complexSearchService.getSelectedCrits()[this.id]
   }
+
+
 
   changeSelectedCriteria() {
     this.complexSearchService.setOneSelectedCriteria(this.id, this.selectedCriteria)
