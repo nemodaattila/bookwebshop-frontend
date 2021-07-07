@@ -15,7 +15,7 @@ export class CriteriaSelectElementComponent implements OnInit {
 
   public selectedCriteria: string = ''
 
-  public getCriteriaTypes()
+  public getCriteriaTypes():{}
   {
     return this.complexSearchService.getCriteriaTypes(this.id)
 

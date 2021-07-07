@@ -53,16 +53,17 @@ export class ComplexSearchBrowserService extends ServiceParentService {
     if (this.selectedCrits.length!==Object.keys(this.critTypes).length) {
       this.ignoredSelectableCriteria.push(this.selectedCrits[this.selectedCrits.length - 1])
       this.selectedCrits.push(this.getFirstNotIgnored())
-      console.log(this.selectedCrits)
     }
+  }
+
+  deleteCriteria(key: number) {
+    this.ignoredSelectableCriteria=this.ignoredSelectableCriteria.filter(item => item !== this.selectedCrits[key])
+    this.selectedCrits.splice(key,1)
   }
 
   getFirstNotIgnored(num: number = 0): string
   {
-    console.log(num)
-    console.log(this.selectedCrits)
       let objKey = Object.keys(this.critTypes)[num]
-    console.log(objKey)
     if (this.selectedCrits.findIndex((stype) => {
       return stype === objKey
     }) !== -1)
@@ -80,8 +81,6 @@ export class ComplexSearchBrowserService extends ServiceParentService {
       if (parseInt(key) < id)
       delete critTypes[this.ignoredSelectableCriteria[key]]
     }
-    console.log(this.ignoredSelectableCriteria)
-    console.log(this.critTypes)
     return critTypes
   }
 
@@ -179,9 +178,9 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   private passParameterToBookSearchService() {
     let params: { [index: string]: any } = {};
     for (let key in this.selectedCrits) {
-      params[this.selectedCrits[key]] = this.selectedCritValues[key]
+      if (this.selectedCritValues[key] !== undefined && this.selectedCritValues[key] !== "")
+        params[this.selectedCrits[key]] = this.selectedCritValues[key]
     }
-    console.log(params)
     this.bookSearch.setSearchCriteria(params)
   }
 

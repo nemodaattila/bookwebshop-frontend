@@ -34,4 +34,8 @@ export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
   addNewCriteria() {
     this.complexSearchService.addNewSearchCriteria()
   }
+
+  deleteCriteria(key: number) {
+    this.complexSearchService.deleteCriteria(key)
+  }
 }

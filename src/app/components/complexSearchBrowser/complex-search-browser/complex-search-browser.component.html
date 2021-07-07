@@ -4,6 +4,7 @@
 <!--      <app-sub-category-browser [id]="cat" [label]="getSubCategoryLabelByID(cat)"-->
 <!--                                (subSearchNotify)="onSubComponentNotify($event)">-->
 <!--      </app-sub-category-browser>-->
+      <input type="button" value="Kritéria törlése" *ngIf="key > 0" (click)="deleteCriteria(key)">
     </div>
     <div>
       <input type="button" value="Új kritéria" (click)="addNewCriteria()">
