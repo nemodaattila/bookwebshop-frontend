@@ -9,6 +9,7 @@ import {DetailedSearchComponent} from "../components/detailed-search/detailed-se
  * routing Path
  */
 const routes: Routes = [
+  {path: 'browse/:quick', component: BrowseComponent},
   {path: 'browse', component: BrowseComponent },
   {path: 'detailedSearch', component: DetailedSearchComponent },
   {path: '', redirectTo: '/browse', pathMatch: 'full'},

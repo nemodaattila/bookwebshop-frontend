@@ -90,7 +90,6 @@ export class BookSearchService extends ServiceParentService {
     for (let key in params) {
       if (typeof params[key] === 'object') {
         this.searchParams.setCriteria(key, {...params[key]})
-
       } else
         this.searchParams.setCriteria(key, params[key])
     }
@@ -129,8 +128,10 @@ export class BookSearchService extends ServiceParentService {
    * request creator function
    */
   checkRegisterSourceCount() {
-    if (this.registeredSourceComponents === this.answeredRegisteredComponents)
+    console.log([this.registeredSourceComponents, this.answeredRegisteredComponents])
+    if (this.registeredSourceComponents === this.answeredRegisteredComponents) {
       this.createAndSendRequest()
+    }
   }
 
   /**

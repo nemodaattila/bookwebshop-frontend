@@ -16,8 +16,11 @@
     <span id=bookmanagenav></span>
     <span>
         <a id = "browseLink" routerLink="browse">Böngészés</a>
-        <form method="POST" action="../../../../../databasetest/index.php"><label for="quicksearch">Egyszerű keresés (író vagy cím):&nbsp;</label><input
-          id="quicksearch" name="quicksearch" type="text"><input type="submit" value="keresés"></form>
+        <div>
+          <label for="quicksearch">Egyszerű keresés (író vagy cím):&nbsp;</label>
+          <input [(ngModel)]="inputValue" id="quicksearch" name="quicksearch" type="text">
+          <input type="submit" value="keresés" (click)="quickSearch()">
+        </div>
         <a id = "detSearchLink" routerLink="detailedSearch" >Részletes keresés</a>
     </span>
   </nav>

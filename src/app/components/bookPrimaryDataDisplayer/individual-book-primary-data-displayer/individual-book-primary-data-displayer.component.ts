@@ -34,6 +34,7 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
    */
   public typeString?: string
 
+
   /**
    * constructor
    * @param sanitizer value sanitizer

@@ -1,5 +1,5 @@
 import {AppComponent} from './app.component';
-import {MainmenuComponent} from './components/mainmenu/mainmenu.component';
+import {MainMenuComponent} from './components/mainmenu/main-menu.component';
 import {BrowseComponent} from './components/browse/browse.component';
 import {AppRoutingModule} from "./approuting/app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
@@ -29,7 +29,7 @@ import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBro
 @NgModule({
   declarations: [
     AppComponent,
-    MainmenuComponent,
+    MainMenuComponent,
     BrowseComponent,
     BookThemeCategoryBrowserComponent,
     BookPrimaryDataDisplayerComponent,
