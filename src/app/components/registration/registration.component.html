@@ -1,0 +1,26 @@
+
+    <h2>{{headerText}}</h2>
+    <form [formGroup]="userRegisterForm" (ngSubmit)="submitRegisterForm()">
+      <div>
+        <label for="userName">Felhasználónév: </label>
+        <input type="text" id="userName" formControlName="userName">
+      </div>
+      <div>
+        <label for="email">Email-cím:</label>
+        <input type="email" id="email" formControlName="email">
+      </div>
+      <div>
+        <label for="pwd">Jelszó:</label>
+        <input type="password" id="pwd" formControlName="password">
+      </div>
+      <div>
+        <label for="rePwd">Jelszó újra:</label>
+        <input type="password" id="rePwd" formControlName="rePassword">
+      </div>
+      <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      <div class="row">
+          <button type="submit">Adat mentése</button>
+          <button type="button" (click)="cancelForm()">Visszavonás</button>
+        </div>
+    </form>
+
