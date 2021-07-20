@@ -1,5 +1,5 @@
 import {AppComponent} from './app.component';
-import {MainMenuComponent} from './components/mainmenu/main-menu.component';
+import {MainMenuComponent} from './components/navigationMenu/mainmenu/main-menu.component';
 import {BrowseComponent} from './components/browse/browse.component';
 import {AppRoutingModule} from "./approuting/app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
@@ -18,13 +18,16 @@ import { DetailedSearchComponent } from './components/detailed-search/detailed-s
 import { ComplexSearchBrowserComponent } from './components/complexSearchBrowser/complex-search-browser/complex-search-browser.component';
 import { CriteriaSelectorComponent } from './components/complexSearchBrowser/criteria-selector/criteria-selector.component';
 import { CriteriaSelectElementComponent } from './components/complexSearchBrowser/criteria-select-element/criteria-select-element.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CriteriaInputTextComponent } from './components/complexSearchBrowser/criteria-input-text/criteria-input-text.component';
 import { CriteriaInputTextWithDataListComponent } from './components/complexSearchBrowser/criteria-input-text-with-data-list/criteria-input-text-with-data-list.component';
 import { CriteriaSelectWithOptionGroupComponent } from './components/complexSearchBrowser/criteria-select-with-option-group/criteria-select-with-option-group.component';
 import { CriteriaInputNumberComponent } from './components/complexSearchBrowser/criteria-input-number/criteria-input-number.component';
 import { CriteriaSelectInputComponent } from './components/complexSearchBrowser/criteria-select-input/criteria-select-input.component';
 import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBrowser/criteria-multiple-check-box/criteria-multiple-check-box.component';
+import { LoginFormComponent } from './components/navigationMenu/login-form/login-form.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { LoggedInMenuComponent } from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBro
     CriteriaInputNumberComponent,
     CriteriaSelectInputComponent,
     CriteriaMultipleCheckBoxComponent,
+    LoginFormComponent,
+    RegistrationComponent,
+    LoggedInMenuComponent,
 
   ],
   imports: [
@@ -57,6 +63,7 @@ import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBro
     RouterModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

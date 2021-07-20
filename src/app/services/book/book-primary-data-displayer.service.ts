@@ -102,7 +102,7 @@ export class BookPrimaryDataDisplayerService{
   }
 
   /**
-   * aks for prerequisite services readiness property
+   * aks for prerequisite service readiness property
    * @private
    */
   private checkServiceReadyStates() {

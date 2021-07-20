@@ -1,8 +1,8 @@
-import {ServiceParentService} from "./service-parent.service";
-import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-import {BookMetaData} from "../models/book-meta-data";
+import {BookMetaData} from "../../models/bookData/book-meta-data";
 import {Injectable, OnInit} from "@angular/core";
+import {HttpRequestService} from "../helper/http-request.service";
+import {HttpRequestModel} from "../../models/service/http-request-model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import {Injectable, OnInit} from "@angular/core";
  * gets book meta data from server
  * notifies other component
  */
-export class BookMetaDataService extends ServiceParentService implements OnInit {
+export class BookMetaDataService implements OnInit {
 
   /**
    * model for storing metadata
@@ -32,8 +32,7 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
    */
   private readyState: boolean = false;
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(private http: HttpRequestService) {
     // localStorage.setItem('metadata','');
     this.checkMetaDataInLocalStorage();
   }
@@ -81,7 +80,9 @@ export class BookMetaDataService extends ServiceParentService implements OnInit 
    * @private
    */
   private getMetaDataFromServer() {
-    this.http.get<any>(this.backendUrl + '\\metadata').subscribe(data => {
+    let requestModel = new HttpRequestModel();
+    requestModel.setTargetUrl('\\metadata');
+    <any>this.http.get(requestModel).subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
         this.saveMetaToModel(data.data);
         this.saveMetaDataToLocalStorage()

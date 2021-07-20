@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {BookSearchService} from "../../services/book-search.service";
+import {BookSearchService} from "../../services/book/book-search.service";
 import {Subject, Subscription} from "rxjs";
-import {PageNavigatorModel} from "../../models/page-navigator-model";
+import {PageNavigatorModel} from "../../models/service/page-navigator-model";
 
 @Component({
   selector: 'app-page-navigator',

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {ComplexSearchBrowserService} from "../../../services/complex-search-browser.service";
-import {BookMetaDataService} from "../../../services/book-meta-data.service";
+import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
+import {BookMetaDataService} from "../../../services/book/book-meta-data.service";
 
 @Component({
   selector: 'app-criteria-multiple-check-box',

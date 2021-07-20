@@ -1,5 +1,5 @@
-import {BookData} from "./book-data";
-import {BookPrimaryData} from "./book-primary-data";
+import {BookData} from "../bookData/book-data";
+import {BookPrimaryData} from "../bookData/book-primary-data";
 
 /**
  * model for storing data for already loaded books

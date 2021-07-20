@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
-import {BookSearchService} from "../../services/book-search.service";
 import {Subscription} from "rxjs";
+import {BookSearchService} from "../../services/book/book-search.service";
 
 @Component({
   selector: 'app-search-order-and-count-handler',

@@ -1,5 +1,13 @@
 <header>
   <nav>
+        <span id="titlediv">
+        <span><a href="">Könyvespolc.hu</a></span>
+          <!--        <img id="headimg" src="./file/book-logo.jpg" >-->
+
+    <app-login-form *ngIf="!hasLoggedUser"></app-login-form>
+    <app-logged-in-menu *ngIf="hasLoggedUser"></app-logged-in-menu>
+        </span>
+
     <span>
         <span>
             <a routerLink="">Főoldal</a>
@@ -15,13 +23,13 @@
     </span>
     <span id=bookmanagenav></span>
     <span>
-        <a id = "browseLink" routerLink="browse">Böngészés</a>
+        <a id="browseLink" routerLink="browse">Böngészés</a>
         <div>
           <label for="quicksearch">Egyszerű keresés (író vagy cím):&nbsp;</label>
           <input [(ngModel)]="inputValue" id="quicksearch" name="quicksearch" type="text">
           <input type="submit" value="keresés" (click)="quickSearch()">
         </div>
-        <a id = "detSearchLink" routerLink="detailedSearch" >Részletes keresés</a>
+        <a id="detSearchLink" routerLink="detailedSearch">Részletes keresés</a>
     </span>
   </nav>
 </header>

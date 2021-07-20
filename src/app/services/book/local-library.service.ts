@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
 import {BookSearchService} from "./book-search.service";
-import {LocalLibraryModel} from "../models/local-library-model";
+import {LocalLibraryModel} from "../../models/service/local-library-model";
 import {HttpClient} from "@angular/common/http";
-import {ServiceParentService} from "./service-parent.service";
-import {BookPrimaryData} from "../models/book-primary-data";
+import {BookPrimaryData} from "../../models/bookData/book-primary-data";
+import {HttpRequestService} from "../helper/http-request.service";
+import {HttpRequestModel} from "../../models/service/http-request-model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import {BookPrimaryData} from "../models/book-primary-data";
 /**
  * stores the data of all already loaded books
  */
-export class LocalLibraryService extends ServiceParentService {
+export class LocalLibraryService{
 
   /**
    * gets the isbn list from BookSearchService
@@ -40,8 +41,7 @@ export class LocalLibraryService extends ServiceParentService {
    * @param bookSearch
    * @param http
    */
-  constructor(private bookSearch: BookSearchService, private http: HttpClient) {
-    super();
+  constructor(private bookSearch: BookSearchService, private http: HttpRequestService) {
     this.localLibrary = new LocalLibraryModel();
     this.fillBooksFromLocalStorage();
     this.isbnListSubscription = <object>this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
@@ -104,8 +104,10 @@ export class LocalLibraryService extends ServiceParentService {
    * @param isbn
    * @private
    */
-  private getBookPrimaryData(isbn: string): Observable<{ success: any, data: object }> {
-    return this.http.get<{ success: any, data: object }>(this.backendUrl + "\\primaryData\\" + isbn);
+  private getBookPrimaryData(isbn: string): Observable<any> {
+    let hrm = new HttpRequestModel();
+    hrm.setTargetUrl("\\primaryData\\" + isbn)
+    return this.http.send(hrm) as Observable<any>;
   }
 
   /**

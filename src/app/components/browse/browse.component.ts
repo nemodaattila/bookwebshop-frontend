@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
 import {ActivatedRoute, Params} from '@angular/router';
-import {BookSearchService} from "../../services/book-search.service";
+import {BookSearchService} from "../../services/book/book-search.service";
 
 @Component({
   selector: 'app-browse',

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
-import {BookMetaDataService} from "../../../services/book-meta-data.service";
+import {BookMetaDataService} from "../../../services/book/book-meta-data.service";
 import { Subscription} from "rxjs";
-import {BookSearchService} from "../../../services/book-search.service";
-import {BookMetaData} from "../../../models/book-meta-data";
+import {BookSearchService} from "../../../services/book/book-search.service";
+import {BookMetaData} from "../../../models/bookData/book-meta-data";
 
 @Component({
   selector: 'app-book-theme-category-browser',

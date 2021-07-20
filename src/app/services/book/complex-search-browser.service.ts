@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BookSearchService} from "./book-search.service";
 import {Subscription} from "rxjs";
-import {ServiceParentService} from "./service-parent.service";
 import {BookMetaDataService} from "./book-meta-data.service";
 
 @Injectable({
@@ -11,7 +10,7 @@ import {BookMetaDataService} from "./book-meta-data.service";
 /**
  * service for complex book search ( on multiple criteria)
  */
-export class ComplexSearchBrowserService extends ServiceParentService {
+export class ComplexSearchBrowserService{
 
   /**
    * types of criteria key: name, value: label
@@ -93,7 +92,6 @@ export class ComplexSearchBrowserService extends ServiceParentService {
   private bookSearchParamRequest = Subscription.EMPTY
 
   constructor(private bookSearch: BookSearchService, private metaDataServ: BookMetaDataService) {
-    super();
     this.selectedCriteria.push(Object.keys(this.criteriaTypes)[0])
   }
 

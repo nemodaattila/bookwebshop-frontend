@@ -1,8 +1,8 @@
-import {ServiceParentService} from "./service-parent.service";
-import {BookSearchModel} from "../models/book-search-model";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BookSearchModel} from "../../models/service/book-search-model";
 import {Observable, Subject} from "rxjs";
 import {Injectable} from "@angular/core";
+import {HttpRequestService} from "../helper/http-request.service";
+import {HttpRequestModel} from "../../models/service/http-request-model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import {Injectable} from "@angular/core";
  * creates and sends a request to the server for searching books in database
  * based on multiple search parameter
  */
-export class BookSearchService extends ServiceParentService {
+export class BookSearchService{
 
   /**
    * pushes the actual isbn list
@@ -49,8 +49,7 @@ export class BookSearchService extends ServiceParentService {
    */
   private setToDefault: boolean = true
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(private http: HttpRequestService) {
     this.searchParams = new BookSearchModel()
   }
 
@@ -164,11 +163,15 @@ export class BookSearchService extends ServiceParentService {
    * @param searchParams
    * @private
    */
-  private searchForBooks(searchParams: object): Observable<any> {
-    const headers = new HttpHeaders({
+  private searchForBooks(searchParams: {[index: string]: any}): Observable<any> {
+    let htm = new HttpRequestModel()
+    htm.addHeaders(  {
       'Content-Type': 'text/plain',
-    });
-    return this.http.post<any>(this.backendUrl + '\\booklist', searchParams, {headers: headers});
+    })
+    htm.setRequestType('POST')
+    htm.setTargetUrl('booklist')
+    htm.setParameters(searchParams);
+    return <Observable<any>>this.http.send(htm);
   }
 
   /**

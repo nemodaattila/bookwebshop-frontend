@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BookPrimaryDataDisplayerService} from "../../../services/book-primary-data-displayer.service";
+import {BookPrimaryDataDisplayerService} from "../../../services/book/book-primary-data-displayer.service";
 import {Subscription} from "rxjs";
 
 @Component({

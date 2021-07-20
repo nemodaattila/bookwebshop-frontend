@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ComplexSearchBrowserService} from "../../../services/complex-search-browser.service";
+import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
 
 @Component({
   selector: 'app-criteria-selector',

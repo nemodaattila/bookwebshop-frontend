@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {BookPrimaryData} from "../../../models/book-primary-data";
+import {BookPrimaryData} from "../../../models/bookData/book-primary-data";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {BookMetaDataService} from "../../../services/book-meta-data.service";
+import {BookMetaDataService} from "../../../services/book/book-meta-data.service";
 
 @Component({
   selector: 'app-individual-book-primary-data-displayer',

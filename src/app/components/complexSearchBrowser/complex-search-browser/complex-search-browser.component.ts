@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ComplexSearchBrowserService} from "../../../services/complex-search-browser.service";
-import {BookSearchService} from "../../../services/book-search.service";
+import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
+import {BookSearchService} from "../../../services/book/book-search.service";
 
 @Component({
   selector: 'app-complex-search-browser',

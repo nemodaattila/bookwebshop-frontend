@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {AuthenticationService} from "../../../services/user/authentication.service";
 
 @Component({
   selector: 'app-mainmenu',
@@ -8,11 +10,19 @@ import {Router} from "@angular/router";
 })
 export class MainMenuComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthenticationService) {}
 
-  ngOnInit(): void {}
+  private loggedUSerSubscription = Subscription.EMPTY
+
+  ngOnInit(): void {
+    this.authService.loggedUserState.subscribe((value => {
+      this.hasLoggedUser = value
+    }))
+  }
 
   public inputValue = '';
+
+  public hasLoggedUser: boolean = false;
 
 
 
