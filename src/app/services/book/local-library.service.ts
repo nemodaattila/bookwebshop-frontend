@@ -4,8 +4,7 @@ import {BookSearchService} from "./book-search.service";
 import {LocalLibraryModel} from "../../models/service/local-library-model";
 import {HttpClient} from "@angular/common/http";
 import {BookPrimaryData} from "../../models/bookData/book-primary-data";
-import {HttpRequestService} from "../helper/http-request.service";
-import {HttpRequestModel} from "../../models/service/http-request-model";
+import {backendUrl} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +40,7 @@ export class LocalLibraryService{
    * @param bookSearch
    * @param http
    */
-  constructor(private bookSearch: BookSearchService, private http: HttpRequestService) {
+  constructor(private bookSearch: BookSearchService, private http: HttpClient) {
     this.localLibrary = new LocalLibraryModel();
     this.fillBooksFromLocalStorage();
     this.isbnListSubscription = <object>this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
@@ -104,10 +103,8 @@ export class LocalLibraryService{
    * @param isbn
    * @private
    */
-  private getBookPrimaryData(isbn: string): Observable<any> {
-    let hrm = new HttpRequestModel();
-    hrm.setTargetUrl("\\primaryData\\" + isbn)
-    return this.http.send(hrm) as Observable<any>;
+  private getBookPrimaryData(isbn: string): Observable<{ success: any, data: object }> {
+    return this.http.get<{ success: any, data: object }>(backendUrl + "\\primaryData\\" + isbn);
   }
 
   /**

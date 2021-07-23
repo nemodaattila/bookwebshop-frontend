@@ -1,8 +1,8 @@
+import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
 import {BookMetaData} from "../../models/bookData/book-meta-data";
 import {Injectable, OnInit} from "@angular/core";
-import {HttpRequestService} from "../helper/http-request.service";
-import {HttpRequestModel} from "../../models/service/http-request-model";
+import {backendUrl} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class BookMetaDataService implements OnInit {
    */
   private readyState: boolean = false;
 
-  constructor(private http: HttpRequestService) {
+  constructor(private http: HttpClient) {
     // localStorage.setItem('metadata','');
     this.checkMetaDataInLocalStorage();
   }
@@ -80,9 +80,7 @@ export class BookMetaDataService implements OnInit {
    * @private
    */
   private getMetaDataFromServer() {
-    let requestModel = new HttpRequestModel();
-    requestModel.setTargetUrl('\\metadata');
-    <any>this.http.get(requestModel).subscribe(data => {
+    this.http.get<any>(backendUrl + '\\metadata').subscribe(data => {
       if ((data.hasOwnProperty('success') && data.success === true)) {
         this.saveMetaToModel(data.data);
         this.saveMetaDataToLocalStorage()

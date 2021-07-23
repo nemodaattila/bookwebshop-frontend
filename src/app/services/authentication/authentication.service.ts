@@ -4,8 +4,7 @@ import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {VariableHelperService} from "../helper/variable-helper.service";
 import {Router} from "@angular/router";
-import {HttpRequestService} from "../helper/http-request.service";
-import {HttpRequestModel} from "../../models/service/http-request-model";
+import {backendUrl} from "../../globals";
 
 
 
@@ -20,7 +19,7 @@ export class AuthenticationService{
 
   eventListener = new Subject<any>();
 
-  constructor(private router: Router, private http: HttpRequestService, private varHelper: VariableHelperService) {
+  constructor(private router: Router, private http: HttpClient, private varHelper: VariableHelperService) {
     console.log(this.checkLocalStorageForToken())
     console.log(this.getToken())
     if (this.checkLocalStorageForToken() && this.loggedUser === undefined) {
@@ -74,6 +73,8 @@ export class AuthenticationService{
 
   login(data: any): void {
     this.loginRequest(data).subscribe(value => {
+      console.log(value)
+      console.log(value.cookie)
       let {'success': success, 'data': data} = value
       if (success) {
         console.log(data)
@@ -98,26 +99,17 @@ export class AuthenticationService{
   }
 
   registerRequest(data: { [index: string]: string }): Observable<any> {
-   let hrm = new HttpRequestModel()
-    hrm.addHeaders( {
+    const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
     });
-   hrm.setRequestType('POST')
-    hrm.setTargetUrl('register')
-    hrm.setParameters(data)
-    return this.http.send(hrm) as Observable<any>
+    return this.http.post<any>(backendUrl + 'register', data, {headers: headers});
   }
 
   loginRequest(data: { [index: string]: string }): Observable<any> {
-    let hrm = new HttpRequestModel()
-    hrm.addHeaders( {
+    const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
     });
-    hrm.setRequestType('POST')
-    hrm.setTargetUrl('login')
-    hrm.setParameters(data)
-    return this.http.send(hrm) as Observable<any>
-
+    return this.http.post<any>(backendUrl + 'login', data, {headers: headers});
   }
 
   logOut()
@@ -129,15 +121,10 @@ export class AuthenticationService{
         if (success === true)
         {
           this.removeLoggedUserAndToken()
-          console.log("logout success")
         }
         else
         {
           console.log(value)
-          if (data['errorCode'] === 'UTINULL')
-          {
-            this.removeLoggedUserAndToken()
-          }
           this.eventListener.next({type: 'logOutError', value: data['errorCode']});
         }
       }
@@ -149,16 +136,8 @@ export class AuthenticationService{
 
   logOutRequest()
   {
-    let hrm = new HttpRequestModel()
-    // hrm.addHeaders( {
-    //   'Content-Type': 'text/plain',
-    // });
-    hrm.setTargetUrl('logout\\'+this.getToken())
-    // hrm.setParameters(data)
-    return this.http.send(hrm) as Observable<any>
-
-    // return this.http.get('logout\\'+this.getToken())
-    // return this.http.get<any>(this.backendUrl + 'logout/'+this.getToken());
+    // let header = new HttpHeaders({Authorization: 'Basic ' + this.getToken() as string})
+    return this.http.get<any>(backendUrl + 'logout');
   }
 
   public removeLoggedUserAndToken()
@@ -194,14 +173,12 @@ export class AuthenticationService{
 
 
   getUserFromServerBasedOnToken(token: string | null): Observable<any> {
-    let hrm = new HttpRequestModel()
-    hrm.setTargetUrl('\\tokentouser\\'+token)
-    return this.http.send(hrm) as Observable<any>
-    // return this.http.get<any>(this.backendUrl + '\\tokentouser\\'+token);
+
+    return this.http.get<any>(backendUrl + '\\tokentouser\\'+token);
   }
 
   private checkLocalStorageForToken(): boolean {
-    // this.removeLoggedUserAndToken()
+    this.removeLoggedUserAndToken()
     return (localStorage.getItem('token') !== null && localStorage.getItem('token')!==undefined)
   }
 

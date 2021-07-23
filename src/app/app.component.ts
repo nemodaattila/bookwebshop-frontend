@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {BookMetaDataService} from "./services/book/book-meta-data.service";
 import {BookSearchService} from "./services/book/book-search.service";
 import {LocalLibraryService} from "./services/book/local-library.service";
-import {AuthenticationService} from "./services/user/authentication.service";
+import {AuthenticationService} from "./services/authentication/authentication.service";
 
 @Component({
   selector: 'app-root',

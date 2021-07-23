@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {AuthenticationService} from "../../../services/user/authentication.service";
+import {AuthenticationService} from "../../../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-mainmenu',

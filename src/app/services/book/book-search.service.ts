@@ -1,8 +1,8 @@
 import {BookSearchModel} from "../../models/service/book-search-model";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {Injectable} from "@angular/core";
-import {HttpRequestService} from "../helper/http-request.service";
-import {HttpRequestModel} from "../../models/service/http-request-model";
+import {backendUrl} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class BookSearchService{
    */
   private setToDefault: boolean = true
 
-  constructor(private http: HttpRequestService) {
+  constructor(private http: HttpClient) {
     this.searchParams = new BookSearchModel()
   }
 
@@ -163,15 +163,11 @@ export class BookSearchService{
    * @param searchParams
    * @private
    */
-  private searchForBooks(searchParams: {[index: string]: any}): Observable<any> {
-    let htm = new HttpRequestModel()
-    htm.addHeaders(  {
+  private searchForBooks(searchParams: object): Observable<any> {
+    const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
-    })
-    htm.setRequestType('POST')
-    htm.setTargetUrl('booklist')
-    htm.setParameters(searchParams);
-    return <Observable<any>>this.http.send(htm);
+    });
+    return this.http.post<any>(backendUrl + '\\booklist', searchParams, {headers: headers});
   }
 
   /**

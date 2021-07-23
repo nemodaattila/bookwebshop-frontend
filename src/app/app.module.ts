@@ -2,7 +2,7 @@ import {AppComponent} from './app.component';
 import {MainMenuComponent} from './components/navigationMenu/mainmenu/main-menu.component';
 import {BrowseComponent} from './components/browse/browse.component';
 import {AppRoutingModule} from "./approuting/app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BookThemeCategoryBrowserComponent} from './components/categoryBrowser/book-theme-category-browser/book-theme-category-browser.component';
 import {BookPrimaryDataDisplayerComponent} from './components/bookPrimaryDataDisplayer/book-primary-data-displayer/book-primary-data-displayer.component';
 import {CommonModule} from "@angular/common";
@@ -28,6 +28,8 @@ import { CriteriaMultipleCheckBoxComponent } from './components/complexSearchBro
 import { LoginFormComponent } from './components/navigationMenu/login-form/login-form.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoggedInMenuComponent } from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
+import {AuthenticationService} from "./services/authentication/authentication.service";
+import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
 
 @NgModule({
   declarations: [
@@ -65,7 +67,11 @@ import { LoggedInMenuComponent } from './components/navigationMenu/logged-in-men
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthenticationService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpAuthenticationInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
