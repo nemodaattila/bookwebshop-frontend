@@ -5,13 +5,14 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) {
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const auth = this.injector.get(AuthenticationService);
@@ -24,10 +25,9 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
         headers: r2.headers.set('Authorization', auth.getToken() as string),
 
-
         // headers: request.headers.set('Content-Type', 'text/plain')
 
-      //  'Content-Type': 'text/plain',
+        //  'Content-Type': 'text/plain',
       });
 
       console.log(authRequest)

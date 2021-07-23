@@ -34,13 +34,13 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
    */
   public typeString?: string
 
-
   /**
    * constructor
    * @param sanitizer value sanitizer
    * @param metaService service for book metadata
    */
-  constructor(private sanitizer: DomSanitizer, private metaService: BookMetaDataService) {}
+  constructor(private sanitizer: DomSanitizer, private metaService: BookMetaDataService) {
+  }
 
   /**
    *  creates cover thumbnail safe form

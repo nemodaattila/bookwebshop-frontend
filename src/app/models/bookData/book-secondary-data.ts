@@ -1,3 +1,4 @@
 export class BookSecondaryData {
-  constructor(secondaryData: object) {}
+  constructor(secondaryData: object) {
+  }
 }

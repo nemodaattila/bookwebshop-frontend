@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { BookMetaDataService } from './book-meta-data.service';
+import {BookMetaDataService} from './book-meta-data.service';
 
 describe('BookMetaDataService', () => {
   let service: BookMetaDataService;

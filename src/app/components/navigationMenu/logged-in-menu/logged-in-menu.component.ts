@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication/authentication.service";
 import {User} from "../../../models/user/user";
 import {Subscription} from "rxjs";
@@ -10,7 +10,8 @@ import {Subscription} from "rxjs";
 })
 export class LoggedInMenuComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService) {
+  }
 
   loggedUser!: User;
 
@@ -28,10 +29,8 @@ export class LoggedInMenuComponent implements OnInit {
     });
   }
 
-  logOut()
-  {
+  logOut() {
     this.authService.logOut()
   }
-
 
 }

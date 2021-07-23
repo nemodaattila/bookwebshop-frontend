@@ -1,4 +1,4 @@
-import { LocalLibraryModel } from './local-library-model';
+import {LocalLibraryModel} from './local-library-model';
 
 describe('LocalLibraryModel', () => {
   it('should create an instance', () => {

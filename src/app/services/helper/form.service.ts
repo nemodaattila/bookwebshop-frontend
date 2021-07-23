@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 
 @Injectable({
@@ -6,11 +6,12 @@ import {FormGroup} from "@angular/forms";
 })
 export class FormService {
 
-  constructor() { }
+  constructor() {
+  }
 
-  checkFormError(form: FormGroup, errorTypes: {[index: string]: { [index: string] : string}}): string {
+  checkFormError(form: FormGroup, errorTypes: { [index: string]: { [index: string]: string } }): string {
     let hasError = false;
-    let formControl: string='';
+    let formControl: string = '';
     let error;
     for (const key in form.controls) {
       if (form.controls[key].errors !== null) {

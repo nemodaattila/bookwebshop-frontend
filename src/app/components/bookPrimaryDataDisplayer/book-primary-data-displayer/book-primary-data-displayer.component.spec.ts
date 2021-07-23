@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BookPrimaryDataDisplayerComponent } from './book-primary-data-displayer.component';
+import {BookPrimaryDataDisplayerComponent} from './book-primary-data-displayer.component';
 
 describe('BookPrimaryDataDisplayerComponent', () => {
   let component: BookPrimaryDataDisplayerComponent;
@@ -8,9 +8,9 @@ describe('BookPrimaryDataDisplayerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookPrimaryDataDisplayerComponent ]
+      declarations: [BookPrimaryDataDisplayerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

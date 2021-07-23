@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CriteriaMultipleCheckBoxComponent } from './criteria-multiple-check-box.component';
+import {CriteriaMultipleCheckBoxComponent} from './criteria-multiple-check-box.component';
 
 describe('CriteriaMultipleTagComponent', () => {
   let component: CriteriaMultipleCheckBoxComponent;
@@ -8,9 +8,9 @@ describe('CriteriaMultipleTagComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriteriaMultipleCheckBoxComponent ]
+      declarations: [CriteriaMultipleCheckBoxComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

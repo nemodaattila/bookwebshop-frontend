@@ -1,4 +1,4 @@
-import { BookSecondaryData } from './book-secondary-data';
+import {BookSecondaryData} from './book-secondary-data';
 
 describe('BookSecondaryData', () => {
   it('should create an instance', () => {

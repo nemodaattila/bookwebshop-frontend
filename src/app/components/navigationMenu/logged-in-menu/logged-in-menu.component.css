@@ -6,20 +6,17 @@
 
 }
 
-.cssTable
-{
-  display:table;
+.cssTable {
+  display: table;
 
 }
 
-.cssTable .cssRow
-{
-  display:table-row;
+.cssTable .cssRow {
+  display: table-row;
   box-sizing: content-box;
 }
 
-.cssTable .cssRow>*
-{
-  display:table-cell;
+.cssTable .cssRow > * {
+  display: table-cell;
   padding: 2px;
 }

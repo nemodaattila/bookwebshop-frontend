@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BookThemeCategoryBrowserComponent } from './book-theme-category-browser.component';
+import {BookThemeCategoryBrowserComponent} from './book-theme-category-browser.component';
 
 describe('BookThemeCategoryBrowserComponent', () => {
   let component: BookThemeCategoryBrowserComponent;
@@ -8,9 +8,9 @@ describe('BookThemeCategoryBrowserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookThemeCategoryBrowserComponent ]
+      declarations: [BookThemeCategoryBrowserComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

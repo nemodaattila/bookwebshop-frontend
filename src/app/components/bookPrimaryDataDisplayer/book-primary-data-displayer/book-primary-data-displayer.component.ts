@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
 /**
  * frame, datasource, and connection for displaying multiple book primary data
  */
-export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy{
+export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy {
 
   /**
    * event listener for isbn list -> displayerService
@@ -43,11 +43,11 @@ export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy{
       this.isbnList = this.displayerService.getActualIsbnList()
       this.allFound = this.displayerService.getAllCount();
     })
-    }
+  }
 
   ngOnDestroy(): void {
-        this.isbnListener.unsubscribe();
-    }
+    this.isbnListener.unsubscribe();
+  }
 
   /**
    * asks the displayerService for a book's primary data by isbn and returns it
@@ -56,7 +56,5 @@ export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy{
   getPrimaryDataByISBN(isbn: string) {
     return this.displayerService.getPrimaryDataByISBN(isbn)
   }
-
-
 
 }

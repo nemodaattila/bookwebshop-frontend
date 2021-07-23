@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CriteriaInputTextWithDataListComponent } from './criteria-input-text-with-data-list.component';
+import {CriteriaInputTextWithDataListComponent} from './criteria-input-text-with-data-list.component';
 
 describe('CriteriaInputTextWithDataListComponent', () => {
   let component: CriteriaInputTextWithDataListComponent;
@@ -8,9 +8,9 @@ describe('CriteriaInputTextWithDataListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriteriaInputTextWithDataListComponent ]
+      declarations: [CriteriaInputTextWithDataListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

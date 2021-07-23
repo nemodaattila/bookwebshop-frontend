@@ -6,7 +6,6 @@ body > header {
   justify-content: space-between;
 }
 
-
 nav {
   padding: 10px;
   border: solid 1px;
@@ -31,7 +30,6 @@ nav form {
 }
 
 #titleDiv {
-
   display: flex;
   align-items: center;
   /*justify-content: center;*/

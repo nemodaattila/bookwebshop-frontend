@@ -16,20 +16,21 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   errorMessage = '';
   headerText = 'Regisztráció';
   errorObs: Subscription = Subscription.EMPTY;
-  formErrorMessages:{[index: string]: { [index: string] : string}} = {
-    userName: {required : 'Felhasználónév megadása kötelező'},
-    email: {required : 'Email megadása kötelező', email: 'Valid e-mail címet adjon meg!'},
+  formErrorMessages: { [index: string]: { [index: string]: string } } = {
+    userName: {required: 'Felhasználónév megadása kötelező'},
+    email: {required: 'Email megadása kötelező', email: 'Valid e-mail címet adjon meg!'},
     password: {required: 'Jelszót kötelező kitölteni', minlength: 'A jelszónak minimum 8 karakternek kell lennie'},
     rePassword: {required: 'Jelszót kötelező kitölteni', minlength: 'A jelszónak minimum 8 karakternek kell lennie'}
   };
 
-  serverErrorMessages: {[index: string]:string}=
+  serverErrorMessages: { [index: string]: string } =
     {
       'UE': 'Már létezik felhasználó az adott névvel vagy e-mail címmel',
       "UCE": 'A felhasználó létrehozása szerver hiba miatt meghiúsult'
     }
 
-  constructor(private router: Router, private authService: AuthenticationService, private formValidator: FormService) { }
+  constructor(private router: Router, private authService: AuthenticationService, private formValidator: FormService) {
+  }
 
   /**
    * ha van bejelentkezett felhasnáló elnavigál
@@ -61,7 +62,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       userName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      rePassword: new FormControl('' , [Validators.required, Validators.minLength(8)])
+      rePassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   }
 
@@ -71,8 +72,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   submitRegisterForm(): void {
     this.errorMessage = '';
     const formValid = this.formValidator.checkFormError(this.userRegisterForm, this.formErrorMessages);
-    if (formValid !== '')
-    {
+    if (formValid !== '') {
       this.errorMessage = formValid;
       return;
     }
@@ -80,7 +80,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       if (this.userRegisterForm.controls.password.value !== this.userRegisterForm.controls.rePassword.value) {
         this.errorMessage = 'A két jelszó nem egyezik';
       } else {
-        const data: {[index: string]: string} = this.userRegisterForm.value;
+        const data: { [index: string]: string } = this.userRegisterForm.value;
         delete data.rePassword;
         console.log(data)
         this.authService.register(data);

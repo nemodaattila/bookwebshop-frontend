@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CriteriaSelectorComponent } from './criteria-selector.component';
+import {CriteriaSelectorComponent} from './criteria-selector.component';
 
 describe('CriteriaSelectorComponent', () => {
   let component: CriteriaSelectorComponent;
@@ -8,9 +8,9 @@ describe('CriteriaSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriteriaSelectorComponent ]
+      declarations: [CriteriaSelectorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { PageNavigatorModel } from './page-navigator-model';
+import {PageNavigatorModel} from './page-navigator-model';
 
 describe('PageNavigatorModel', () => {
   it('should create an instance', () => {

@@ -10,7 +10,7 @@ import {BookMetaDataService} from "./book-meta-data.service";
 /**
  * stores data for the actually displayed books
  */
-export class BookPrimaryDataDisplayerService{
+export class BookPrimaryDataDisplayerService {
 
   /**
    * subscription for the BookMetaData isbn list broadcast

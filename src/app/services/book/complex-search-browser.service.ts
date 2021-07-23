@@ -10,7 +10,7 @@ import {BookMetaDataService} from "./book-meta-data.service";
 /**
  * service for complex book search ( on multiple criteria)
  */
-export class ComplexSearchBrowserService{
+export class ComplexSearchBrowserService {
 
   /**
    * types of criteria key: name, value: label

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from "../../models/user/user";
 
 @Injectable({
@@ -6,7 +6,8 @@ import {User} from "../../models/user/user";
 })
 export class VariableHelperService {
 
-  constructor() { }
+  constructor() {
+  }
 
   public createUserFromHttpResponse(response: { [index: string]: any }) {
     console.log(response)

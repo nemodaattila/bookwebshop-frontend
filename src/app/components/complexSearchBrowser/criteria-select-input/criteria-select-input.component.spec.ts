@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CriteriaSelectInputComponent } from './criteria-select-input.component';
+import {CriteriaSelectInputComponent} from './criteria-select-input.component';
 
 describe('CriteriaSelectInputComponent', () => {
   let component: CriteriaSelectInputComponent;
@@ -8,9 +8,9 @@ describe('CriteriaSelectInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriteriaSelectInputComponent ]
+      declarations: [CriteriaSelectInputComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

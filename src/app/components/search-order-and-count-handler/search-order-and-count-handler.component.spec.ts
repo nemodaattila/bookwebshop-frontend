@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SearchOrderAndCountHandlerComponent } from './search-order-and-count-handler.component';
+import {SearchOrderAndCountHandlerComponent} from './search-order-and-count-handler.component';
 
 describe('SearchOrderAndCountHandlerComponent', () => {
   let component: SearchOrderAndCountHandlerComponent;
@@ -8,9 +8,9 @@ describe('SearchOrderAndCountHandlerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchOrderAndCountHandlerComponent ]
+      declarations: [SearchOrderAndCountHandlerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

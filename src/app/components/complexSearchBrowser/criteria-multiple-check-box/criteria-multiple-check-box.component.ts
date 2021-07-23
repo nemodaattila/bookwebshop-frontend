@@ -11,7 +11,7 @@ import {BookMetaDataService} from "../../../services/book/book-meta-data.service
 /**
  * multiple checkbox type (tags) Criteria Component for complex book search
  */
-export class CriteriaMultipleCheckBoxComponent{
+export class CriteriaMultipleCheckBoxComponent {
 
   constructor(private complexSearch: ComplexSearchBrowserService, private metaService: BookMetaDataService) {
     this.sortTags(this.metaService.getTags())

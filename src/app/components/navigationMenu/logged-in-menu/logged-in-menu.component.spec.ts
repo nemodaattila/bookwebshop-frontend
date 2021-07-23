@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoggedInMenuComponent } from './logged-in-menu.component';
+import {LoggedInMenuComponent} from './logged-in-menu.component';
 
 describe('LoggedInMenuComponent', () => {
   let component: LoggedInMenuComponent;
@@ -8,9 +8,9 @@ describe('LoggedInMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoggedInMenuComponent ]
+      declarations: [LoggedInMenuComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

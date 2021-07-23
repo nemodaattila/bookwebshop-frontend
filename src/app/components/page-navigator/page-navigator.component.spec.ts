@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageNavigatorComponent } from './page-navigator.component';
+import {PageNavigatorComponent} from './page-navigator.component';
 
 describe('PageNavigatorComponent', () => {
   let component: PageNavigatorComponent;
@@ -8,9 +8,9 @@ describe('PageNavigatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageNavigatorComponent ]
+      declarations: [PageNavigatorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

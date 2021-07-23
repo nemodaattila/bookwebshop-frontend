@@ -1,4 +1,4 @@
-import { BookMetaData } from './book-meta-data';
+import {BookMetaData} from './book-meta-data';
 
 describe('BookMetaData', () => {
   it('should create an instance', () => {

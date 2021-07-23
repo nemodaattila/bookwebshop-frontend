@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CriteriaSelectWithOptionGroupComponent } from './criteria-select-with-option-group.component';
+import {CriteriaSelectWithOptionGroupComponent} from './criteria-select-with-option-group.component';
 
 describe('CriteriaSelectWithOptionGroupComponent', () => {
   let component: CriteriaSelectWithOptionGroupComponent;
@@ -8,9 +8,9 @@ describe('CriteriaSelectWithOptionGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CriteriaSelectWithOptionGroupComponent ]
+      declarations: [CriteriaSelectWithOptionGroupComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -12,7 +12,7 @@ import {backendUrl} from "../../globals";
 /**
  * stores the data of all already loaded books
  */
-export class LocalLibraryService{
+export class LocalLibraryService {
 
   /**
    * gets the isbn list from BookSearchService

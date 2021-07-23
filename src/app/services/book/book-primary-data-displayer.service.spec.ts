@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { BookPrimaryDataDisplayerService } from './book-primary-data-displayer.service';
+import {BookPrimaryDataDisplayerService} from './book-primary-data-displayer.service';
 
 describe('BookPrimaryDataDisplayerService', () => {
   let service: BookPrimaryDataDisplayerService;

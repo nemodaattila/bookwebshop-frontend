@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SubCategoryBrowserComponent } from './sub-category-browser.component';
+import {SubCategoryBrowserComponent} from './sub-category-browser.component';
 
 describe('SubCategoryBrowserComponent', () => {
   let component: SubCategoryBrowserComponent;
@@ -8,9 +8,9 @@ describe('SubCategoryBrowserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubCategoryBrowserComponent ]
+      declarations: [SubCategoryBrowserComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

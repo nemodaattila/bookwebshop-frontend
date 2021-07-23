@@ -13,7 +13,7 @@ import {BookSearchService} from "../../services/book/book-search.service";
  * setting the direction of order (ascending, descending)
  * setting the number of displayed search results (e.g. 10, 50)
  */
-export class SearchOrderAndCountHandlerComponent implements OnDestroy{
+export class SearchOrderAndCountHandlerComponent implements OnDestroy {
 
   /**
    * subscription for the BookSearchService's parameter collector call
@@ -58,9 +58,9 @@ export class SearchOrderAndCountHandlerComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-        this.bookSearchParamRequest.unsubscribe()
-        this.bookSearch.unRegisterSearchService()
-    }
+    this.bookSearchParamRequest.unsubscribe()
+    this.bookSearch.unRegisterSearchService()
+  }
 
   /**
    * event change saves the values of the input select elements and inits a
