@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndividualBookPrimaryDataDisplayerComponent } from './individual-book-primary-data-displayer.component';
 
-describe('InduvidualBookPrimaryDataDisplayeComponent', () => {
+describe('IndividualBookPrimaryDataDisplayerComponent', () => {
   let component: IndividualBookPrimaryDataDisplayerComponent;
   let fixture: ComponentFixture<IndividualBookPrimaryDataDisplayerComponent>;
 

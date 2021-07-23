@@ -1,5 +1,5 @@
 export class User {
-  constructor(private userName: string|null = '', private authenticationLevel: number|null = 1, private email: string|null = '') {
+  constructor(private userName: string | null = '', private authenticationLevel: number | null = 1, private email: string | null = '') {
     console.log(this)
   }
 

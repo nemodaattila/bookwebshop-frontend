@@ -287,8 +287,7 @@ export class ComplexSearchBrowserService{
   }
 
   /**
-   * passes data (searc
-   * h criteria types and values) to the BookSearchService
+   * passes data (search criteria types and values) to the BookSearchService
    * @private
    */
   private passParameterToBookSearchService() {

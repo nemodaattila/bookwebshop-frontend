@@ -1,10 +1,5 @@
-.catNav {
-  margin: 5px;
-  border: 1px solid black;
-  padding-inline-start: 5px;
-}
 
-.catNav > .searchLabel {
+.searchLabel {
   margin: 2px;
   cursor: pointer;
 }

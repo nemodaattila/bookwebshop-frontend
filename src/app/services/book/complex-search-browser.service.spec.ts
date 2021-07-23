@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ComplexSearchBrowserService } from './complex-search-browser.service';
 
-describe('ComplexSearchNrowserService', () => {
+describe('ComplexSearchBrowserService', () => {
   let service: ComplexSearchBrowserService;
 
   beforeEach(() => {

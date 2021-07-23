@@ -1,8 +1,8 @@
 <header>
   <nav>
-        <span id="titlediv">
+        <span id="titleDiv">
         <span><a href="">Könyvespolc.hu</a></span>
-          <!--        <img id="headimg" src="./file/book-logo.jpg" >-->
+          <!--        <img id="headImg" src="./file/book-logo.jpg" >-->
 
     <app-login-form *ngIf="!hasLoggedUser"></app-login-form>
     <app-logged-in-menu *ngIf="hasLoggedUser"></app-logged-in-menu>
@@ -11,24 +11,24 @@
     <span>
         <span>
             <a routerLink="">Főoldal</a>
-            <a id="discountlink" href="../../../../../databasetest/index.php">Akciók</a>
-            <a id="newreleaselink" href="../../../../../databasetest/index.php">Újdonságok</a>
+            <a id="discountLink">Akciók</a>
+            <a id="newReleaseLink">Újdonságok</a>
 
         </span>
-        <span id="rightdiv">
-            <a id="aboutuslink" href="../../../../../databasetest/index.php">Rólunk</a>
-            <a id="shopaccesslink" href="../../../../../databasetest/index.php">Elérhetőség</a>
-            <a id="faqlink" href="../../../../../databasetest/index.php">Kérdések - Észrevételek</a>
+        <span id="rightDiv">
+            <a id="aboutUsLink">Rólunk</a>
+            <a id="shopAccessLink">Elérhetőség</a>
+            <a id="faqLink">Kérdések - Észrevételek</a>
         </span>
     </span>
-    <span id=bookmanagenav></span>
+    <span id=bookManageNav></span>
     <span>
         <a id="browseLink" routerLink="browse">Böngészés</a>
-        <div>
-          <label for="quicksearch">Egyszerű keresés (író vagy cím):&nbsp;</label>
-          <input [(ngModel)]="inputValue" id="quicksearch" name="quicksearch" type="text">
+        <span>
+          <label for="quickSearch">Egyszerű keresés (író vagy cím):&nbsp;</label>
+          <input [(ngModel)]="inputValue" id="quickSearch" type="text">
           <input type="submit" value="keresés" (click)="quickSearch()">
-        </div>
+        </span>
         <a id="detSearchLink" routerLink="detailedSearch">Részletes keresés</a>
     </span>
   </nav>

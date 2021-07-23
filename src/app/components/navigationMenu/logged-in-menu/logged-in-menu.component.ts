@@ -21,7 +21,7 @@ export class LoggedInMenuComponent implements OnInit {
   ngOnInit(): void {
 
     this.loggedUser = <User>this.authService.getLoggedUser();
-    this.eventSubscription = this.authService.eventListener.subscribe(value => {
+    this.eventSubscription = this.authService.httpEventListener.subscribe(value => {
       if (value.type === 'logOutError') {
         this.errorMessage = value.value;
       }

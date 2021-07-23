@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -10,30 +10,43 @@ import {AuthenticationService} from "../../../services/authentication/authentica
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements OnInit {
+/**
+ * component displaying and handling user login
+ */
+export class LoginFormComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private formService: FormService, private authService: AuthenticationService) { }
+  constructor(private router: Router, private formService: FormService, private authService: AuthenticationService) {
+  }
 
   /**
    * login form
    */
   userLoginForm!: FormGroup;
-  errorMessage = '';
-  eventSubscription = Subscription.EMPTY;
-  formErrorMessages = {
-    name: {required : 'Név megadása kötelező'},
-    password: {required: 'Jelszót kötelező kitölteni',minlength: 'A jelszónak minimum 8 karakternek kell lennie'}
-  };
-
 
   /**
-   * ha már be van jelentkezve valaki elnavigál
-   * feliratkozás loginHiba triggerre
+   * displayed error message in case of error
+   */
+  errorMessage = '';
+
+  /**
+   * subscription for events (error events)
+   */
+  eventSubscription = Subscription.EMPTY;
+
+  /**
+   * possible error messages connected to  form validation
+   */
+  formErrorMessages = {
+    name: {required: 'Név megadása kötelező'},
+    password: {required: 'Jelszót kötelező kitölteni', minlength: 'A jelszónak minimum 8 karakternek kell lennie'}
+  };
+
+  /**
+   * form initialization and error subscribing
    */
   ngOnInit(): void {
-    // if (this.userService.getLoggedUserBoolean()) { this.router.navigate(['/']); }
     this.initFormGroup();
-    this.eventSubscription = this.authService.eventListener.subscribe(value => {
+    this.eventSubscription = this.authService.httpEventListener.subscribe(value => {
       if (value.type === 'loginError') {
         this.errorMessage = value.value;
       }
@@ -44,37 +57,28 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
-   * visszanavigálás
-   */
-  cancelForm(): void {
-    this.router.navigate(['']);
-  }
-
-  /**
-   * login form megjelenítése
+   * form initialization
    * @private
    */
   private initFormGroup(): void {
     this.userLoginForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      password : new FormControl('', [Validators.required,Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   }
 
   /**
-   * form validéálás , elküldés feldolgozásra
+   * form validation, data passes to authorization service
    */
   submitLoginForm(): void {
     this.errorMessage = '';
     const formValid = this.formService.checkFormError(this.userLoginForm, this.formErrorMessages);
-    if (formValid !== '')
-    {
+    if (formValid !== '') {
       this.errorMessage = formValid;
       return;
     }
     const data = this.userLoginForm.value;
     console.log(data)
-
     this.authService.login(data);
   }
 

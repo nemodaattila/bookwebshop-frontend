@@ -11,7 +11,7 @@ import {backendUrl} from "../../globals";
  * creates and sends a request to the server for searching books in database
  * based on multiple search parameter
  */
-export class BookSearchService{
+export class BookSearchService {
 
   /**
    * pushes the actual isbn list
@@ -44,7 +44,7 @@ export class BookSearchService{
   private answeredRegisteredComponents: number = 0;
 
   /**
-   * parameters are o be reseted or not
+   * parameters are to be reset or not
    * @private
    */
   private setToDefault: boolean = true

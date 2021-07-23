@@ -30,18 +30,18 @@ nav form {
   margin-block-end: 0;
 }
 
-/*#titlediv {*/
+#titleDiv {
 
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+}
 
-/*#titlediv > * {*/
-/*  margin: 5px;*/
-/*}*/
+#titleDiv > * {
+  margin: 5px;
+}
 
-/*#headimg {*/
-/*  width: 80px;*/
-/*  height: 80px;*/
-/*}*/
+#headImg {
+  width: 80px;
+  height: 80px;
+}

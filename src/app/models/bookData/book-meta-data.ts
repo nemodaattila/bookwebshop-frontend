@@ -8,13 +8,13 @@ export class BookMetaData {
    * e.g.: { 1 (book): {1: hardcover, 2: softcover}}, 2 (audio): {3: audioCd, 4: cassette}
    * @private
    */
-  private format: { [index: number]: { [index: number]: string } } = {}
+  private readonly format: { [index: number]: { [index: number]: string } } = {}
 
   /**
    * possible language of books
    * @private
    */
-  private language: { [index: number]: string } = {}
+  private readonly language: { [index: number]: string } = {}
 
   /**
    * main theme categories of books
@@ -36,13 +36,13 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
    * possible tags/labels for books: e.g: magical, sci/fi, time-travel, romantic
    * @private
    */
-  private tag: { [index: number]: string } = {}
+  private readonly tag: { [index: number]: string } = {}
 
   /**
    * possible target audiences for books, e.g. : all-age, 0-6 years, 13-17 year old girl's
    * @private
    */
-  private targetAudience: { [index: number]: string } = {}
+  private readonly targetAudience: { [index: number]: string } = {}
 
   /**
    * type of books: (physical) book, audio book, e-book

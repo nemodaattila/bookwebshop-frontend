@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
@@ -10,7 +10,7 @@ import {AuthenticationService} from "../../services/authentication/authenticatio
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   userRegisterForm!: FormGroup;
   errorMessage = '';
@@ -38,7 +38,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     // if (this.coopServ.getLoggedUserBoolean()) { this.router.navigate(['/']); }
     this.initFormGroup();
-    this.errorObs = this.authService.eventListener.subscribe(value => {
+    this.errorObs = this.authService.httpEventListener.subscribe(value => {
       if (value.type === 'registerError') {
         this.errorMessage = this.serverErrorMessages[value.value];
       }
