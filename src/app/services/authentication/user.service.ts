@@ -6,6 +6,7 @@ import {VariableHelperService} from "../helper/variable-helper.service";
 import {Router} from "@angular/router";
 import {backendUrl} from "../../globals";
 import {LoggedUserService} from "./logged-user.service";
+import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +18,11 @@ import {LoggedUserService} from "./logged-user.service";
  */
 export class UserService {
 
-  /**
-   * data about logged user if exists, else null
-   * @private
-   */
-  // private loggedUser?: User = undefined
 
   /**
    * emits the state of user , true if a user is logged in
    */
   public loggedUserState = new Subject<boolean>();
-
-  httpEventListener = new Subject<any>();
 
   /**
    * checks if a user is saved in localstorage but not in loggedUser variable (e.g. browser refresh)
@@ -36,22 +30,30 @@ export class UserService {
    * TODO check: valid token check with server
    */
   constructor(private router: Router, private http: HttpClient, private varHelper: VariableHelperService,
-              private loggedUserServ: LoggedUserService) {
+              private loggedUserServ: LoggedUserService, private messageDisplayer: GlobalMessageDisplayerService) {
+    console.log('userconst')
     console.log(this.loggedUserServ.checkLocalStorageForToken())
     console.log(this.loggedUserServ.getToken())
     if (this.loggedUserServ.checkLocalStorageForToken() && this.loggedUserServ.getLoggedUser() === undefined) {
-      this.getUserFromServerBasedOnToken(this.loggedUserServ.getToken()).subscribe((value => {
-          console.log(value)
-          if (!value['success']) {
+      this.getUserFromServerBasedOnToken(this.loggedUserServ.getToken()).subscribe(({
+                                                                                      'success': success,
+                                                                                      'data': data
+                                                                                    }) => {
+          console.log(data)
+          console.log(success)
+          if (!success) {
             this.loggedUserServ.removeLoggedUserAndToken()
-            this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
+            this.messageDisplayer.displayFail('UTC', data['errorCode'])
+            // this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
           } else {
-            this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(value['data']['userData']))
+            this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
+            this.messageDisplayer.displaySuccess('UTC', data['userData']['userName'])
           }
           this.emitLoggedUserState()
-        }),
+        },
         error => {
           console.log(error.error)
+          this.messageDisplayer.displayError('UTC', error)
           this.emitLoggedUserState()
         }
       )
@@ -69,14 +71,16 @@ export class UserService {
       let {'success': success, 'data': data} = value
 
       if (success === true) {
-        this.httpEventListener.next({type: 'registrationSuccess', value: true});
+        this.messageDisplayer.displaySuccess('UR')
+        // this.httpEventListener.next({type: 'registrationSuccess', value: true});
         this.router.navigate(['/']);
       } else {
-        this.httpEventListener.next({type: 'registerError', value: data['errorCode']});
+        this.messageDisplayer.displayFail('UR', data['errorCode'])
+        // this.httpEventListener.next({type: 'registerError', value: data['errorCode']});
       }
 
     }, error => {
-      this.httpEventListener.next({type: 'registerError', value: error.error});
+      this.messageDisplayer.displayError('UR', error)
     });
   }
 
@@ -88,19 +92,22 @@ export class UserService {
   login(data: { [index: string]: string }): void {
     this.loginRequest(data).subscribe(value => {
       console.log(value)
-      console.log(value.cookie)
       let {'success': success, 'data': data} = value
       if (success) {
         console.log(data)
         this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
         this.loggedUserServ.saveToken(data['token']);
+        this.messageDisplayer.displaySuccess('UL', data['userData']['userName'])
       } else {
-        this.httpEventListener.next({type: 'loginError', value: data['errorCode']});
+        console.log('fail')
+        this.messageDisplayer.displayFail('UL', data['errorCode'])
+        // this.httpEventListener.next({type: 'loginError', value: data['errorCode']});
       }
       this.emitLoggedUserState()
     }, error => {
       console.log(error)
-      this.httpEventListener.next({type: 'loginError', value: error.error});
+      this.messageDisplayer.displayError('UL', error)
+      // this.httpEventListener.next({type: 'loginError', value: error.error});
     });
     this.emitLoggedUserState()
 
@@ -136,16 +143,19 @@ export class UserService {
         console.log(value)
         let {success, data} = value
         console.log([success, data])
-        if (success === true) {
-          this.loggedUserServ.removeLoggedUserAndToken()
-        } else {
-          console.log(value)
-          this.httpEventListener.next({type: 'logOutError', value: data['errorCode']});
-        }
-        this.emitLoggedUserState()
-      }, (error) => {
-        console.log(error)
-      })
+      if (success === true) {
+        this.loggedUserServ.removeLoggedUserAndToken()
+        this.messageDisplayer.displaySuccess('ULO')
+      } else {
+        console.log(value)
+        this.messageDisplayer.displayFail('ULO', data['errorCode'])
+      }
+      this.emitLoggedUserState()
+    }, (error) => {
+      console.log(error)
+      this.messageDisplayer.displayError('UL', error)
+
+    })
     this.emitLoggedUserState()
 
   }

@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GlobalMessageDiplayerComponent} from './global-message-diplayer.component';
+import {GlobalMessageDisplayerComponent} from './global-message-displayer.component';
 
 describe('GlobalMessageDiplayerComponent', () => {
-  let component: GlobalMessageDiplayerComponent;
-  let fixture: ComponentFixture<GlobalMessageDiplayerComponent>;
+  let component: GlobalMessageDisplayerComponent;
+  let fixture: ComponentFixture<GlobalMessageDisplayerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GlobalMessageDiplayerComponent]
+      declarations: [GlobalMessageDisplayerComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GlobalMessageDiplayerComponent);
+    fixture = TestBed.createComponent(GlobalMessageDisplayerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

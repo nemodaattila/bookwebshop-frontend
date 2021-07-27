@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {UserService} from "../../../services/authentication/user.service";
+import {GlobalMessageDisplayerService} from "../../../services/helper/global-message-displayer.service";
 
 @Component({
   selector: 'app-main-menu',
