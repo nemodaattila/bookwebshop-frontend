@@ -30,6 +30,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {LoggedInMenuComponent} from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
 import {UserService} from "./services/authentication/user.service";
 import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
+import {GlobalMessageDiplayerComponent} from './components/global-message-diplayer/global-message-diplayer.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {HttpAuthenticationInterceptor} from "./services/authentication/http-auth
     LoginFormComponent,
     RegistrationComponent,
     LoggedInMenuComponent,
+    GlobalMessageDiplayerComponent,
 
   ],
   imports: [
