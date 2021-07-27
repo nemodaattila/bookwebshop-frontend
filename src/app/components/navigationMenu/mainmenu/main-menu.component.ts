@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {AuthenticationService} from "../../../services/authentication/authentication.service";
+import {UserService} from "../../../services/authentication/user.service";
 
 @Component({
   selector: 'app-main-menu',
@@ -18,7 +18,7 @@ export class MainMenuComponent implements OnInit {
 
   public hasLoggedUser: boolean = false;
 
-  constructor(private router: Router, private authService: AuthenticationService) {
+  constructor(private router: Router, private authService: UserService) {
   }
 
   ngOnInit(): void {

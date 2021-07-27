@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {VariableHelperService} from "../helper/variable-helper.service";
 import {Router} from "@angular/router";
 import {backendUrl} from "../../globals";
+import {LoggedUserService} from "./logged-user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,13 @@ import {backendUrl} from "../../globals";
  * service for handling user authentication, login, logout, custom web token
  * communication with server, etc.
  */
-export class AuthenticationService {
+export class UserService {
 
   /**
    * data about logged user if exists, else null
    * @private
    */
-  private loggedUser?: User = undefined
+  // private loggedUser?: User = undefined
 
   /**
    * emits the state of user , true if a user is logged in
@@ -34,23 +35,24 @@ export class AuthenticationService {
    * if true checks with the server if user is valid
    * TODO check: valid token check with server
    */
-  constructor(private router: Router, private http: HttpClient, private varHelper: VariableHelperService) {
-    console.log(this.checkLocalStorageForToken())
-    console.log(this.getToken())
-    if (this.checkLocalStorageForToken() && this.loggedUser === undefined) {
-      this.getUserFromServerBasedOnToken(this.getToken()).subscribe((value => {
+  constructor(private router: Router, private http: HttpClient, private varHelper: VariableHelperService,
+              private loggedUserServ: LoggedUserService) {
+    console.log(this.loggedUserServ.checkLocalStorageForToken())
+    console.log(this.loggedUserServ.getToken())
+    if (this.loggedUserServ.checkLocalStorageForToken() && this.loggedUserServ.getLoggedUser() === undefined) {
+      this.getUserFromServerBasedOnToken(this.loggedUserServ.getToken()).subscribe((value => {
           console.log(value)
           if (!value['success']) {
-            this.removeLoggedUserAndToken()
+            this.loggedUserServ.removeLoggedUserAndToken()
             this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
           } else {
-            this.loggedUser = this.varHelper.createUserFromHttpResponse(value['data']['userData'])
-            console.log(this.loggedUser)
-            this.emitLoggedUserState(true)
+            this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(value['data']['userData']))
           }
+          this.emitLoggedUserState()
         }),
         error => {
           console.log(error.error)
+          this.emitLoggedUserState()
         }
       )
     }
@@ -90,15 +92,18 @@ export class AuthenticationService {
       let {'success': success, 'data': data} = value
       if (success) {
         console.log(data)
-        this.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
-        this.saveToken(data['token']);
+        this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
+        this.loggedUserServ.saveToken(data['token']);
       } else {
         this.httpEventListener.next({type: 'loginError', value: data['errorCode']});
       }
+      this.emitLoggedUserState()
     }, error => {
       console.log(error)
       this.httpEventListener.next({type: 'loginError', value: error.error});
     });
+    this.emitLoggedUserState()
+
   }
 
   /**
@@ -132,15 +137,17 @@ export class AuthenticationService {
         let {success, data} = value
         console.log([success, data])
         if (success === true) {
-          this.removeLoggedUserAndToken()
+          this.loggedUserServ.removeLoggedUserAndToken()
         } else {
           console.log(value)
           this.httpEventListener.next({type: 'logOutError', value: data['errorCode']});
         }
-      }
-      , (error) => {
+        this.emitLoggedUserState()
+      }, (error) => {
         console.log(error)
       })
+    this.emitLoggedUserState()
+
   }
 
   /**
@@ -151,48 +158,11 @@ export class AuthenticationService {
   }
 
   /**
-   * "frontend logout"
-   * removes authorization token from localstorage
-   * deletes loggedUser variable
-   */
-  public removeLoggedUserAndToken() {
-    localStorage.removeItem('token')
-    this.loggedUser = undefined
-    this.emitLoggedUserState(false)
-
-  }
-
-  /**
-   * save authorization token to localstorage
-   * @param token token string
-   */
-  saveToken(token: string) {
-    localStorage.setItem('token', token)
-
-  }
-
-  /**
-   * reads authorization token form localstorage
-   */
-  getToken() {
-    return localStorage.getItem('token')
-  }
-
-  /**
-   * saves user as loggedUser, emits state
-   * @param user logged User
-   */
-  setLoggedUser(user: User) {
-    this.loggedUser = user
-    this.emitLoggedUserState(true)
-  }
-
-  /**
    * returns logged User
    * @return User
    */
   public getLoggedUser(): User | undefined {
-    return this.loggedUser
+    return this.loggedUserServ.getLoggedUser()
   }
 
   /**
@@ -206,21 +176,11 @@ export class AuthenticationService {
   }
 
   /**
-   * checks if valid token exists in localstorage
-   * @private
-   */
-  private checkLocalStorageForToken(): boolean {
-    // this.removeLoggedUserAndToken()
-    return (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined)
-  }
-
-  /**
    * emits the state of logged user
    * true of a logged user exists
-   * @param state true if user is logged
    * @private
    */
-  private emitLoggedUserState(state: boolean) {
-    this.loggedUserState.next(state)
+  private emitLoggedUserState() {
+    this.loggedUserState.next(this.loggedUserServ.getLoggedUserState())
   }
 }

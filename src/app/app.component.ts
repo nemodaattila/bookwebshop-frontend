@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {BookMetaDataService} from "./services/book/book-meta-data.service";
 import {BookSearchService} from "./services/book/book-search.service";
 import {LocalLibraryService} from "./services/book/local-library.service";
-import {AuthenticationService} from "./services/authentication/authentication.service";
+import {UserService} from "./services/authentication/user.service";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,6 @@ export class AppComponent {
   title = 'BookWebShopFrontend';
 
   constructor(private metaService: BookMetaDataService, private bookSearch: BookSearchService,
-              private localLibrary: LocalLibraryService, private authService: AuthenticationService) {
+              private localLibrary: LocalLibraryService, private authService: UserService) {
   }
 }

@@ -6,7 +6,8 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthenticationService} from "./authentication.service";
+import {UserService} from "./user.service";
+import {LoggedUserService} from "./logged-user.service";
 
 @Injectable()
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
@@ -15,7 +16,7 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const auth = this.injector.get(AuthenticationService);
+    const auth = this.injector.get(LoggedUserService);
     console.log(auth.getToken())
     let r2 = request.clone({
       withCredentials: true

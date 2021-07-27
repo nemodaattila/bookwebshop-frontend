@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {FormService} from "../../../services/helper/form.service";
-import {AuthenticationService} from "../../../services/authentication/authentication.service";
+import {UserService} from "../../../services/authentication/user.service";
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +15,7 @@ import {AuthenticationService} from "../../../services/authentication/authentica
  */
 export class LoginFormComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private formService: FormService, private authService: AuthenticationService) {
+  constructor(private router: Router, private formService: FormService, private authService: UserService) {
   }
 
   /**

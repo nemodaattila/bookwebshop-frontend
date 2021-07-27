@@ -28,7 +28,7 @@ import {CriteriaMultipleCheckBoxComponent} from './components/complexSearchBrows
 import {LoginFormComponent} from './components/navigationMenu/login-form/login-form.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {LoggedInMenuComponent} from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
-import {AuthenticationService} from "./services/authentication/authentication.service";
+import {UserService} from "./services/authentication/user.service";
 import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
 
 @NgModule({
@@ -67,7 +67,7 @@ import {HttpAuthenticationInterceptor} from "./services/authentication/http-auth
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthenticationService, {
+  providers: [UserService, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpAuthenticationInterceptor,
     multi: true

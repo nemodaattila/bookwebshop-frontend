@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {FormService} from "../../services/helper/form.service";
-import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {UserService} from "../../services/authentication/user.service";
 
 @Component({
   selector: 'app-registration',
@@ -29,7 +29,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       "UCE": 'A felhasználó létrehozása szerver hiba miatt meghiúsult'
     }
 
-  constructor(private router: Router, private authService: AuthenticationService, private formValidator: FormService) {
+  constructor(private router: Router, private authService: UserService, private formValidator: FormService) {
   }
 
   /**
