@@ -46,13 +46,12 @@ export class UserService {
             // this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
           } else {
             this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
+            this.loggedUserServ.setTokenExpiringTime(data['tokenExpires'])
             this.messageDisplayer.displaySuccess('UTC', data['userData']['userName'])
           }
           this.emitLoggedUserState()
         },
         error => {
-          console.log(error.error)
-          this.messageDisplayer.displayError('UTC', error)
           this.emitLoggedUserState()
         }
       )
@@ -76,8 +75,6 @@ export class UserService {
         // this.httpEventListener.next({type: 'registerError', value: data['errorCode']});
       }
 
-    }, error => {
-      this.messageDisplayer.displayError('UR', error)
     });
   }
 
@@ -98,10 +95,6 @@ export class UserService {
         // this.httpEventListener.next({type: 'loginError', value: data['errorCode']});
       }
       this.emitLoggedUserState()
-    }, error => {
-      console.log(error)
-      this.messageDisplayer.displayError('UL', error)
-      // this.httpEventListener.next({type: 'loginError', value: error.error});
     });
     this.emitLoggedUserState()
 
@@ -146,11 +139,9 @@ export class UserService {
       }
       this.emitLoggedUserState()
     }, (error) => {
-      console.log(error)
-      this.messageDisplayer.displayError('ULO', error)
-
+      this.emitLoggedUserState()
     })
-    this.emitLoggedUserState()
+
 
   }
 
@@ -167,6 +158,10 @@ export class UserService {
    */
   public getLoggedUser(): User | undefined {
     return this.loggedUserServ.getLoggedUser()
+  }
+
+  public getTokenExpirationTime(): number {
+    return this.loggedUserServ.getTokenExpiringTime()
   }
 
   /**

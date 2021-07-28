@@ -5,6 +5,7 @@ export class MessageCodes {
     'UTC': 'Felhasználó valid',
   }
   private frontendErrorMessages: { [index: string]: string } = {
+    'BEE': 'Szerver hiba',
     'BDL': 'Hiba adatlista lekérdezésnél',
     'BLG': 'Probléma könyvlista lekérése során',
     'BMD': 'Könyv metaadat lekérési hiba',

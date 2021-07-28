@@ -154,9 +154,6 @@ export class BookSearchService {
           this.searchParams.setLastSearchAllResultCount(data.count)
         } else
           this.messageService.displayFail('BLG', data['errorCode'])
-      }, error => {
-        console.dir(error.error.text ?? error.error)
-        this.messageService.displayError('BLG', error)
       })
     } else {
       this.localOrderingRequest.next([params.order, params.orderDir])

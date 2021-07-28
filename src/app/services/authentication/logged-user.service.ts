@@ -12,7 +12,7 @@ export class LoggedUserService {
    */
   private loggedUser?: User = undefined
 
-
+  private tokenExpires: number = 600
 
   /**
    * returns logged User
@@ -76,9 +76,17 @@ export class LoggedUserService {
    * @private
    */
 
-  public getLoggedUserState(): boolean
-  {
+  public getLoggedUserState(): boolean {
     return this.loggedUser !== undefined
+  }
+
+  public setTokenExpiringTime(time: number) {
+    this.tokenExpires = time - Math.floor(Date.now() / 1000)
+    console.log(this.tokenExpires)
+  }
+
+  public getTokenExpiringTime(): number {
+    return this.tokenExpires;
   }
 
 }

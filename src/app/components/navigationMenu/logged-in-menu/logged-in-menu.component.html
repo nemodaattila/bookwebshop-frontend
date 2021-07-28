@@ -2,7 +2,7 @@
   <div class="cssTable">
     <span class="cssRow">
       <span>Bejelentkezett felhasználó:<span>{{loggedUser.getUserName()}}</span></span>
-      <span><a (click)="logOut()">Kijelentkezés</a></span>
+      <span><a (click)="logOut()">Kijelentkezés</a>{{tokenExpirationString}}</span>
     </span>
     <span class="cssRow">
     </span>

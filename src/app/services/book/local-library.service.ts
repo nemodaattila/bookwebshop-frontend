@@ -97,9 +97,6 @@ export class LocalLibraryService {
         } else {
           this.messageService.displayFail('BPD', data['errorCode'])
         }
-      }, error => {
-        console.dir(error.error.text ?? error.error)
-        this.messageService.displayError('BPD', error)
       })
     }
   }

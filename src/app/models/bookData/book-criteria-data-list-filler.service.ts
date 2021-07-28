@@ -23,9 +23,6 @@ export class BookCriteriaDataListFillerService {
         this.dataListEmitter.next(data)
       } else
         this.messageService.displayFail('BDL', data['errorCode'])
-    }, error => {
-      this.messageService.displayError('BDL', error);
-      return;
     });
   }
 }

@@ -89,10 +89,6 @@ export class BookMetaDataService implements OnInit {
         this.metaDataReady.next(this.metaData)
         console.log(this.metaData)
       } else this.messageService.displayFail('BMD', data['errorCode'])
-    }, error => {
-      console.dir(error.error.text)
-      this.messageService.displayError('BMD', error)
-      return;
     });
   }
 
