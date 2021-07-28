@@ -18,7 +18,6 @@ import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.
  */
 export class UserService {
 
-
   /**
    * emits the state of user , true if a user is logged in
    */
@@ -67,9 +66,7 @@ export class UserService {
    * @param regData: object - registration data
    */
   register(regData: { [index: string]: string }): void {
-    this.registerRequest(regData).subscribe(value => {
-      let {'success': success, 'data': data} = value
-
+    this.registerRequest(regData).subscribe(({'success': success, 'data': data}) => {
       if (success === true) {
         this.messageDisplayer.displaySuccess('UR')
         // this.httpEventListener.next({type: 'registrationSuccess', value: true});
@@ -88,11 +85,8 @@ export class UserService {
    * sends request to the server - user login
    * @param data : object login data
    */
-
   login(data: { [index: string]: string }): void {
-    this.loginRequest(data).subscribe(value => {
-      console.log(value)
-      let {'success': success, 'data': data} = value
+    this.loginRequest(data).subscribe(({'success': success, 'data': data}) => {
       if (success) {
         console.log(data)
         this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
@@ -140,9 +134,9 @@ export class UserService {
    */
   logOut() {
     this.logOutRequest().subscribe((value) => {
-        console.log(value)
-        let {success, data} = value
-        console.log([success, data])
+      console.log(value)
+      let {success, data} = value
+      console.log([success, data])
       if (success === true) {
         this.loggedUserServ.removeLoggedUserAndToken()
         this.messageDisplayer.displaySuccess('ULO')
@@ -153,7 +147,7 @@ export class UserService {
       this.emitLoggedUserState()
     }, (error) => {
       console.log(error)
-      this.messageDisplayer.displayError('UL', error)
+      this.messageDisplayer.displayError('ULO', error)
 
     })
     this.emitLoggedUserState()

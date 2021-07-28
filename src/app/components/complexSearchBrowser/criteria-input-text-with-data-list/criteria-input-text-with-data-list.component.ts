@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
 import {HttpClient} from "@angular/common/http";
 import {backendUrl} from "../../../globals";
+import {BookCriteriaDataListFillerService} from "../../../models/bookData/book-criteria-data-list-filler.service";
 
 @Component({
   selector: 'app-criteria-input-text-with-data-list',
@@ -14,7 +15,8 @@ import {backendUrl} from "../../../globals";
  */
 export class CriteriaInputTextWithDataListComponent implements OnInit {
 
-  constructor(private http: HttpClient, private complexSearch: ComplexSearchBrowserService) {
+  constructor(private complexSearch: ComplexSearchBrowserService,
+              private dataListService: BookCriteriaDataListFillerService) {
   }
 
   /**
@@ -55,15 +57,7 @@ export class CriteriaInputTextWithDataListComponent implements OnInit {
    */
   getDataListFromServer() {
     if (this.textValue.length > 2) {
-      this.http.get<any>(backendUrl + '\\datalist\\' + this.criteriaType + "\\" + this.textValue).subscribe(data => {
-        if ((data.hasOwnProperty('success') && data.success === true)) {
-          this.dataList = data.data
-        }
-      }, error => {
-        console.log(error)
-        console.dir(error.error.text)
-        return;
-      });
+      this.dataList = this.dataListService.getDataList(this.criteriaType, this.textValue)
     }
   }
 }

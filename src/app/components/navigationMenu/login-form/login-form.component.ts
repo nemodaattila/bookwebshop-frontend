@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {FormService} from "../../../services/helper/form.service";
 import {UserService} from "../../../services/authentication/user.service";
+import {GlobalMessageDisplayerService} from "../../../services/helper/global-message-displayer.service";
 
 @Component({
   selector: 'app-login-form',
@@ -13,9 +13,10 @@ import {UserService} from "../../../services/authentication/user.service";
 /**
  * component displaying and handling user login
  */
-export class LoginFormComponent implements OnInit, OnDestroy {
+export class LoginFormComponent implements OnInit {
 
-  constructor(private router: Router, private formService: FormService, private authService: UserService) {
+  constructor(private router: Router, private formService: FormService, private userService: UserService,
+              private messageServ: GlobalMessageDisplayerService) {
   }
 
   /**
@@ -24,21 +25,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   userLoginForm!: FormGroup;
 
   /**
-   * displayed error message in case of error
-   */
-  errorMessage = '';
-
-  /**
-   * subscription for events (error events)
-   */
-  eventSubscription = Subscription.EMPTY;
-
-  /**
    * possible error messages connected to  form validation
    */
   formErrorMessages = {
-    name: {required: 'Név megadása kötelező'},
-    password: {required: 'Jelszót kötelező kitölteni', minlength: 'A jelszónak minimum 8 karakternek kell lennie'}
+    name: {required: 'UNR'},
+    password: {required: 'UPR', minlength: 'UPML'}
   };
 
   /**
@@ -46,14 +37,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.initFormGroup();
-    this.eventSubscription = this.authService.httpEventListener.subscribe(value => {
-      if (value.type === 'loginError') {
-        this.errorMessage = value.value;
-      }
-      if (value.type === 'loginOutError') {
-        this.errorMessage = value.value;
-      }
-    });
   }
 
   /**
@@ -71,19 +54,14 @@ export class LoginFormComponent implements OnInit, OnDestroy {
    * form validation, data passes to authorization service
    */
   submitLoginForm(): void {
-    this.errorMessage = '';
     const formValid = this.formService.checkFormError(this.userLoginForm, this.formErrorMessages);
     if (formValid !== '') {
-      this.errorMessage = formValid;
+      this.messageServ.displayFail('ULFV', formValid)
       return;
     }
     const data = this.userLoginForm.value;
     console.log(data)
-    this.authService.login(data);
-  }
-
-  ngOnDestroy(): void {
-    this.eventSubscription.unsubscribe();
+    this.userService.login(data);
   }
 
 }

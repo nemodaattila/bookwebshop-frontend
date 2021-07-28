@@ -14,7 +14,7 @@ export class GlobalMessageDisplayerService {
     console.log('glconst')
   }
 
-  public messageEmitter = new Subject<[boolean, string]>()
+  messageEmitter = new Subject<[boolean, string]>()
 
   displayFail(frontendCode: string, backendCode?: string, optionalData?: string) {
     let frontendMessage = this.messageCodes.getFrontendErrorMessage(frontendCode)
