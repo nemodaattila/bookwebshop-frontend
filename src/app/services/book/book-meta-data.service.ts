@@ -3,6 +3,7 @@ import {Subject} from "rxjs";
 import {BookMetaData} from "../../models/bookData/book-meta-data";
 import {Injectable, OnInit} from "@angular/core";
 import {backendUrl} from "../../globals";
+import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class BookMetaDataService implements OnInit {
    */
   private readyState: boolean = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
     // localStorage.setItem('metadata','');
     this.checkMetaDataInLocalStorage();
   }
@@ -80,16 +81,17 @@ export class BookMetaDataService implements OnInit {
    * @private
    */
   private getMetaDataFromServer() {
-    this.http.get<any>(backendUrl + '\\metadata').subscribe(data => {
-      if ((data.hasOwnProperty('success') && data.success === true)) {
-        this.saveMetaToModel(data.data);
+    this.http.get<any>(backendUrl + '\\metadata').subscribe(({'success': success, 'data': data}) => {
+      if (success) {
+        this.saveMetaToModel(data);
         this.saveMetaDataToLocalStorage()
         this.readyState = true;
         this.metaDataReady.next(this.metaData)
         console.log(this.metaData)
-      }
+      } else this.messageService.displayFail('BMD', data['errorCode'])
     }, error => {
       console.dir(error.error.text)
+      this.messageService.displayError('BMD', error)
       return;
     });
   }

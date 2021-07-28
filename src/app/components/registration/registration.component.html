@@ -16,7 +16,6 @@
     <label for="rePwd">Jelszó újra:</label>
     <input type="password" id="rePwd" formControlName="rePassword">
   </div>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <div class="row">
     <button type="submit">Adat mentése</button>
     <button type="button" (click)="cancelForm()">Visszavonás</button>

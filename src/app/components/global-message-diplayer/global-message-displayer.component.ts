@@ -21,11 +21,14 @@ export class GlobalMessageDisplayerComponent implements OnInit {
 
   private messageSubs = Subscription.EMPTY;
 
+  private timeOut: any
+
   ngOnInit(): void {
     // this.resetMessage()
     console.log('initdips')
     console.log(this.messageService)
     this.messageSubs = this.messageService.messageEmitter.subscribe(value => {
+      clearTimeout(this.timeOut)
       console.log('message')
       console.log(value)
       this.hasMessage = true;
@@ -36,7 +39,7 @@ export class GlobalMessageDisplayerComponent implements OnInit {
   }
 
   startTimeOut() {
-    setTimeout(() => {
+    this.timeOut = setTimeout(() => {
       this.resetMessage()
     }, 10000);
   }

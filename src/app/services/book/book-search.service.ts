@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {Injectable} from "@angular/core";
 import {backendUrl} from "../../globals";
+import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class BookSearchService {
    */
   private setToDefault: boolean = true
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
     this.searchParams = new BookSearchModel()
   }
 
@@ -147,11 +148,15 @@ export class BookSearchService {
     console.log(params)
     console.log(isLocal)
     if (!isLocal) {
-      this.searchForBooks(params).subscribe(bookList => {
-        this.isbnListArrived.next(bookList)
-        this.searchParams.setLastSearchAllResultCount(bookList.data.count)
+      this.searchForBooks(params).subscribe(({'success': success, 'data': data}) => {
+        if (success) {
+          this.isbnListArrived.next({'success': success, 'data': data})
+          this.searchParams.setLastSearchAllResultCount(data.count)
+        } else
+          this.messageService.displayFail('BLG', data['errorCode'])
       }, error => {
         console.dir(error.error.text ?? error.error)
+        this.messageService.displayError('BLG', error)
       })
     } else {
       this.localOrderingRequest.next([params.order, params.orderDir])

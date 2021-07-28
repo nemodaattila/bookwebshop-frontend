@@ -1,26 +1,30 @@
 export class MessageCodes {
   private frontendSuccessMessages: { [index: string]: string } = {
-    'UTC': 'Felhasználó valid',
+    'ULO': 'Sikeres kijelentkezés',
     'UR': 'Sikeres regisztráció',
-    'ULO': 'Sikeres kijelentkezés'
+    'UTC': 'Felhasználó valid',
   }
   private frontendErrorMessages: { [index: string]: string } = {
-    'ULFV': 'Login form validációs hiba',
     'BDL': 'Hiba adatlista lekérdezésnél',
+    'BLG': 'Probléma könyvlista lekérése során',
+    'BMD': 'Könyv metaadat lekérési hiba',
+    'BPD': 'Könyv elsődleges adat lekérési hiba',
+    'UL': 'Bejelentkezési hiba',
+    'ULFV': 'Login form validációs hiba',
+    'ULO': 'Kijelentkezési hiba',
+    'UR': 'Regisztrációs hiba',
     'URFV': 'Regisztráció form validációs hiba',
     'UTC': 'Invalid felhasználó',
-    'UR': 'Regisztrációs hiba',
-    'UL': 'Bejelentkezési hiba',
-    'ULO': 'Kijelentkezési hiba'
-
   }
+
   private backendErrorMessages: { [index: string]: string } = {
-    'UNR': 'Név megadása kötelező',
-    'UPR': 'Jelszó megadása kötelező',
-    'UPML': 'A jelszónak minimum 8 karakternek kell lennie',
     'UER': 'Email megadása kotelező',
     'UEV': 'Valid e-mail címet adjon meg!',
-    'UPNE': 'A két jelszó nem egyezik'
+    'ULEPN': 'Usernév vagy jelszó nem megfelelő',
+    'UNR': 'Név megadása kötelező',
+    'UPML': 'A jelszónak minimum 8 karakternek kell lennie',
+    'UPNE': 'A két jelszó nem egyezik',
+    'UPR': 'Jelszó megadása kötelező',
   }
 
   public getFrontendErrorMessage(code: string): string {

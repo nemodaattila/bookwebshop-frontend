@@ -41,6 +41,9 @@ export class CriteriaInputTextWithDataListComponent implements OnInit {
 
   ngOnInit(): void {
     this.criteriaType = this.complexSearch.getSelectedCriteria()[this.id]
+    this.dataListService.dataListEmitter.subscribe(value => {
+      this.dataList = value as string[]
+    })
   }
 
   /**
@@ -57,7 +60,7 @@ export class CriteriaInputTextWithDataListComponent implements OnInit {
    */
   getDataListFromServer() {
     if (this.textValue.length > 2) {
-      this.dataList = this.dataListService.getDataList(this.criteriaType, this.textValue)
+      this.dataListService.getDataList(this.criteriaType, this.textValue)
     }
   }
 }

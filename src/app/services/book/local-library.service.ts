@@ -5,6 +5,7 @@ import {LocalLibraryModel} from "../../models/service/local-library-model";
 import {HttpClient} from "@angular/common/http";
 import {BookPrimaryData} from "../../models/bookData/book-primary-data";
 import {backendUrl} from "../../globals";
+import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class LocalLibraryService {
    * @param bookSearch
    * @param http
    */
-  constructor(private bookSearch: BookSearchService, private http: HttpClient) {
+  constructor(private bookSearch: BookSearchService, private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
     this.localLibrary = new LocalLibraryModel();
     this.fillBooksFromLocalStorage();
     this.isbnListSubscription = <object>this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
@@ -89,11 +90,16 @@ export class LocalLibraryService {
     let bookExists
     bookExists = this.localLibrary.checkBookInLibrary(isbn)
     if (!bookExists) {
-      this.getBookPrimaryData(isbn).subscribe(({data}) => {
-        this.localLibrary.addBookPrimaryData(isbn, data)
-        this.saveLocalLibraryToLocalStorage();
+      this.getBookPrimaryData(isbn).subscribe(({'success': success, 'data': data}) => {
+        if (success) {
+          this.localLibrary.addBookPrimaryData(isbn, data)
+          this.saveLocalLibraryToLocalStorage();
+        } else {
+          this.messageService.displayFail('BPD', data['errorCode'])
+        }
       }, error => {
         console.dir(error.error.text ?? error.error)
+        this.messageService.displayError('BPD', error)
       })
     }
   }
@@ -103,7 +109,7 @@ export class LocalLibraryService {
    * @param isbn
    * @private
    */
-  private getBookPrimaryData(isbn: string): Observable<{ success: any, data: object }> {
+  private getBookPrimaryData(isbn: string): Observable<{ success: boolean, data: any }> {
     return this.http.get<{ success: any, data: object }>(backendUrl + "\\primaryData\\" + isbn);
   }
 
