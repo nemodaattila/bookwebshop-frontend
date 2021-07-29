@@ -40,6 +40,7 @@ export class LocalLibraryService {
    * subscribes to BookSearchService for book search result isbn list
    * @param bookSearch
    * @param http
+   * @param messageService
    */
   constructor(private bookSearch: BookSearchService, private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
     this.localLibrary = new LocalLibraryModel();
@@ -74,7 +75,6 @@ export class LocalLibraryService {
    * @param isbnList
    */
   checkListInLocalLibrary(isbnList: Array<string>) {
-    console.log(isbnList)
     isbnList.map((isbn: string) => {
       this.checkIsbnInLocalLibrary(isbn)
     })
@@ -87,9 +87,7 @@ export class LocalLibraryService {
    * @private
    */
   private checkIsbnInLocalLibrary(isbn: string) {
-    let bookExists
-    bookExists = this.localLibrary.checkBookInLibrary(isbn)
-    if (!bookExists) {
+    if (!this.localLibrary.checkBookInLibrary(isbn)) {
       this.getBookPrimaryData(isbn).subscribe(({'success': success, 'data': data}) => {
         if (success) {
           this.localLibrary.addBookPrimaryData(isbn, data)

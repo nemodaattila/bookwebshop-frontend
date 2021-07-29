@@ -26,36 +26,24 @@ export class UserService {
   /**
    * checks if a user is saved in localstorage but not in loggedUser variable (e.g. browser refresh)
    * if true checks with the server if user is valid
-   * TODO check: valid token check with server
    */
   constructor(private router: Router, private http: HttpClient, private varHelper: VariableHelperService,
               private loggedUserServ: LoggedUserService, private messageDisplayer: GlobalMessageDisplayerService) {
-    console.log('userconst')
-    console.log(this.loggedUserServ.checkLocalStorageForToken())
-    console.log(this.loggedUserServ.getToken())
     if (this.loggedUserServ.checkLocalStorageForToken() && this.loggedUserServ.getLoggedUser() === undefined) {
-      this.getUserFromServerBasedOnToken().subscribe(({
-                                                        'success': success,
-                                                        'data': data
-                                                      }) => {
-          console.log(data)
-          console.log(success)
+      this.getUserFromServerBasedOnToken().subscribe(({'success': success, 'data': data}) => {
           if (!success) {
             this.loggedUserServ.removeLoggedUserAndToken()
             this.messageDisplayer.displayFail('UTC', data['errorCode'])
-            // this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
           } else {
             this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
             this.messageDisplayer.displaySuccess('UTC', data['userData']['userName'])
           }
           this.emitLoggedUserState()
         },
-        error => {
+        () => {
           this.emitLoggedUserState()
         }
-
       )
-
     }
   }
 
@@ -69,13 +57,10 @@ export class UserService {
     this.registerRequest(regData).subscribe(({'success': success, 'data': data}) => {
       if (success === true) {
         this.messageDisplayer.displaySuccess('UR')
-        // this.httpEventListener.next({type: 'registrationSuccess', value: true});
-        this.router.navigate(['/']);
+        void this.router.navigate(['/']);
       } else {
         this.messageDisplayer.displayFail('UR', data['errorCode'])
-        // this.httpEventListener.next({type: 'registerError', value: data['errorCode']});
       }
-
     });
   }
 
@@ -86,19 +71,15 @@ export class UserService {
   login(data: { [index: string]: string }): void {
     this.loginRequest(data).subscribe(({'success': success, 'data': data}) => {
       if (success) {
-        console.log(data)
         this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
         this.loggedUserServ.saveToken(data['token']);
         this.messageDisplayer.displaySuccess('UL', data['userData']['userName'])
       } else {
-        console.log('fail')
         this.messageDisplayer.displayFail('UL', data['errorCode'])
-        // this.httpEventListener.next({type: 'loginError', value: data['errorCode']});
       }
       this.emitLoggedUserState()
     });
     this.emitLoggedUserState()
-
   }
 
   /**
@@ -106,10 +87,9 @@ export class UserService {
    * @param data register data
    */
   registerRequest(data: { [index: string]: string }): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/plain',
-    });
-    return this.http.post<any>(backendUrl + 'register', data, {headers: headers});
+    return this.http.post<any>(backendUrl + 'register', data,
+      {headers: new HttpHeaders({'Content-Type': 'text/plain',})}
+    );
   }
 
   /**
@@ -117,32 +97,26 @@ export class UserService {
    * @param data login data
    */
   loginRequest(data: { [index: string]: string }): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/plain',
-    });
-    return this.http.post<any>(backendUrl + 'login', data, {headers: headers});
+    return this.http.post<any>(backendUrl + 'login', data,
+      {headers: new HttpHeaders({'Content-Type': 'text/plain',})}
+    );
   }
 
   /**
    * sends request to te server - user logout
    */
   logOut() {
-    this.logOutRequest().subscribe((value) => {
-      console.log(value)
-      let {success, data} = value
-      console.log([success, data])
+    this.logOutRequest().subscribe(({'success': success, 'data': data}) => {
       if (success === true) {
         this.loggedUserServ.removeLoggedUserAndToken()
         this.messageDisplayer.displaySuccess('ULO')
       } else {
-        console.log(value)
         this.messageDisplayer.displayFail('ULO', data['errorCode'])
       }
       this.emitLoggedUserState()
-    }, (error) => {
+    }, () => {
       this.emitLoggedUserState()
     })
-
 
   }
 
@@ -167,8 +141,6 @@ export class UserService {
 
   /**
    * http request for checking the logged user's validity
-   * TODO rework token with credential
-   * @param token
    */
   getUserFromServerBasedOnToken(): Observable<any> {
 

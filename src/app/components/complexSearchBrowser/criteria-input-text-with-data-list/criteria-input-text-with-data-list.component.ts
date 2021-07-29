@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
-import {HttpClient} from "@angular/common/http";
-import {backendUrl} from "../../../globals";
 import {BookCriteriaDataListFillerService} from "../../../models/bookData/book-criteria-data-list-filler.service";
 
 @Component({

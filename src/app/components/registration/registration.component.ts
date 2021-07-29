@@ -10,10 +10,17 @@ import {GlobalMessageDisplayerService} from "../../services/helper/global-messag
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+
+/**
+ * component for displaying registration form
+ */
 export class RegistrationComponent implements OnInit {
 
   userRegisterForm!: FormGroup;
-  headerText = 'Regisztráció';
+
+  /**
+   * possible validation errors and messages
+   */
   formErrorMessages: { [index: string]: { [index: string]: string } } = {
     userName: {required: 'UNR'},
     email: {required: 'UER', email: 'UEV'},
@@ -25,24 +32,21 @@ export class RegistrationComponent implements OnInit {
               private messageService: GlobalMessageDisplayerService, private formValidator: FormService) {
   }
 
-  /**
-   * ha van bejelentkezett felhasnáló elnavigál
-   * feliratkozás loginError-re
-   */
+
   ngOnInit(): void {
-    // if (this.coopServ.getLoggedUserBoolean()) { this.router.navigate(['/']); }
     this.initFormGroup();
   }
 
   /**
-   * visszairányitás
+   * onclick event of cancel button (visszavonás)
+   * redirects to main page
    */
   cancelForm(): void {
-    this.router.navigate(['']);
+    void this.router.navigate(['']);
   }
 
   /**
-   * form megjelenítés
+   * initiates form
    * @private
    */
   private initFormGroup(): void {
@@ -55,7 +59,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   /**
-   * form navigálás, elküldés feldolgozásra
+   * submit event of the form
+   * validates form data
+   * if valid starts registration process
    */
   submitRegisterForm(): void {
     const formValid = this.formValidator.checkFormError(this.userRegisterForm, this.formErrorMessages);
@@ -69,7 +75,6 @@ export class RegistrationComponent implements OnInit {
       } else {
         const data: { [index: string]: string } = this.userRegisterForm.value;
         delete data.rePassword;
-        console.log(data)
         this.userService.register(data);
       }
     }

@@ -28,10 +28,8 @@ import {CriteriaMultipleCheckBoxComponent} from './components/complexSearchBrows
 import {LoginFormComponent} from './components/navigationMenu/login-form/login-form.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {LoggedInMenuComponent} from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
-import {UserService} from "./services/authentication/user.service";
 import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
 import {GlobalMessageDisplayerComponent} from './components/global-message-diplayer/global-message-displayer.component';
-import {GlobalMessageDisplayerService} from "./services/helper/global-message-displayer.service";
 
 @NgModule({
   declarations: [

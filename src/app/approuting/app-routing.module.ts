@@ -7,6 +7,7 @@ import {RegistrationComponent} from "../components/registration/registration.com
 
 /**
  * routing Path
+ * TODO authenticationGuard
  */
 const routes: Routes = [
   {path: 'register', component: RegistrationComponent},

@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../../services/authentication/user.service";
 import {User} from "../../../models/user/user";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-logged-in-menu',

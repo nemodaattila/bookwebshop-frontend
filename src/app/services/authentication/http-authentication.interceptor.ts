@@ -1,29 +1,42 @@
 import {Injectable, Injector} from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
+  HttpErrorResponse,
   HttpEvent,
-  HttpInterceptor, HttpResponse, HttpErrorResponse, HttpHeaders, HttpHeaderResponse
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {UserService} from "./user.service";
 import {LoggedUserService} from "./logged-user.service";
-import {catchError, first, map, tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable()
+/**
+ * interceptor class for intercepting http requests and responses
+ */
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector, private messageService: GlobalMessageDisplayerService) {
   }
 
+  /**
+   * intercepts http requests / responses,
+   * with request: adds withCredentials header, if authentication token exists adds it as custom header
+   * (Authentication)
+   * with response: if response is HttpErrorResponse, passes error to display it,
+   * if HttpResponse and TokenExpirationTime custom header exists, passes it's value to LoggedUserService
+   * @param request
+   * @param next
+   */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const auth = this.injector.get(LoggedUserService);
-    console.log(auth.getToken())
     request = request.clone({
       withCredentials: true
     })
     if (auth.getToken() !== null) {
+      console.log(auth.getToken())
       request = request.clone({
         headers: request.headers.set('Authorization', auth.getToken() as string),
       })
@@ -32,23 +45,15 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       tap((httpEvent: HttpEvent<any>) => {
-        // Skip request
         if (httpEvent.type === 0) {
           return;
         }
-        console.log("response: ", httpEvent);
-
-        let minTargetApiVersion: string;
+        console.log(httpEvent);
         if ((httpEvent as any) instanceof HttpResponse) {
           let expTime = (httpEvent as HttpResponse<any>).headers.get("TokenExpirationTime");
-          console.log(expTime)
           if (expTime !== null) {
-            console.log(Number(expTime))
             auth.setTokenExpiringTime(Number(expTime))
           }
-          // if((httpEvent as HttpResponse<any>).headers.has('mintargetapiversion')) {
-          //   minTargetApiVersion = httpEvent.headers.get('mintargetapiversion');
-          // }
         }
         return httpEvent
       }),
@@ -58,35 +63,6 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
         return throwError(error);
       })
     );
-
-    // next.handle(request).pipe(map((res: Response) => console.log(res.headers.values())));
-    // return next.handle(request)
-    // return next.handle(request).pipe(
-    //   map(((event:HttpEvent<any>) => {
-    //     return event
-    //   })),
-    //
-    // )
-    //     console.log(event)
-    //     if (event instanceof HttpResponse)
-    //     {
-    //       if (event.body.data.tokenExpires !== undefined)
-    //       {
-    //         auth.setTokenExpiringTime(event.body.data.tokenExpires)
-    //       }
-    //       // console.log(auth.getToken())
-    //     }
-    //     return event
-    //   }));
-    //
-    //
-    //
-    //
-    //
-    // }
-    // console.log(reqWithCred)
-    // return (auth.getToken() !== null)?au
-    // return next.handle(reqWithCred);
   }
 
 }

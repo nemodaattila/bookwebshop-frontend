@@ -9,26 +9,37 @@ import {UserService} from "../../../services/authentication/user.service";
 })
 /**
  * component displaying a navigation menu
- * TODO global message displayer
  */
 export class MainMenuComponent implements OnInit {
 
+  /**
+   * value linked to the quickSearch input element
+   */
   public inputValue = '';
 
+  /**
+   * boolean flag for displaying login menu OR logged user menu
+   */
   public hasLoggedUser: boolean = false;
 
   constructor(private router: Router, private authService: UserService) {
   }
 
+  /**
+   * subscription for change in logged user state
+   */
   ngOnInit(): void {
     this.authService.loggedUserState.subscribe((value => {
       this.hasLoggedUser = value
     }))
   }
 
+  /**
+   * onclick event for quickSearch search button (egyszerű keresés)
+   */
   quickSearch() {
     if (this.inputValue.length > 2)
-      this.router.navigate(['browse', this.inputValue])
+      void this.router.navigate(['browse', this.inputValue])
     this.inputValue = ''
   }
 }

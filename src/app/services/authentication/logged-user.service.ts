@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from "../../models/user/user";
 
 @Injectable({
@@ -22,7 +22,8 @@ export class LoggedUserService {
     return this.loggedUser
   }
 
-  constructor() { }
+  constructor() {
+  }
 
   /**
    * "frontend logout"
@@ -33,8 +34,6 @@ export class LoggedUserService {
     localStorage.removeItem('token')
     this.loggedUser = undefined
   }
-
-
 
   /**
    * saves user as loggedUser, emits state
