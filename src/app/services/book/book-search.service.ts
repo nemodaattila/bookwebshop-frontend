@@ -149,6 +149,8 @@ export class BookSearchService {
     console.log(isLocal)
     if (!isLocal) {
       this.searchForBooks(params).subscribe(({'success': success, 'data': data}) => {
+        console.log(success)
+        console.log(data)
         if (success) {
           this.isbnListArrived.next({'success': success, 'data': data})
           this.searchParams.setLastSearchAllResultCount(data.count)

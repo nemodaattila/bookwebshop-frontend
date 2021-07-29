@@ -3,12 +3,12 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpResponse, HttpErrorResponse
+  HttpInterceptor, HttpResponse, HttpErrorResponse, HttpHeaders, HttpHeaderResponse
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {UserService} from "./user.service";
 import {LoggedUserService} from "./logged-user.service";
-import {catchError, map, tap} from "rxjs/operators";
+import {catchError, first, map, tap} from "rxjs/operators";
 import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 
 @Injectable()
@@ -31,16 +31,42 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
     console.log(request)
 
     return next.handle(request).pipe(
-      map((event => {
-        console.log(event)
-        return event
-      })),
+      tap((httpEvent: HttpEvent<any>) => {
+        // Skip request
+        if (httpEvent.type === 0) {
+          return;
+        }
+        console.log("response: ", httpEvent);
+
+        let minTargetApiVersion: string;
+        if ((httpEvent as any) instanceof HttpResponse) {
+          let expTime = (httpEvent as HttpResponse<any>).headers.get("TokenExpirationTime");
+          console.log(expTime)
+          if (expTime !== null) {
+            console.log(Number(expTime))
+            auth.setTokenExpiringTime(Number(expTime))
+          }
+          // if((httpEvent as HttpResponse<any>).headers.has('mintargetapiversion')) {
+          //   minTargetApiVersion = httpEvent.headers.get('mintargetapiversion');
+          // }
+        }
+        return httpEvent
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error)
         this.messageService.displayError('BEE', error, error.url as string)
         return throwError(error);
       })
-    )
+    );
+
+    // next.handle(request).pipe(map((res: Response) => console.log(res.headers.values())));
+    // return next.handle(request)
+    // return next.handle(request).pipe(
+    //   map(((event:HttpEvent<any>) => {
+    //     return event
+    //   })),
+    //
+    // )
     //     console.log(event)
     //     if (event instanceof HttpResponse)
     //     {

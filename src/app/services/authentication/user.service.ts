@@ -34,10 +34,10 @@ export class UserService {
     console.log(this.loggedUserServ.checkLocalStorageForToken())
     console.log(this.loggedUserServ.getToken())
     if (this.loggedUserServ.checkLocalStorageForToken() && this.loggedUserServ.getLoggedUser() === undefined) {
-      this.getUserFromServerBasedOnToken(this.loggedUserServ.getToken()).subscribe(({
-                                                                                      'success': success,
-                                                                                      'data': data
-                                                                                    }) => {
+      this.getUserFromServerBasedOnToken().subscribe(({
+                                                        'success': success,
+                                                        'data': data
+                                                      }) => {
           console.log(data)
           console.log(success)
           if (!success) {
@@ -46,7 +46,6 @@ export class UserService {
             // this.httpEventListener.next({type: 'tokenError', value: value['data']['errorCode']});
           } else {
             this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
-            this.loggedUserServ.setTokenExpiringTime(data['tokenExpires'])
             this.messageDisplayer.displaySuccess('UTC', data['userData']['userName'])
           }
           this.emitLoggedUserState()
@@ -54,7 +53,9 @@ export class UserService {
         error => {
           this.emitLoggedUserState()
         }
+
       )
+
     }
   }
 
@@ -169,9 +170,9 @@ export class UserService {
    * TODO rework token with credential
    * @param token
    */
-  getUserFromServerBasedOnToken(token: string | null): Observable<any> {
+  getUserFromServerBasedOnToken(): Observable<any> {
 
-    return this.http.get<any>(backendUrl + '\\tokentouser\\' + token);
+    return this.http.get<any>(backendUrl + '\\tokentouser');
   }
 
   /**

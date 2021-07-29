@@ -33,7 +33,7 @@ export class GlobalMessageDisplayerService {
   displayError(frontendCode: string, error: HttpErrorResponse, optionalData?: string) {
     let frontendMessage = this.messageCodes.getFrontendErrorMessage(frontendCode)
     let message = ((frontendMessage === undefined) ? frontendCode : frontendMessage) + ' - ';
-    message += error.error.text ?? error.error.message ?? error.message ?? 'UNKNOWN ERROR'
+    message += error.error.text ?? error.error.message ?? error.message ?? error.error ?? 'UNKNOWN ERROR'
     message += (optionalData === undefined) ? '' : ' - ' + optionalData
     this.messageEmitter.next([false, message])
   }
