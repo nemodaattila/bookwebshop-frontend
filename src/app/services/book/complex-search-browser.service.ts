@@ -17,22 +17,22 @@ export class ComplexSearchBrowserService {
    * @private
    */
   private criteriaTypes: { [index: string]: string } = {
-    "Category": "Alkategória",
-    "TargetAudience": "Célközönség",
-    "Title": "Cím",
-    "Format": "Formátum",
-    "MainCategory": "Főkategória",
-    "ISBN": "ISBN",
-    "Author": "Író",
-    "Discount": "Kedvezmény",
-    "Year": "Kiadás éve",
-    "Publisher": "Kiadó",
-    "Language": "Nyelv",
-    "Pages": "Oldalak száma",
-    "Series": "Sorozat",
-    "Tags": "Tagek",
-    "Price": "Teljes Ár",
-    "Type": "Típus",
+    Category: 'Alkategória',
+    TargetAudience: 'Célközönség',
+    Title: "Cím",
+    Format: "Formátum",
+    MainCategory: "Főkategória",
+    ISBN: "ISBN",
+    Author: "Író",
+    Discount: "Kedvezmény",
+    Year: "Kiadás éve",
+    Publisher: "Kiadó",
+    Language: "Nyelv",
+    Pages: "Oldalak száma",
+    Series: "Sorozat",
+    Tags: "Tagek",
+    Price: "Teljes Ár",
+    Type: "Típus",
   };
 
   /**
@@ -48,27 +48,27 @@ export class ComplexSearchBrowserService {
   /**
    * criteria types with select input type
    */
-  selectInput: Array<string> = ["Type", "MainCategory", "TargetAudience", "Language", "Pages", "Price", "Discount"];
+  selectInput: Array<string> = ['Type', 'MainCategory', 'TargetAudience', 'Language', 'Pages', 'Price', 'Discount'];
 
   /**
    * criteria types with select input type with option group
    */
-  selectWithOptionGroup: Array<string> = ["Category", "Format"]
+  selectWithOptionGroup: Array<string> = ['Category', 'Format']
 
   /**
    * criteria types with text input
    */
-  textInput: Array<string> = ["ISBN", "Title"];
+  textInput: Array<string> = ['ISBN', 'Title'];
 
   /**
    * criteria type with number input
    */
-  numberInput: Array<string> = ["Year"];
+  numberInput: Array<string> = ['Year'];
 
   /**
    * criteria type with text input implemented with datalist
    */
-  textInputWithDatalist: Array<string> = ["Author", 'Series', 'Publisher']
+  textInputWithDatalist: Array<string> = ['Author', 'Series', 'Publisher']
 
   /**
    * criteria type not displayed in criteria type selector' options (CriteriaSelectElementComponent),
@@ -80,9 +80,9 @@ export class ComplexSearchBrowserService {
    * select options for selected criteria types
    */
   public arrayOptions: { [index: string]: Array<string> } = {
-    "Discount": ["0", "1-5", "6-15", "16-30", "31-50", "51-"],
-    "Pages": ["0-100", "101-250", "251-500", "501-1000", "1000-"],
-    "Price": ["0-1000", "1001-3000", "3001-6000", "6001-10000", "10000-"]
+    Discount: ['0', '1-5', '6-15', '16-30', '31-50', '51-'],
+    Pages: ['0-100', '101-250', '251-500', '501-1000', '1000-'],
+    Price: ['0-1000', '1001-3000', '3001-6000', '6001-10000', '10000-']
   }
 
   /**
@@ -149,13 +149,13 @@ export class ComplexSearchBrowserService {
   getGroupedOptions(criteriaType: string): Array<any> {
 
     let group, groupIndex, items
-    if (criteriaType === "Category") {
+    if (criteriaType === 'Category') {
       let temp = this.metaDataServ.getCategories()
       group = temp.mainCategory
       groupIndex = Object.keys(group)
       items = temp.subCategory
     }
-    if (criteriaType === "Format") {
+    if (criteriaType === 'Format') {
       let temp = this.metaDataServ.getFormats()
       group = temp.type
       groupIndex = Object.keys(group)
@@ -202,8 +202,8 @@ export class ComplexSearchBrowserService {
    * @param index
    */
   getSelectedCriteriaInputType(index: number): string | undefined {
-    if (this.selectedCriteria[index] === "Tags") {
-      return "tag";
+    if (this.selectedCriteria[index] === 'Tags') {
+      return 'tag';
     }
     if (this.isTextInput(this.selectedCriteria[index]))
       return 'text'
@@ -325,7 +325,7 @@ export class ComplexSearchBrowserService {
    */
   validateValues(): boolean {
     for (let value of this.selectedCriteriaValues) {
-      if (value === undefined || value === "" || value === null || value === [])
+      if (value === undefined || value === '' || value === null || value === [])
         return false
     }
     return true

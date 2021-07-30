@@ -26,7 +26,7 @@ export class LoggedUserService {
   }
 
   /**
-   * "frontend logout"
+   * frontend logout
    * removes authorization token from localstorage
    * deletes loggedUser variable
    */

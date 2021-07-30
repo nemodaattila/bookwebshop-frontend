@@ -20,13 +20,13 @@ export class BookSearchModel {
    * order parameter of result (sql table parameter)
    * @private
    */
-  private order: string = "Title"
+  private order: string = 'Title'
 
   /**
    * direction of order (ASC/ DESC)
    * @private
    */
-  private orderDir: string = "ASC";
+  private orderDir: string = 'ASC';
 
   /**
    * criteria of the last search (needed for offline ordering)
@@ -96,8 +96,8 @@ export class BookSearchModel {
   setDefault() {
     this.offset = 0;
     this.limit = 10;
-    this.order = "Title";
-    this.orderDir = "ASC";
+    this.order = 'Title';
+    this.orderDir = 'ASC';
     this.criteria = {};
   };
 

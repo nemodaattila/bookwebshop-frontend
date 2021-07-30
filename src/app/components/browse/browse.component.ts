@@ -49,12 +49,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.acrSubs = this.acRoute.params.subscribe((value: Params) => {
-      if (value["quick"] !== undefined) {
-        this.quickSearch = value["quick"];
+      if (value['quick'] !== undefined) {
+        this.quickSearch = value['quick'];
         this.searchService.registerSearchSourceService()
         this.bookSearchParamRequest = this.searchService.searchParamRequestSubject.subscribe(() => {
           if (this.quickSearch.length > 2)
-            this.searchService.setSearchCriteria({"Quick": this.quickSearch});
+            this.searchService.setSearchCriteria({'Quick': this.quickSearch});
         })
       }
       this.searchService.initSearch()

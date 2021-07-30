@@ -50,7 +50,7 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
         }
         console.log(httpEvent);
         if ((httpEvent as any) instanceof HttpResponse) {
-          let expTime = (httpEvent as HttpResponse<any>).headers.get("TokenExpirationTime");
+          let expTime = (httpEvent as HttpResponse<any>).headers.get('TokenExpirationTime');
           if (expTime !== null) {
             auth.setTokenExpiringTime(Number(expTime))
           }

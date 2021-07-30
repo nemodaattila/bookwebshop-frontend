@@ -105,7 +105,7 @@ export class LocalLibraryService {
    * @private
    */
   private getBookPrimaryData(isbn: string): Observable<{ success: boolean, data: any }> {
-    return this.http.get<{ success: any, data: object }>(backendUrl + "\\primaryData\\" + isbn);
+    return this.http.get<{ success: any, data: object }>(backendUrl + '\\primaryData\\' + isbn);
   }
 
   /**

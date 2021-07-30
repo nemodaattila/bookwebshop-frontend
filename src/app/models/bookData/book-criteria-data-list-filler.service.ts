@@ -15,7 +15,7 @@ export class BookCriteriaDataListFillerService {
   dataListEmitter = new Subject()
 
   public getDataList(type: string, pattern: string): any {
-    this.http.get<any>(backendUrl + '\\datalist\\' + type + "\\" + pattern).subscribe(({
+    this.http.get<any>(backendUrl + '\\datalist\\' + type + '\\' + pattern).subscribe(({
                                                                                          'success': success,
                                                                                          'data': data
                                                                                        }) => {

@@ -25,13 +25,13 @@ export class SearchOrderAndCountHandlerComponent implements OnDestroy {
    * method of ordering : e.g : title price
    * @private
    */
-  private orderType: string = "Title";
+  private orderType: string = 'Title';
 
   /**
    * direction of ordering: ASC or DESC
    * @private
    */
-  private direction: string = "ASC";
+  private direction: string = 'ASC';
 
   /**
    * umber of displayed search results (e.g. 10, 50)
@@ -71,13 +71,13 @@ export class SearchOrderAndCountHandlerComponent implements OnDestroy {
    */
   parameterRefresh(parameter: string, value: string | number) {
     let def = false
-    if (parameter === "OACSortSelect") {
+    if (parameter === 'OACSortSelect') {
       this.orderType = value as string;
     }
-    if (parameter === "OACDirSelect") {
+    if (parameter === 'OACDirSelect') {
       this.direction = value as string;
     }
-    if (parameter === "OACQuantitySelect") {
+    if (parameter === 'OACQuantitySelect') {
       def = true
       this.quantity = Number(value);
       this.pageResetRequest.emit();

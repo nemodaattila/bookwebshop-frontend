@@ -98,7 +98,7 @@ export class BookPrimaryData {
     this.discount = parseInt(data.discount ?? data.discount) ?? 0;
     this.isbn = data.isbn ?? data.isbn ?? 'UNKNOWN';
     this.price = parseInt(data.price ?? data.price) ?? 0;
-    this.title = data.title ?? data.title ?? "UNKNOWN"
+    this.title = data.title ?? data.title ?? 'UNKNOWN'
     this.typeId = parseInt(data.type_id ?? data.typeId);
   }
 }

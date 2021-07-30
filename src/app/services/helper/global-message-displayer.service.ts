@@ -38,7 +38,7 @@ export class GlobalMessageDisplayerService {
     let frontendMessage = this.messageCodes.getFrontendErrorMessage(frontendCode)
     let message = ((frontendMessage === undefined) ? frontendCode : frontendMessage) + ' - ';
     if (backendCode === undefined) {
-      message += "UNKNOWN ERROR"
+      message += 'UNKNOWN ERROR'
     } else {
       let backendMessage = this.messageCodes.getBackendErrorMessage(backendCode)
       message += ((backendMessage === undefined) ? backendCode : backendMessage);

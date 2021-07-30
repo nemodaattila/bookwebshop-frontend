@@ -197,7 +197,7 @@ export class BookSearchService {
    * @private
    */
   private localOrderChecker() {
-    if (this.searchParams.getOrder() === "Year") return false;
+    if (this.searchParams.getOrder() === 'Year') return false;
     let prevCriteria = this.searchParams.getPrevCriteria();
     let newCriteria = this.searchParams.getNewCriteria();
     let count = this.searchParams.getLastSearchAllResultCount()

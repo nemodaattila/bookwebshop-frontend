@@ -153,11 +153,11 @@ export class BookPrimaryDataDisplayerService {
     this.actualIsbnList.sort((isbn1, isbn2) => {
       let param1, param2
 
-      if (order === "Title") {
+      if (order === 'Title') {
         param1 = this.actualBookData[isbn1].getTitle();
         param2 = this.actualBookData[isbn2].getTitle();
       }
-      if (order === "Author") {
+      if (order === 'Author') {
         param1 = Object.values(this.actualBookData[isbn1].getAuthor())[0];
         param2 = Object.values(this.actualBookData[isbn2].getAuthor())[0];
       }

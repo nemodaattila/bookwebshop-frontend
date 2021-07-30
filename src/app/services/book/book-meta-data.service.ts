@@ -98,7 +98,7 @@ export class BookMetaDataService implements OnInit {
    */
   private saveMetaDataToLocalStorage() {
     let date = parseInt((new Date().getTime() / 1000).toFixed(0))
-    localStorage.setItem("metadata", JSON.stringify([this.metaData, date]))
+    localStorage.setItem('metadata', JSON.stringify([this.metaData, date]))
   }
 
   /**
