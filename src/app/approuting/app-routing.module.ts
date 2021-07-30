@@ -4,13 +4,14 @@ import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 import {DetailedSearchComponent} from "../components/detailed-search/detailed-search.component";
 import {RegistrationComponent} from "../components/registration/registration.component";
+import {AuthenticationNotLoggedGuard} from "../services/authentication/authentication-not-logged.guard";
 
 /**
  * routing Path
  * TODO authenticationGuard
  */
 const routes: Routes = [
-  {path: 'register', component: RegistrationComponent},
+  {path: 'register', component: RegistrationComponent, canActivate: [AuthenticationNotLoggedGuard]},
   {path: 'browse/:quick', component: BrowseComponent},
   {path: 'browse', component: BrowseComponent},
   {path: 'detailedSearch', component: DetailedSearchComponent},
@@ -18,7 +19,6 @@ const routes: Routes = [
   {path: '**', redirectTo: '/browse', pathMatch: 'full'},
 
   /*
-  {path: 'login', component: UserloginComponent},
   {path: 'profil', component: ProfilComponent, canActivate: [AuthenticationUserGuard]},
   {path: 'profiledit', component: ProfileditComponent, canActivate: [AuthenticationUserGuard]},
   {path: 'userdelete', component: UserdeleteComponent, canActivate: [AuthenticationUserGuard]},

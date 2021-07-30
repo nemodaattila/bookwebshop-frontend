@@ -76,6 +76,7 @@ export class LoggedUserService {
    */
 
   public getLoggedUserState(): boolean {
+    console.log(this.loggedUser)
     return this.loggedUser !== undefined
   }
 

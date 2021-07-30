@@ -30,8 +30,11 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService,
               private messageService: GlobalMessageDisplayerService, private formValidator: FormService) {
+    this.userService.loggedUserState.subscribe((value) => {
+        if (value) this.router.navigate(['']);
+      }
+    )
   }
-
 
   ngOnInit(): void {
     this.initFormGroup();

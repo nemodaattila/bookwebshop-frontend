@@ -19,6 +19,7 @@ export class MessageCodes {
   }
 
   private backendErrorMessages: { [index: string]: string } = {
+    'TAF': 'Jogosultsági hiba',
     'UER': 'Email megadása kotelező',
     'UEV': 'Valid e-mail címet adjon meg!',
     'ULEPN': 'Usernév vagy jelszó nem megfelelő',
