@@ -49,6 +49,7 @@ export class LocalLibraryModel {
    */
   public fillFromLocalStorage(localLibraryJSONString: string) {
     let localLibrary = JSON.parse(localLibraryJSONString).books
+    console.log(localLibrary)
     for (let isbn in localLibrary) {
       if ((new Date().getTime() - localLibrary[isbn].creationTime) < 86400000) {
         this.fillOne(isbn, localLibrary[isbn])
@@ -64,17 +65,26 @@ export class LocalLibraryModel {
    */
   private fillOne(isbn: string, data: any) {
     this.createNewBook(isbn, data.creationTime)
-    this.books[isbn].addPrimaryData(data.primaryData)
-    if (this.books[isbn] !== undefined) {
-      this.books[isbn].addSecondaryData(data.secondaryData)
-    }
+    this.books[isbn].fillDataFromLocalStorage(data)
+
+  }
+
+  public fillSecondaryData(isbn: string, data: any) {
+    console.log({...this.books[isbn]})
+    this.books[isbn].addSecondaryData(data)
+    console.log(this.books[isbn])
+
   }
 
   /**
    * returns the primary data of a book
    * @param isbn
    */
-  getPrimaryData(isbn: string): BookPrimaryData {
-    return this.books[isbn].getPrimaryData();
+  getBookData(isbn: string): BookData {
+    return this.books[isbn];
+  }
+
+  setPrimaryToFalse(isbn: string) {
+    this.books[isbn].setPrimaryOnlyToFalse()
   }
 }

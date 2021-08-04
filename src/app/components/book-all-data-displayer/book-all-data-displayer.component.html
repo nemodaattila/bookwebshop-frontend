@@ -1,0 +1,13 @@
+<div class="twoColumn">
+  <div id="indivImageDiv">
+    <img alt="{{bookData?.getTitle()}}" [src]="safeImgURl">
+  </div>
+  <div id="indivDescDiv">
+    <h3><label>Cím:</label>{{bookData?.getTitle()}}</h3>
+    <p><label>Író(k):</label><span *ngFor="let key of authorIds;let index = index">
+      <span class="searchLabel" [routerLink]="['/browse']"
+            [queryParams]="{Author: bookData?.getAuthorByID(key)}">{{bookData?.getAuthorByID(key)}}</span>
+      <span *ngIf="index!==authorIds.length-1"> - </span></span></p>
+
+  </div>
+</div>

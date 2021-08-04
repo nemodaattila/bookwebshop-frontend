@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {BookPrimaryData} from "../../models/bookData/book-primary-data";
 import {backendUrl} from "../../globals";
 import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
+import {BookData} from "../../models/bookData/book-data";
 
 @Injectable({
   providedIn: 'root'
@@ -82,21 +83,42 @@ export class LocalLibraryService {
 
   /**
    * checks the isbn if it exists in LocalLibrary model
-   * if not it send a call for server for it
+   * if not its send a call for server for it
    * @param isbn book isbn to be checked if exists
    * @private
    */
   private checkIsbnInLocalLibrary(isbn: string) {
     if (!this.localLibrary.checkBookInLibrary(isbn)) {
-      this.getBookPrimaryData(isbn).subscribe(({'success': success, 'data': data}) => {
-        if (success) {
-          this.localLibrary.addBookPrimaryData(isbn, data)
-          this.saveLocalLibraryToLocalStorage();
-        } else {
-          this.messageService.displayFail('BPD', data['errorCode'])
-        }
-      })
+      this.sendRequestForPrimaryData(isbn);
     }
+  }
+
+  private sendRequestForPrimaryData(isbn: string) {
+    this.getBookPrimaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
+      if (success) {
+        this.localLibrary.addBookPrimaryData(isbn, data)
+        this.saveLocalLibraryToLocalStorage();
+      } else {
+        this.messageService.displayFail('BPD', data['errorCode'])
+      }
+    })
+  }
+
+  public getAllDataByIsbn(isbn: string): { success: boolean, data?: BookData } | undefined {
+    if (this.localLibrary.checkBookInLibrary(isbn)) {
+      let data = this.localLibrary.getBookData(isbn);
+      if (!data.primaryDataOnly()) {
+        console.log('inLibrary')
+        return {success: true, data: data}
+      } else {
+        console.log('secondaryMissing')
+        this.sendRequestForSecondaryData(isbn)
+      }
+    } else {
+      console.log('NotInLibrary')
+      return {success: false}
+    }
+    return
   }
 
   /**
@@ -104,8 +126,26 @@ export class LocalLibraryService {
    * @param isbn
    * @private
    */
-  private getBookPrimaryData(isbn: string): Observable<{ success: boolean, data: any }> {
+  private getBookPrimaryDataFromServer(isbn: string): Observable<{ success: boolean, data: any }> {
     return this.http.get<{ success: any, data: object }>(backendUrl + '\\primaryData\\' + isbn);
+  }
+
+  private getBookSecondaryDataFromServer(isbn: string): Observable<{ success: boolean, data: any }> {
+    return this.http.get<{ success: any, data: object }>(backendUrl + '\\secondaryData\\' + isbn);
+  }
+
+  private sendRequestForSecondaryData(isbn: string) {
+    this.getBookSecondaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
+      if (success) {
+        console.log(data)
+        this.localLibrary.fillSecondaryData(isbn, data)
+        this.localLibrary.setPrimaryToFalse(isbn)
+        // this.localLibrary.addBookPrimaryData(isbn, data)
+        this.saveLocalLibraryToLocalStorage();
+      } else {
+        this.messageService.displayFail('BSD', data['errorCode'])
+      }
+    })
   }
 
   /**
@@ -113,6 +153,7 @@ export class LocalLibraryService {
    * @private
    */
   private saveLocalLibraryToLocalStorage() {
+    console.log(this.localLibrary)
     localStorage.setItem('localLibrary', JSON.stringify(this.localLibrary))
     this.readyState = true;
     this.libraryRefreshed.next()
@@ -123,8 +164,9 @@ export class LocalLibraryService {
    * if it not exists return an default Data object with default data
    * @param isbn isbn of the book
    */
-  public getPrimaryData(isbn: string): BookPrimaryData {
-    if (!this.localLibrary.checkBookInLibrary(isbn)) return new BookPrimaryData([])
-    return this.localLibrary.getPrimaryData(isbn)
+  public getBookData(isbn: string) {
+    // if (!this.localLibrary.checkBookInLibrary(isbn)) return new BookPrimaryData([])
+    // // return this.localLibrary.getPrimaryData(isbn)
+    return this.localLibrary.getBookData(isbn)
   }
 }
