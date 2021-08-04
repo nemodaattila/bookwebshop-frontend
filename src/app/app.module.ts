@@ -30,6 +30,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {LoggedInMenuComponent} from './components/navigationMenu/logged-in-menu/logged-in-menu.component';
 import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
 import {GlobalMessageDisplayerComponent} from './components/global-message-diplayer/global-message-displayer.component';
+import {BookAllDataDisplayerComponent} from './components/book-all-data-displayer/book-all-data-displayer.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {GlobalMessageDisplayerComponent} from './components/global-message-dipla
     RegistrationComponent,
     LoggedInMenuComponent,
     GlobalMessageDisplayerComponent,
+    BookAllDataDisplayerComponent,
 
   ],
   imports: [

@@ -27,6 +27,7 @@ export class MessageCodes {
     'UPML': 'A jelszónak minimum 8 karakternek kell lennie',
     'UPNE': 'A két jelszó nem egyezik',
     'UPR': 'Jelszó megadása kötelező',
+    'UTEXP': 'Inaktivítás'
   }
 
   public getFrontendErrorMessage(code: string): string {

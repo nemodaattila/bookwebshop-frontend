@@ -51,14 +51,14 @@ export class PageNavigatorComponent implements OnInit, OnDestroy {
    */
   constructor(private bookSearch: BookSearchService) {
     this.navModel = new PageNavigatorModel();
-    this.bookSearch.registerSearchSourceService()
+    this.bookSearch.registerSearchSourceService("PN")
     this.actualIsbnListSubscription = this.bookSearch.isbnListArrived.subscribe(({data: isbnList}) => {
       this.navModel.setData(isbnList.list.length, isbnList.count, this.bookSearch.getQuantityPerPage());
       this.fakeCountArray = new Array(this.navModel.getPageNumber());
     })
 
     this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
-      this.bookSearch.setOffsetCriteria(this.navModel.getOffset());
+      this.bookSearch.setOffsetCriteria("PN", this.navModel.getOffset());
     })
   }
 
@@ -97,7 +97,7 @@ export class PageNavigatorComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.actualIsbnListSubscription.unsubscribe()
     this.bookSearchParamRequest.unsubscribe()
-    this.bookSearch.unRegisterSearchService()
+    this.bookSearch.unRegisterSearchService("PN")
   }
 
 }

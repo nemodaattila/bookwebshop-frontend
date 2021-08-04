@@ -3,6 +3,7 @@ import {LocalLibraryService} from "./local-library.service";
 import {Subject, Subscription} from "rxjs";
 import {BookSearchService} from "./book-search.service";
 import {BookMetaDataService} from "./book-meta-data.service";
+import {BookData} from "../../models/bookData/book-data";
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export class BookPrimaryDataDisplayerService {
    * data for books in the actualIsbnList
    * @private
    */
-  private actualBookData: any = {};
+  private actualBookData: { [index: string]: BookData } = {};
 
   /**
    * shows that all
@@ -129,7 +130,7 @@ export class BookPrimaryDataDisplayerService {
    */
   getPrimaryDataForActualBooks() {
     for (let isbn of this.actualIsbnList)
-      this.actualBookData[isbn] = this.localLibrary.getPrimaryData(isbn)
+      this.actualBookData[isbn] = this.localLibrary.getBookData(isbn)
     if (this.actualBookData.length !== null) {
       this.actualBookDataRefreshed.next();
     }
@@ -139,8 +140,8 @@ export class BookPrimaryDataDisplayerService {
    * return's a book's primary data by isbn
    * @param isbn isbn of a book
    */
-  public getPrimaryDataByISBN(isbn: string) {
-    return this.localLibrary.getPrimaryData(isbn);
+  public getBookDataByISBN(isbn: string) {
+    return this.localLibrary.getBookData(isbn);
   }
 
   /**
@@ -151,7 +152,7 @@ export class BookPrimaryDataDisplayerService {
   private localOrder(data: [string, string]) {
     let [order, dir] = data;
     this.actualIsbnList.sort((isbn1, isbn2) => {
-      let param1, param2
+      let param1: string | number, param2: string | number
 
       if (order === 'Title') {
         param1 = this.actualBookData[isbn1].getTitle();
@@ -166,7 +167,9 @@ export class BookPrimaryDataDisplayerService {
         param2 = this.actualBookData[isbn2].getPrice();
 
       }
+      // @ts-ignore
       if (param1 > param2) return (dir === 'DESC') ? -1 : 1;
+      // @ts-ignore
       if (param1 < param2) return (dir === 'DESC') ? 1 : -1;
       return 0;
     })

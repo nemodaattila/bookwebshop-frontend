@@ -54,7 +54,7 @@ export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy {
    * @param isbn  requested book's isbn
    */
   getPrimaryDataByISBN(isbn: string) {
-    return this.displayerService.getPrimaryDataByISBN(isbn)
+    return this.displayerService.getBookDataByISBN(isbn)
   }
 
 }

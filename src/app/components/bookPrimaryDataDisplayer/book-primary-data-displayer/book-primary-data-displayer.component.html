@@ -1,7 +1,7 @@
 <div *ngIf="allFound !== 0; else emptyList" id="mainBookDiv">
   <div *ngFor="let isbn of isbnList">
     <app-individual-book-primary-data-displayer
-      [primaryData]="getPrimaryDataByISBN(isbn)"></app-individual-book-primary-data-displayer>
+            [bookData]="getPrimaryDataByISBN(isbn)"></app-individual-book-primary-data-displayer>
   </div>
 </div>
 <ng-template #emptyList>

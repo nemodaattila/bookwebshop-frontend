@@ -64,7 +64,7 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy {
    * @param bookSearch service for book search based on given parameters
    */
   constructor(private metaDateService: BookMetaDataService, private bookSearch: BookSearchService) {
-    this.bookSearch.registerSearchSourceService()
+    this.bookSearch.registerSearchSourceService("BTCB")
     this.metaSubscription = this.metaDateService.metaDataReady.subscribe((metaData: BookMetaData) => {
       this.setCategories(metaData)
     })
@@ -91,9 +91,9 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy {
    */
   private passParameterToBookSearchService() {
     if (this.bookSearchParameter.length !== 0) {
-      this.bookSearch.setCategorySearchCriteria(this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
+      this.bookSearch.setCategorySearchCriteria("BTCB", this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
     } else {
-      this.bookSearch.setCategorySearchCriteria(null, null)
+      this.bookSearch.setCategorySearchCriteria("BTCB", null, null)
     }
   }
 
@@ -141,7 +141,7 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.metaSubscription.unsubscribe();
     this.bookSearchParamRequest.unsubscribe()
-    this.bookSearch.unRegisterSearchService()
+    this.bookSearch.unRegisterSearchService("BTCB")
   }
 
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {BookPrimaryData} from "../../../models/bookData/book-primary-data";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {BookMetaDataService} from "../../../services/book/book-meta-data.service";
+import {BookData} from "../../../models/bookData/book-data";
 
 @Component({
   selector: 'app-individual-book-primary-data-displayer',
@@ -17,7 +18,7 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
   /**
    * primary data of the book - comes from BookPrimaryDataDisplayer component
    */
-  @Input() primaryData?: BookPrimaryData;
+  @Input() bookData?: BookData;
 
   /**
    * the book's thumbnail in SafeResourceUrl form
@@ -48,15 +49,15 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
    *  asks metaDataService for type by type id
    */
   ngOnChanges(): void {
-    if (this.primaryData?.getCoverThumbnail() !== undefined) {
-      this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.primaryData.getCoverThumbnail());
+    if (this.bookData?.getCoverThumbnail() !== undefined) {
+      this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.bookData.getCoverThumbnail());
     }
-    if (this.primaryData?.getAuthor() !== undefined) {
-      const aIDs = Object.keys(this.primaryData?.getAuthor())
+    if (this.bookData?.getAuthor() !== undefined) {
+      const aIDs = Object.keys(this.bookData?.getAuthor())
       this.authorIds = aIDs.map(value => parseInt(value))
     }
-    if (this.primaryData?.getTypeId() !== undefined) {
-      this.typeString = this.metaService.getTypeById(this.primaryData.getTypeId())
+    if (this.bookData?.getTypeId() !== undefined) {
+      this.typeString = this.metaService.getTypeById(this.bookData.getTypeId())
     }
   }
 }

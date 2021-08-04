@@ -38,6 +38,7 @@ export class MainMenuComponent implements OnInit {
    * onclick event for quickSearch search button (egyszerű keresés)
    */
   quickSearch() {
+    console.log(this.inputValue)
     if (this.inputValue.length > 2)
       void this.router.navigate(['browse', this.inputValue])
     this.inputValue = ''

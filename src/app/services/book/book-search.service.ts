@@ -36,13 +36,15 @@ export class BookSearchService {
    * count of registered components as parameter source
    * @private
    */
-  private registeredSourceComponents: number = 0;
+  private registeredSourceComponentCount: number = 0;
+
+  private registeredSourceComponents: Array<string> = []
 
   /**
    * count of registered components that answered after a parameter call
    * @private
    */
-  private answeredRegisteredComponents: number = 0;
+  private answeredRegisteredComponentCount: number = 0;
 
   /**
    * parameters are to be reset or not
@@ -58,12 +60,26 @@ export class BookSearchService {
    * register a new parameter source component
    * simple increases to counter
    */
-  registerSearchSourceService() {
-    this.registeredSourceComponents++;
+
+  //TODO rework registration for book search source
+
+  registerSearchSourceService(type: string) {
+
+    if (this.registeredSourceComponents.indexOf(type) === -1) {
+      this.registeredSourceComponents.push(type)
+      this.registeredSourceComponentCount++;
+      console.log(this.registeredSourceComponents)
+    }
   }
 
-  unRegisterSearchService() {
-    this.registeredSourceComponents--;
+  unRegisterSearchService(type: string) {
+    let index = this.registeredSourceComponents.indexOf(type)
+    if (index !== -1) {
+      this.registeredSourceComponents.splice(index, 1);
+      this.registeredSourceComponentCount--;
+    }
+    console.log(this.registeredSourceComponents)
+
   }
 
   /**
@@ -71,38 +87,51 @@ export class BookSearchService {
    * @param type type of criteria
    * @param value value of criteria
    */
-  setCategorySearchCriteria(type: string | null, value: number | null) {
-    if (type === 'MainCategory') {
-      this.searchParams.delCriteria('Category')
+  setCategorySearchCriteria(source: string, type: string | null, value: number | null) {
+    console.log(source)
+    if (this.registeredSourceComponents.indexOf(source) !== -1) {
+      console.log('ok')
+      if (type === 'MainCategory') {
+        this.searchParams.delCriteria('Category')
+      }
+      if (type === 'Category') {
+        this.searchParams.delCriteria('MainCategory')
+      }
+      if (type === null) {
+        this.searchParams.delCriteria('Category')
+        this.searchParams.delCriteria('MainCategory')
+      } else
+        this.searchParams.setCriteria(type, value as number)
+      this.increaseAnswered()
     }
-    if (type === 'Category') {
-      this.searchParams.delCriteria('MainCategory')
-    }
-    if (type === null) {
-      this.searchParams.delCriteria('Category')
-      this.searchParams.delCriteria('MainCategory')
-    } else
-      this.searchParams.setCriteria(type, value as number)
-    this.increaseAnswered()
   };
 
-  setSearchCriteria(params: { [index: string]: any }) {
-    for (let key in params) {
-      if (typeof params[key] === 'object') {
-        this.searchParams.setCriteria(key, {...params[key]})
-      } else
-        this.searchParams.setCriteria(key, params[key])
+  setSearchCriteria(source: string, params: { [index: string]: any }) {
+    console.log(source)
+    if (this.registeredSourceComponents.indexOf(source) !== -1) {
+      console.log('ok')
+      console.log(params)
+      for (let key in params) {
+        if (typeof params[key] === 'object') {
+          this.searchParams.setCriteria(key, {...params[key]})
+        } else
+          this.searchParams.setCriteria(key, params[key])
+      }
+      this.increaseAnswered()
     }
-    this.increaseAnswered()
   }
 
   /**
    * sets the offset parameter of the search model
    * @param offset
    */
-  public setOffsetCriteria(offset: number) {
-    this.searchParams.setOffset(offset)
-    this.increaseAnswered()
+  public setOffsetCriteria(source: string, offset: number) {
+    console.log(source)
+    if (this.registeredSourceComponents.indexOf(source) !== -1) {
+      console.log('ok')
+      this.searchParams.setOffset(offset)
+      this.increaseAnswered()
+    }
   }
 
   /**
@@ -111,14 +140,14 @@ export class BookSearchService {
    * @private
    */
   private increaseAnswered() {
-    this.answeredRegisteredComponents++;
+    this.answeredRegisteredComponentCount++;
     this.checkRegisterSourceCount()
   }
 
   public initSearch(setDefault: boolean = true) {
     this.searchParams.setPrevCriteria()
     if (setDefault) this.searchParams.setDefault();
-    this.answeredRegisteredComponents = 0;
+    this.answeredRegisteredComponentCount = 0;
     this.setToDefault = setDefault;
     this.searchParamRequestSubject.next(null);
   }
@@ -128,8 +157,8 @@ export class BookSearchService {
    * request creator function
    */
   checkRegisterSourceCount() {
-    console.log([this.registeredSourceComponents, this.answeredRegisteredComponents])
-    if (this.registeredSourceComponents === this.answeredRegisteredComponents) {
+    console.log([this.registeredSourceComponentCount, this.answeredRegisteredComponentCount])
+    if (this.registeredSourceComponentCount === this.answeredRegisteredComponentCount) {
       this.createAndSendRequest()
     }
   }
@@ -187,9 +216,13 @@ export class BookSearchService {
    * @param orderDir directory of order
    * @param limit number of results to be displayed
    */
-  setOrderAndLimit(order: string, orderDir: string, limit: number) {
-    this.searchParams.setOrderAndLimit(order, orderDir, limit);
-    this.increaseAnswered()
+  setOrderAndLimit(source: string, order: string, orderDir: string, limit: number) {
+    console.log(source)
+    if (this.registeredSourceComponents.indexOf(source) !== -1) {
+      console.log('ok')
+      this.searchParams.setOrderAndLimit(order, orderDir, limit);
+      this.increaseAnswered()
+    }
   }
 
   /**

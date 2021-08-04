@@ -51,15 +51,15 @@ export class SearchOrderAndCountHandlerComponent implements OnDestroy {
    * @param bookSearch BookSearchService instance
    */
   constructor(private bookSearch: BookSearchService) {
-    this.bookSearch.registerSearchSourceService()
+    this.bookSearch.registerSearchSourceService("OAC")
     this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
-      this.bookSearch.setOrderAndLimit(this.orderType, this.direction, this.quantity)
+      this.bookSearch.setOrderAndLimit("OAC", this.orderType, this.direction, this.quantity)
     })
   }
 
   ngOnDestroy(): void {
     this.bookSearchParamRequest.unsubscribe()
-    this.bookSearch.unRegisterSearchService()
+    this.bookSearch.unRegisterSearchService("OAC")
   }
 
   /**

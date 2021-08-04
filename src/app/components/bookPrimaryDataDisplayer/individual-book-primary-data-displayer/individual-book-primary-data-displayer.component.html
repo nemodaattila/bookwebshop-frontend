@@ -1,22 +1,23 @@
-<article class="bookArticle" *ngIf="primaryData !== undefined">
-  <section class="imageSection"><img alt="{{primaryData.getTitle()}}" [src]="safeImgURl"></section>
+<article class="bookArticle" *ngIf="bookData !== undefined">
+  <section class="imageSection"><a [routerLink]="['/bookalldata', bookData.getIsbn()]"><img
+    alt="{{bookData.getTitle()}}" [src]="safeImgURl"></a></section>
   <section class="dataSection">
     <section class="infoSection">
       <p>
         <span *ngFor="let key of authorIds; let index = index">
-          {{ primaryData.getAuthorByID(key) }} <span *ngIf="index!==authorIds.length-1">-</span>
+          {{ bookData.getAuthorByID(key) }} <span *ngIf="index!==authorIds.length-1">-</span>
         </span>
       </p>
-      <p>{{primaryData.getTitle()}}</p>
-      <p>{{primaryData.getIsbn()}}</p>
+      <p class="searchLabel" [routerLink]="['/bookalldata', bookData.getIsbn()]">{{bookData.getTitle()}}</p>
+      <p>{{bookData.getIsbn()}}</p>
       <p>Típus : {{typeString}}</p>
 
     </section>
     <section class="priceSection">
-      <p>Ár: {{primaryData.getPrice()}}</p>
-      <div *ngIf="primaryData.getDiscount() !== 0">
-        <p>Kedvezmény: {{primaryData.getDiscount()}}</p>
-        <p>Kedvezményes ár: {{(primaryData.getPrice() / 100) * (100 - primaryData.getPrice())}}</p>
+      <p>Ár: {{bookData.getPrice()}}</p>
+      <div *ngIf="bookData.getDiscount() !== 0">
+        <p>Kedvezmény: {{bookData.getDiscount()}}</p>
+        <p>Kedvezményes ár: {{(bookData.getPrice() / 100) * (100 - bookData.getPrice())}}</p>
       </div>
     </section>
   </section>

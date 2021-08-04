@@ -8,3 +8,8 @@
   margin: 10px 10px auto;
 }
 
+.searchLabel {
+  margin: 2px;
+  cursor: pointer;
+}
+

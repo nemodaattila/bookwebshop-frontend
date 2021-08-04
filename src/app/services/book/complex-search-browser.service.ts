@@ -296,7 +296,7 @@ export class ComplexSearchBrowserService {
       if (this.selectedCriteria.hasOwnProperty(key))
         params[this.selectedCriteria[key]] = this.selectedCriteriaValues[key]
     }
-    this.bookSearch.setSearchCriteria(params)
+    this.bookSearch.setSearchCriteria("CSB", params)
   }
 
   /**
@@ -304,7 +304,7 @@ export class ComplexSearchBrowserService {
    * registers to BookSearchService for search data call
    */
   public subscribeForBookSearch(): void {
-    this.bookSearch.registerSearchSourceService()
+    this.bookSearch.registerSearchSourceService("CSB")
     this.bookSearchParamRequest = this.bookSearch.searchParamRequestSubject.subscribe(() => {
       this.passParameterToBookSearchService()
     })
@@ -315,7 +315,7 @@ export class ComplexSearchBrowserService {
    * unregisters from BookSearchService for search data call
    */
   public unsubscribeForBookSearch(): void {
-    this.bookSearch.unRegisterSearchService()
+    this.bookSearch.unRegisterSearchService("CSB")
     this.bookSearchParamRequest.unsubscribe()
   }
 

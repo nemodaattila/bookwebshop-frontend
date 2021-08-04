@@ -31,13 +31,45 @@ export class BrowseComponent implements OnInit, OnDestroy {
    * subscription to activatedRoute
    */
   acrSubs: Subscription = Subscription.EMPTY;
-
+  acr2Subs: Subscription = Subscription.EMPTY;
   /**
    * quickSearch search parameter - comes from ActivatedRoute
    */
   quickSearch: string = '';
 
+  private counter: number = 0;
+  private registered: boolean = false;
+
+  private searchParams: { [index: string]: any } = {}
+
   constructor(private searchService: BookSearchService, private acRoute: ActivatedRoute) {
+    console.log('browseConst')
+    this.searchService.registerSearchSourceService('BC')
+    this.counter = 0;
+    this.acrSubs = this.acRoute.queryParams.subscribe(params => {
+      console.log('acrouteparamregister')
+      console.log(params)
+      if (Object.keys(params).length !== 0) {
+        let [firstKey] = Object.keys(params)
+        this.searchParams[firstKey] = params[firstKey]
+      } else
+        this.searchParams = {}
+      this.searchWhenReady();
+    })
+
+    this.acr2Subs = this.acRoute.params.subscribe((params: Params) => {
+      console.log('acrouteurlregister')
+      console.log(params)
+      if (params['quick'] !== undefined && params['quick'].length > 2) {
+        this.searchParams['Quick'] = params['quick'];
+      }
+      this.searchWhenReady();
+    });
+
+    this.bookSearchParamRequest = this.searchService.searchParamRequestSubject.subscribe(() => {
+
+      this.searchService.setSearchCriteria('BC', this.searchParams);
+    })
   }
 
   /**
@@ -48,24 +80,24 @@ export class BrowseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.acrSubs = this.acRoute.params.subscribe((value: Params) => {
-      if (value['quick'] !== undefined) {
-        this.quickSearch = value['quick'];
-        this.searchService.registerSearchSourceService()
-        this.bookSearchParamRequest = this.searchService.searchParamRequestSubject.subscribe(() => {
-          if (this.quickSearch.length > 2)
-            this.searchService.setSearchCriteria({'Quick': this.quickSearch});
-        })
-      }
+    console.log('init')
+    this.searchWhenReady();
+  }
+
+  private searchWhenReady() {
+    console.log(this.counter)
+    this.counter++;
+    if (this.counter > 2) {
       this.searchService.initSearch()
-    });
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.quickSearch !== '') {
-      this.bookSearchParamRequest.unsubscribe()
-      this.searchService.unRegisterSearchService()
-    }
+    this.bookSearchParamRequest.unsubscribe()
+    this.searchService.unRegisterSearchService('BC')
+    this.acrSubs.unsubscribe()
+    this.acr2Subs.unsubscribe()
+
   }
 
 }
