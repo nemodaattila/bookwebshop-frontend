@@ -68,7 +68,6 @@ export class BookSearchService {
     if (this.registeredSourceComponents.indexOf(type) === -1) {
       this.registeredSourceComponents.push(type)
       this.registeredSourceComponentCount++;
-      console.log(this.registeredSourceComponents)
     }
   }
 
@@ -78,19 +77,18 @@ export class BookSearchService {
       this.registeredSourceComponents.splice(index, 1);
       this.registeredSourceComponentCount--;
     }
-    console.log(this.registeredSourceComponents)
-
   }
 
   /**
-   * saves source criteria, deletes criteria if needed
+   * saves Category criteria, deletes criteria if needed
+   * checks source is registered
+   * @param source code string of source
    * @param type type of criteria
    * @param value value of criteria
    */
   setCategorySearchCriteria(source: string, type: string | null, value: number | null) {
     console.log(source)
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
-      console.log('ok')
       if (type === 'MainCategory') {
         this.searchParams.delCriteria('Category')
       }
@@ -106,16 +104,23 @@ export class BookSearchService {
     }
   };
 
+  /**
+   * sets search parameters
+   * checks source is registered
+   * @param source code string of source
+   * @param params search parameters
+   */
   setSearchCriteria(source: string, params: { [index: string]: any }) {
     console.log(source)
+
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
-      console.log('ok')
-      console.log(params)
+
       for (let key in params) {
         if (typeof params[key] === 'object') {
           this.searchParams.setCriteria(key, {...params[key]})
         } else
           this.searchParams.setCriteria(key, params[key])
+        console.log(this.searchParams)
       }
       this.increaseAnswered()
     }
@@ -123,12 +128,12 @@ export class BookSearchService {
 
   /**
    * sets the offset parameter of the search model
-   * @param offset
+   * check source is registered
+   * @param source code string of source
+   * @param offset offset value
    */
   public setOffsetCriteria(source: string, offset: number) {
-    console.log(source)
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
-      console.log('ok')
       this.searchParams.setOffset(offset)
       this.increaseAnswered()
     }
@@ -144,6 +149,11 @@ export class BookSearchService {
     this.checkRegisterSourceCount()
   }
 
+  /**
+   * init search process
+   * send search parameter collecting signal
+   * @param setDefault
+   */
   public initSearch(setDefault: boolean = true) {
     this.searchParams.setPrevCriteria()
     if (setDefault) this.searchParams.setDefault();
@@ -153,11 +163,17 @@ export class BookSearchService {
   }
 
   /**
+   * resets the search params to default
+   */
+  public setDefault() {
+    this.searchParams.setDefault()
+  }
+
+  /**
    * if the number answered calls equals the registered component's number, calls
    * request creator function
    */
   checkRegisterSourceCount() {
-    console.log([this.registeredSourceComponentCount, this.answeredRegisteredComponentCount])
     if (this.registeredSourceComponentCount === this.answeredRegisteredComponentCount) {
       this.createAndSendRequest()
     }
@@ -178,7 +194,7 @@ export class BookSearchService {
     console.log(isLocal)
     if (!isLocal) {
       this.searchForBooks(params).subscribe(({'success': success, 'data': data}) => {
-        console.log(success)
+        // console.log(success)
         console.log(data)
         if (success) {
           this.isbnListArrived.next({'success': success, 'data': data})
@@ -212,14 +228,14 @@ export class BookSearchService {
 
   /**
    * sets the property of order, order dir and search limit in the model
+   * checks if parameter source is registered
+   * @param source code string of source
    * @param order order attribute
    * @param orderDir directory of order
    * @param limit number of results to be displayed
    */
   setOrderAndLimit(source: string, order: string, orderDir: string, limit: number) {
-    console.log(source)
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
-      console.log('ok')
       this.searchParams.setOrderAndLimit(order, orderDir, limit);
       this.increaseAnswered()
     }

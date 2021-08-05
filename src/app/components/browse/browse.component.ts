@@ -35,20 +35,29 @@ export class BrowseComponent implements OnInit, OnDestroy {
   /**
    * quickSearch search parameter - comes from ActivatedRoute
    */
-  quickSearch: string = '';
 
+  /**
+   * counts loaded components (subscription + init)
+   * @private
+   */
   private counter: number = 0;
-  private registered: boolean = false;
 
+  /**
+   * stores search parameters activateRoute (quick search and BookAllDataDisplayer)
+   * @private
+   */
   private searchParams: { [index: string]: any } = {}
 
+  /**
+   * subscribes to activatedRoutes queryParams and params for search parameters
+   * subscribes to BookSearchService for search parameter transfer
+   * @param searchService
+   * @param acRoute
+   */
   constructor(private searchService: BookSearchService, private acRoute: ActivatedRoute) {
-    console.log('browseConst')
     this.searchService.registerSearchSourceService('BC')
     this.counter = 0;
     this.acrSubs = this.acRoute.queryParams.subscribe(params => {
-      console.log('acrouteparamregister')
-      console.log(params)
       if (Object.keys(params).length !== 0) {
         let [firstKey] = Object.keys(params)
         this.searchParams[firstKey] = params[firstKey]
@@ -58,8 +67,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     })
 
     this.acr2Subs = this.acRoute.params.subscribe((params: Params) => {
-      console.log('acrouteurlregister')
-      console.log(params)
       if (params['quick'] !== undefined && params['quick'].length > 2) {
         this.searchParams['Quick'] = params['quick'];
       }
@@ -67,7 +74,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
 
     this.bookSearchParamRequest = this.searchService.searchParamRequestSubject.subscribe(() => {
-
       this.searchService.setSearchCriteria('BC', this.searchParams);
     })
   }
@@ -80,12 +86,15 @@ export class BrowseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('init')
+    this.searchService.setDefault()
     this.searchWhenReady();
   }
 
+  /**
+   * calls for search if subscriptions happened and init happens
+   * @private
+   */
   private searchWhenReady() {
-    console.log(this.counter)
     this.counter++;
     if (this.counter > 2) {
       this.searchService.initSearch()
@@ -97,7 +106,5 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.searchService.unRegisterSearchService('BC')
     this.acrSubs.unsubscribe()
     this.acr2Subs.unsubscribe()
-
   }
-
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
-import {BookCriteriaDataListFillerService} from "../../../models/bookData/book-criteria-data-list-filler.service";
+import {BookCriteriaDataListFillerService} from "../../../services/book/book-criteria-data-list-filler.service";
 
 @Component({
   selector: 'app-criteria-input-text-with-data-list',

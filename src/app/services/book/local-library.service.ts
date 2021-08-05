@@ -3,7 +3,6 @@ import {Observable, Subject, Subscription} from "rxjs";
 import {BookSearchService} from "./book-search.service";
 import {LocalLibraryModel} from "../../models/service/local-library-model";
 import {HttpClient} from "@angular/common/http";
-import {BookPrimaryData} from "../../models/bookData/book-primary-data";
 import {backendUrl} from "../../globals";
 import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.service";
 import {BookData} from "../../models/bookData/book-data";
@@ -93,6 +92,11 @@ export class LocalLibraryService {
     }
   }
 
+  /**
+   * request to server for getting a book's primary data
+   * @param isbn
+   * @private
+   */
   private sendRequestForPrimaryData(isbn: string) {
     this.getBookPrimaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
       if (success) {
@@ -104,18 +108,21 @@ export class LocalLibraryService {
     })
   }
 
+  /**
+   * searches a book by isbn in local-library
+   * if exists checks for secondary data
+   * if not secondary data exists, sends request to server
+   * @param isbn
+   */
   public getAllDataByIsbn(isbn: string): { success: boolean, data?: BookData } | undefined {
     if (this.localLibrary.checkBookInLibrary(isbn)) {
       let data = this.localLibrary.getBookData(isbn);
       if (!data.primaryDataOnly()) {
-        console.log('inLibrary')
         return {success: true, data: data}
       } else {
-        console.log('secondaryMissing')
         this.sendRequestForSecondaryData(isbn)
       }
     } else {
-      console.log('NotInLibrary')
       return {success: false}
     }
     return
@@ -130,17 +137,26 @@ export class LocalLibraryService {
     return this.http.get<{ success: any, data: object }>(backendUrl + '\\primaryData\\' + isbn);
   }
 
+  /**
+   * send request to server for a book's secondary data
+   * @param isbn isbn of a book
+   * @private
+   */
   private getBookSecondaryDataFromServer(isbn: string): Observable<{ success: boolean, data: any }> {
     return this.http.get<{ success: any, data: object }>(backendUrl + '\\secondaryData\\' + isbn);
   }
 
+  /**
+   * sets the secondary data of a book, data originated from server response
+   * @param isbn
+   * @private
+   */
   private sendRequestForSecondaryData(isbn: string) {
     this.getBookSecondaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
       if (success) {
         console.log(data)
         this.localLibrary.fillSecondaryData(isbn, data)
         this.localLibrary.setPrimaryToFalse(isbn)
-        // this.localLibrary.addBookPrimaryData(isbn, data)
         this.saveLocalLibraryToLocalStorage();
       } else {
         this.messageService.displayFail('BSD', data['errorCode'])
@@ -153,20 +169,16 @@ export class LocalLibraryService {
    * @private
    */
   private saveLocalLibraryToLocalStorage() {
-    console.log(this.localLibrary)
     localStorage.setItem('localLibrary', JSON.stringify(this.localLibrary))
     this.readyState = true;
     this.libraryRefreshed.next()
   }
 
   /**
-   * returns the data of primary data of a book
-   * if it not exists return an default Data object with default data
+   * returns the data data of a book
    * @param isbn isbn of the book
    */
   public getBookData(isbn: string) {
-    // if (!this.localLibrary.checkBookInLibrary(isbn)) return new BookPrimaryData([])
-    // // return this.localLibrary.getPrimaryData(isbn)
     return this.localLibrary.getBookData(isbn)
   }
 }

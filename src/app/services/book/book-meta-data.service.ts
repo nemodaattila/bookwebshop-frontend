@@ -192,4 +192,20 @@ export class BookMetaDataService implements OnInit {
     }
     return array
   }
+
+  public getCategoryNameById(id: number | undefined): string {
+    return this.metaData.getCategoryNameByID(id as number)
+  }
+
+  public getTargetAudienceNameById(id: number | undefined): string {
+    return this.metaData.getTargetAudienceNameById(id as number)
+  }
+
+  public getLanguageNameByID(id: number | undefined): string {
+    return this.metaData.getLanguage()[id as number]
+  }
+
+  public getTagNameByID(id: number): string {
+    return this.metaData.getTags()[id]
+  }
 }

@@ -1,6 +1,7 @@
 /**
  * contains data for a book
  */
+import {VariableHelperService} from "../../services/helper/variable-helper.service";
 
 export class BookData {
 
@@ -10,28 +11,46 @@ export class BookData {
    * creation time of the BookData object (needed for the data fresh)
    * @private
    */
-  private creationTime?: number;
+  private creationTime!: number;
 
-  private isbn?: string;
+  private isbn!: string;
   private title: string = 'UNKNOWN';
 
-  private typeId?: number
+  private typeId: number = 1
 
   private author: { [index: number]: string } = {};
 
-  private categoryId?: number;
+  private categoryId: number = 0;
 
-  private cover?: string;
+  private cover!: string;
 
-  private coverThumbnail?: string;
+  private coverThumbnail!: string;
 
-  private discount?: number
+  private discount: number = 0
 
-  private discountType?: { [index: number]: string }
+  private discountType!: { [index: number]: string }
 
-  private languageId?: number
+  private languageId!: number
 
-  private price?: number
+  private price!: number
+
+  private pageNumber: number = 0;
+
+  private physicalSize!: string;
+
+  private publisher!: string
+
+  private series: string | null = null
+
+  private shortDescription!: string;
+
+  private tags: Array<number> = [];
+
+  private targetAudienceId!: number;
+
+  private weight!: number;
+
+  private year: number = 0;
 
   getAuthor(): { [index: number]: string } {
     return this.author;
@@ -42,11 +61,11 @@ export class BookData {
   }
 
   getCategoryId(): number {
-    return this.categoryId!
+    return this.categoryId
   }
 
   getDiscount(): number {
-    return this.discount!
+    return this.discount
   }
 
   getIsbn(): string {
@@ -62,11 +81,7 @@ export class BookData {
   }
 
   getTypeId(): number {
-    return this.typeId!
-  }
-
-  setCoverThumbnail(value: string) {
-    this.coverThumbnail = value;
+    return this.typeId
   }
 
   getCoverThumbnail(): string {
@@ -75,6 +90,22 @@ export class BookData {
 
   getCover(): string {
     return this.cover!
+  }
+
+  getPageNumber(): number {
+    return this.pageNumber
+  }
+
+  getSeries(): string | null {
+    return this.series
+  }
+
+  getTags(): Array<number> {
+    return this.tags
+  }
+
+  getWeight(): number | undefined {
+    return this.weight
   }
 
   /**
@@ -93,8 +124,32 @@ export class BookData {
     this.primaryOnly = false
   }
 
+  public getTargetAudienceId(): number {
+    return this.targetAudienceId!
+  }
+
+  public getLanguageID(): number {
+    return this.languageId!
+  }
+
+  public getPhysicalSize(): string | undefined {
+    return this.physicalSize
+  }
+
+  public getPublisher(): string {
+    return this.publisher!
+  }
+
+  public getDescription(): string | undefined {
+    return this.shortDescription
+  }
+
+  public getYear(): number {
+    return this.year
+  }
+
   /**
-   * creates new BookPrimaryData object based in object data
+   * fills the primary data of a book
    * @param data
    */
   public addPrimaryData(data: { [index: string]: any }) {
@@ -110,36 +165,33 @@ export class BookData {
     // console.log(this)
   }
 
+  /**
+   * fills book with data
+   * @param data
+   */
   public fillDataFromLocalStorage(data: { [index: string]: any }) {
     this.primaryOnly = data.primaryOnly
     this.addPrimaryData(data)
     this.addSecondaryData(data)
   }
 
-  //
+//
   /**
-   * creates new BookSecondaryData object based in object data
+   * fills secondary data of a book
    * @param data
    */
   public addSecondaryData(data: { [index: string]: any }) {
-    // console.log(data)
     this.cover = data.cover
-    this.discountType = data.discount_type ?? data.dicountType
+    this.discountType = data.discountType ?? ((data.discount_type !== undefined) ? VariableHelperService.arrayToObjectWithIntKey(data.discount_type) : {0: 'None'})
     this.languageId = data.language_id ?? data.languageId
-    // console.log(this)
-
+    this.pageNumber = parseInt(data.page_number ?? data.pageNumber)
+    this.physicalSize = data.physicalSize ?? data.physical_size ?? undefined
+    this.publisher = data.publisher
+    this.series = data.series
+    this.shortDescription = data.short_description ?? data.shortDescription
+    this.tags = data.tags
+    this.targetAudienceId = data.target_audience_id ?? data.targetAudienceId
+    this.weight = data.weight ?? undefined
+    this.year = Number(data.year)
   }
-
-  //
-  // /**
-  //  * returns the primary Data of a book
-  //  */
-  getPrimaryData() {
-    // return <BookPrimaryData>this.primaryData;
-  }
-
-  //
-  // getSecondaryData(): BookSecondaryData {
-  //   return <BookSecondaryData>this.secondaryData;
-  // }
 }

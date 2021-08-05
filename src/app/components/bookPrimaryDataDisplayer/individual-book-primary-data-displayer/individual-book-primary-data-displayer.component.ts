@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {BookPrimaryData} from "../../../models/bookData/book-primary-data";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {BookMetaDataService} from "../../../services/book/book-meta-data.service";
 import {BookData} from "../../../models/bookData/book-data";
@@ -18,12 +17,12 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
   /**
    * primary data of the book - comes from BookPrimaryDataDisplayer component
    */
-  @Input() bookData?: BookData;
+  @Input() bookData!: BookData;
 
   /**
    * the book's thumbnail in SafeResourceUrl form
    */
-  public safeImgURl?: SafeResourceUrl;
+  public safeImgURl!: SafeResourceUrl;
 
   /**
    * id(s) of the book's author(s) in array
@@ -33,7 +32,7 @@ export class IndividualBookPrimaryDataDisplayerComponent implements OnChanges {
   /**
    * type of the book in string
    */
-  public typeString?: string
+  public typeString!: string
 
   /**
    * constructor

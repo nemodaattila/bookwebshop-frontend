@@ -18,4 +18,17 @@ export class VariableHelperService {
     return user;
 
   }
+
+  /**
+   * converts an array to object
+   * @param array
+   */
+  public static arrayToObjectWithIntKey(array: Array<any>): { [index: number]: any } {
+    console.log(array)
+    let obj: { [index: number]: any } = {}
+    array.forEach((value, index) => {
+      obj[index] = value
+    });
+    return obj;
+  }
 }

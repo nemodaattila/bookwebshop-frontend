@@ -25,6 +25,7 @@ export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.complexSearchService.subscribeForBookSearch()
+    this.bookSearch.setDefault()
   }
 
   /**
@@ -62,10 +63,4 @@ export class ComplexSearchBrowserComponent implements OnInit, OnDestroy {
   addNewCriteria() {
     this.complexSearchService.addNewSearchCriteria()
   }
-
-  /**
-   * removes a criteria (CriteriaSelector component)
-   * @param key the key of the criteria to be removed
-   */
-
 }

@@ -74,12 +74,37 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
     return this.format;
   }
 
+  /**
+   * return book type by id
+   * @param id
+   */
   public getTypeById(id: number): string {
     return this.type![id] as string;
   }
 
   public getTargetAudience(): { [index: number]: string } {
     return this.targetAudience;
+  }
+
+  /**
+   * returns target audience name by id
+   * @param id
+   */
+  public getTargetAudienceNameById(id: number): string {
+    return this.targetAudience[id];
+  }
+
+  /**
+   * return category name by id
+   * @param id
+   */
+  public getCategoryNameByID(id: number): any {
+    for (let key of Object.values(this.subCategory)) {
+      if (key.hasOwnProperty(id)) {
+        return key[id];
+      }
+    }
+    return ''
   }
 
   constructor(data: any) {

@@ -47,6 +47,10 @@ export class BookSearchModel {
    */
   private criteria: { [index: string]: any } = {};
 
+  /**
+   * the count of results of the last search
+   * @private
+   */
   private lastSearchAllResultCount: number = Infinity;
 
   public setLastSearchAllResultCount(count: number) {
@@ -70,7 +74,10 @@ export class BookSearchModel {
   }
 
   setCriteria(type: string, value: any) {
+    console.log(type)
+    console.log(value)
     this.criteria[type] = value;
+    console.dir(this.criteria)
   };
 
   getNewCriteria(): [string, number] {
@@ -99,6 +106,8 @@ export class BookSearchModel {
     this.order = 'Title';
     this.orderDir = 'ASC';
     this.criteria = {};
+    this.lastSearchAllResultCount = Infinity;
+
   };
 
   /**
@@ -110,9 +119,9 @@ export class BookSearchModel {
 
   }
 
-  /*
-  *saving the new search criteria for comparison for local ordering
-  */
+  /**
+   *saving the new search criteria for comparison for local ordering
+   */
   setNewCriteria() {
     this.newCriteria[0] = JSON.stringify(this.criteria);
     this.newCriteria[1] = this.limit;

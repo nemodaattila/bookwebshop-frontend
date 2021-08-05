@@ -1,5 +1,4 @@
 import {BookData} from "../bookData/book-data";
-import {BookPrimaryData} from "../bookData/book-primary-data";
 
 /**
  * model for storing data for already loaded books
@@ -49,7 +48,6 @@ export class LocalLibraryModel {
    */
   public fillFromLocalStorage(localLibraryJSONString: string) {
     let localLibrary = JSON.parse(localLibraryJSONString).books
-    console.log(localLibrary)
     for (let isbn in localLibrary) {
       if ((new Date().getTime() - localLibrary[isbn].creationTime) < 86400000) {
         this.fillOne(isbn, localLibrary[isbn])
@@ -69,21 +67,27 @@ export class LocalLibraryModel {
 
   }
 
+  /**
+   * fills the book object with secondary data
+   * @param isbn book isbn
+   * @param data data
+   */
   public fillSecondaryData(isbn: string, data: any) {
-    console.log({...this.books[isbn]})
     this.books[isbn].addSecondaryData(data)
-    console.log(this.books[isbn])
-
   }
 
   /**
-   * returns the primary data of a book
+   * returns the data of a book
    * @param isbn
    */
   getBookData(isbn: string): BookData {
     return this.books[isbn];
   }
 
+  /**
+   * sets the primaryOnly flag to false -> contains secondary data
+   * @param isbn
+   */
   setPrimaryToFalse(isbn: string) {
     this.books[isbn].setPrimaryOnlyToFalse()
   }
