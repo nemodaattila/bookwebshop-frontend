@@ -22,15 +22,21 @@ export class MainMenuComponent implements OnInit {
    */
   public hasLoggedUser: boolean = false;
 
-  constructor(private router: Router, private authService: UserService) {
+  public authLevel: number = 0;
+
+  constructor(private router: Router, private userService: UserService) {
   }
 
   /**
    * subscription for change in logged user state
    */
   ngOnInit(): void {
-    this.authService.loggedUserState.subscribe((value => {
+    this.userService.loggedUserState.subscribe((value => {
       this.hasLoggedUser = value
+      if (value) {
+        this.authLevel = this.userService.getLoggedUser()!.getAuthenticationLevel() as number
+      } else
+        this.authLevel = 0
     }))
   }
 

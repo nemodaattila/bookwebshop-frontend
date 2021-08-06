@@ -12,7 +12,7 @@
         <span>
             <a routerLink="">Főoldal</a>
             <a id="discountLink">Akciók</a>
-            <a id="newReleaseLink">Újdonságok</a>
+            <a routerLink="browse/newreleases">Újdonságok</a>
 
         </span>
         <span id="rightDiv">
@@ -21,7 +21,7 @@
             <a id="faqLink">Kérdések - Észrevételek</a>
         </span>
     </span>
-    <span id=bookManageNav></span>
+    <app-data-manager-menu *ngIf="this.authLevel>=2"></app-data-manager-menu>
     <span>
         <a id="browseLink" routerLink="browse">Böngészés</a>
         <span>

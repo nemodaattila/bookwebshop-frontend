@@ -31,6 +31,8 @@ import {LoggedInMenuComponent} from './components/navigationMenu/logged-in-menu/
 import {HttpAuthenticationInterceptor} from "./services/authentication/http-authentication.interceptor";
 import {GlobalMessageDisplayerComponent} from './components/global-message-diplayer/global-message-displayer.component';
 import {BookAllDataDisplayerComponent} from './components/book-all-data-displayer/book-all-data-displayer.component';
+import {DataManagerMenuComponent} from './components/navigationMenu/data-manager-menu/data-manager-menu.component';
+import {BookUploadComponent} from './components/BookHandling/book-upload/book-upload.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import {BookAllDataDisplayerComponent} from './components/book-all-data-displaye
     LoggedInMenuComponent,
     GlobalMessageDisplayerComponent,
     BookAllDataDisplayerComponent,
+    DataManagerMenuComponent,
+    BookUploadComponent,
 
   ],
   imports: [
