@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
 
 @Component({
   selector: 'app-criteria-select-input',
   templateUrl: './criteria-select-input.component.html',
-  styleUrls: ['./criteria-select-input.component.css']
+  styleUrls: ['./criteria-select-input.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 /**
  * input select type Criteria Component for complex book search
@@ -57,6 +58,7 @@ export class CriteriaSelectInputComponent implements OnInit {
    * @param key
    */
   isEmpty(key: number) {
+    console.log(key)
     return this.options[key] === undefined
   }
 }

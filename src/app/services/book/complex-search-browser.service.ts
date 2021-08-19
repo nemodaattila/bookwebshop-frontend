@@ -197,6 +197,14 @@ export class ComplexSearchBrowserService {
     return this.selectedCriteria
   }
 
+  getSortedTags(): Array<any> {
+    return this.metaDataServ.getTagsSortedWithSeparatedIndex()
+  }
+
+  getDiscountTypes() {
+    return this.metaDataServ.getDiscountAsArray()
+  }
+
   /**
    * return the type of the criteria (as string), based on index (component serial number)
    * @param index

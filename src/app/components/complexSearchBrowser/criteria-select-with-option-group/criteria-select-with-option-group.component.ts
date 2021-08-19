@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
 
 @Component({
   selector: 'app-criteria-select-with-option-group',
   templateUrl: './criteria-select-with-option-group.component.html',
-  styleUrls: ['./criteria-select-with-option-group.component.css']
+  styleUrls: ['./criteria-select-with-option-group.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 
 /**
@@ -76,6 +78,7 @@ export class CriteriaSelectWithOptionGroupComponent implements OnInit {
    * @param gr index of the group
    */
   getItemGroupIndexesByIndex(gr: string) {
+    console.log(gr)
     return Object.keys(this.item[parseInt(gr)])
   }
 
@@ -85,6 +88,7 @@ export class CriteriaSelectWithOptionGroupComponent implements OnInit {
    * @param index index of the item in the group
    */
   getItemLabel(group: string, index: string) {
+    console.log(group)
     return this.item[parseInt(group)][parseInt(index)]
   }
 }

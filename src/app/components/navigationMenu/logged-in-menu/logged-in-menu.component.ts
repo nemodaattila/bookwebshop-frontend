@@ -34,7 +34,7 @@ export class LoggedInMenuComponent implements OnInit, OnDestroy {
     this.timer = setInterval(() => {
       this.setExpirationString()
       this.tokenExpirationTime--;
-      if (this.tokenExpirationTime === 0) {
+      if (this.tokenExpirationTime < 0) {
         clearTimeout(this.timer)
         console.log('timout')
         this.logOut()

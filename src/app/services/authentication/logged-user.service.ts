@@ -14,6 +14,16 @@ export class LoggedUserService {
 
   private tokenExpires: number = 600
 
+  private loggedUserChecked: boolean = false
+
+  setLoggedUserChecked(value: boolean) {
+    this.loggedUserChecked = value;
+  }
+
+  public getLoggedUserChecked(): boolean {
+    return this.loggedUserChecked;
+  }
+
   /**
    * returns logged User
    * @return User
@@ -76,7 +86,6 @@ export class LoggedUserService {
    */
 
   public getLoggedUserState(): boolean {
-    console.log(this.loggedUser)
     return this.loggedUser !== undefined
   }
 

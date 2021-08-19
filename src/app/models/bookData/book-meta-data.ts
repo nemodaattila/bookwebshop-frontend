@@ -50,6 +50,8 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
    */
   private readonly type: { [index: number]: string } = {}
 
+  private readonly discountType: { [index: number]: [string, number] } = {}
+
   getMainCategory(): { [index: number]: string } {
     return this.mainCategory;
   }
@@ -72,6 +74,10 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
 
   getFormat(): { [index: number]: { [index: number]: string } } {
     return this.format;
+  }
+
+  getDiscountType(): { [p: number]: [string, number] } {
+    return this.discountType;
   }
 
   /**
@@ -115,5 +121,6 @@ belles-lettres}}, 2 (learning): {3: lexicon, 4: school book}
     this.tag = data.tag;
     this.targetAudience = data.targetAudience;
     this.type = data.type;
+    this.discountType = data.discountType;
   }
 }

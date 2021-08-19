@@ -38,12 +38,17 @@ export class UserService {
             this.loggedUserServ.setLoggedUser(this.varHelper.createUserFromHttpResponse(data['userData']))
             this.messageDisplayer.displaySuccess('UTC', data['userData']['userName'])
           }
+          this.loggedUserServ.setLoggedUserChecked(true)
           this.emitLoggedUserState()
         },
         () => {
+          this.loggedUserServ.setLoggedUserChecked(true)
           this.emitLoggedUserState()
         }
       )
+    } else {
+      this.loggedUserServ.setLoggedUserChecked(true)
+      this.emitLoggedUserState()
     }
   }
 
@@ -114,6 +119,7 @@ export class UserService {
         this.messageDisplayer.displayFail('ULO', data['errorCode'])
       }
       this.emitLoggedUserState()
+      this.router.navigateByUrl('');
     }, () => {
       this.emitLoggedUserState()
     })
@@ -153,6 +159,7 @@ export class UserService {
    * @private
    */
   private emitLoggedUserState() {
+    console.log(this.loggedUserServ.getLoggedUserState())
     this.loggedUserState.next(this.loggedUserServ.getLoggedUserState())
   }
 }
