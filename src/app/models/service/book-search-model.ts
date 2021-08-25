@@ -74,10 +74,7 @@ export class BookSearchModel {
   }
 
   setCriteria(type: string, value: any) {
-    console.log(type)
-    console.log(value)
     this.criteria[type] = value;
-    console.dir(this.criteria)
   };
 
   getNewCriteria(): [string, number] {

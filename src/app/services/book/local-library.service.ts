@@ -154,7 +154,6 @@ export class LocalLibraryService {
   private sendRequestForSecondaryData(isbn: string) {
     this.getBookSecondaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
       if (success) {
-        console.log(data)
         this.localLibrary.fillSecondaryData(isbn, data)
         this.localLibrary.setPrimaryToFalse(isbn)
         this.saveLocalLibraryToLocalStorage();

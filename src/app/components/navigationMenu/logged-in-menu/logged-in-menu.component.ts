@@ -22,7 +22,6 @@ export class LoggedInMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loggedUser = <User>this.userService.getLoggedUser();
     this.tokenExpirationTime = this.userService.getTokenExpirationTime()
-    console.log(this.tokenExpirationTime)
     this.startInterval()
   }
 
@@ -36,7 +35,6 @@ export class LoggedInMenuComponent implements OnInit, OnDestroy {
       this.tokenExpirationTime--;
       if (this.tokenExpirationTime < 0) {
         clearTimeout(this.timer)
-        console.log('timout')
         this.logOut()
       }
     }, 1000);

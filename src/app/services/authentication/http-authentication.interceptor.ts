@@ -31,13 +31,11 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
    * @param next
    */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(request)
     const auth = this.injector.get(LoggedUserService);
     request = request.clone({
       withCredentials: true
     })
     if (auth.getToken() !== null) {
-      console.log(auth.getToken())
       request = request.clone({
         headers: request.headers.set('Authorization', auth.getToken() as string),
       })
@@ -49,7 +47,6 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
         if (httpEvent.type === 0) {
           return;
         }
-        console.log(httpEvent);
         console.log((httpEvent as HttpResponse<any>).body.data)
         if ((httpEvent as any) instanceof HttpResponse) {
           let expTime = (httpEvent as HttpResponse<any>).headers.get('TokenExpirationTime');

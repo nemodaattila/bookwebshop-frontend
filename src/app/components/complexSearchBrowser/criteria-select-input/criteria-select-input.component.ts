@@ -58,7 +58,6 @@ export class CriteriaSelectInputComponent implements OnInit {
    * @param key
    */
   isEmpty(key: number) {
-    console.log(key)
     return this.options[key] === undefined
   }
 }

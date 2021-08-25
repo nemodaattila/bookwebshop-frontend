@@ -11,7 +11,6 @@ import {DataMaintainerGuard} from "../services/authentication/data-maintainer.gu
 
 /**
  * routing Path
- * TODO authenticationGuard
  */
 const routes: Routes = [
   {path: 'bookupload', component: BookUploadComponent, canActivate: [DataMaintainerGuard]},

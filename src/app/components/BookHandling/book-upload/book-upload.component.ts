@@ -10,7 +10,6 @@ import {BookDataAdderService} from "../../../services/book/book-data-adder.servi
   selector: 'app-book-upload',
   templateUrl: './book-upload.component.html',
   styleUrls: ['./book-upload.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookUploadComponent implements OnInit {
 
@@ -45,8 +44,6 @@ export class BookUploadComponent implements OnInit {
   ngOnInit(): void {
     this.initFormGroup()
     this.dataListService.dataListEmitter.subscribe(value => {
-      console.log(value)
-      console.log(this.activeDatalist)
       switch (this.activeDatalist) {
         case 0:
           this.authorDataList = value as string[]
@@ -60,15 +57,12 @@ export class BookUploadComponent implements OnInit {
       }
     })
     this.initSelectOptions()
-
   }
 
   private initSelectOptions() {
     this.category = this.browserService.getGroupedOptions('Category')
     this.format = this.browserService.getGroupedOptions('Format')
-
     this.tag = this.browserService.getSortedTags()
-    console.log(this.tag)
     this.discountTypes = this.browserService.getDiscountTypes()
   }
 
@@ -140,7 +134,6 @@ export class BookUploadComponent implements OnInit {
   }
 
   passValueToService(num: number) {
-    console.log(num)
     this.emptyDatalist(num)
     let value
     switch (num) {
@@ -149,7 +142,6 @@ export class BookUploadComponent implements OnInit {
         break
       case 1:
         value = this.dataForm['controls']['publisher'].value
-
         break
       case 2:
         value = this.dataForm['controls']['series'].value
@@ -181,14 +173,12 @@ export class BookUploadComponent implements OnInit {
     auths.push(this.authorSearchValue)
     auths.sort()
     auths = [...new Set(auths)]
-    console.log(auths)
     this.authorSearchValue = ''
     this.dataForm['controls']['author'].setValue(auths.join(','))
   }
 
   changeDiscountValue() {
     let val = this.dataForm['controls']['discountType'].value
-    console.log(val)
     this.dataForm['controls']['discount'].setValue(this.discountTypes[val][1])
   }
 
@@ -196,7 +186,6 @@ export class BookUploadComponent implements OnInit {
     this.dataForm['controls']['coverFile'].setValue(null)
     this.coverFileElement.nativeElement.value = ''
     this.coverThumbnailString = this.dataForm['controls']['coverUrl'].value
-    console.log(this.coverThumbnailString)
     const isUrl = () => {
       try {
         return Boolean(new URL(this.coverThumbnailString));
@@ -206,7 +195,6 @@ export class BookUploadComponent implements OnInit {
     }
     if (isUrl()) {
       const isImg = (this.coverThumbnailString.match(/\.(jpeg|jpg|gif|png)$/) != null);
-      console.log(isImg)
       if (isImg) {
         this.coverSource = this.coverThumbnailString
         return
@@ -221,7 +209,6 @@ export class BookUploadComponent implements OnInit {
     this.coverThumbnailString = ''
     const file: File = event.target!.files[0];
     if (file) {
-      // let file = files[0];
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -241,10 +228,7 @@ export class BookUploadComponent implements OnInit {
       this.messageServ.displayFail('BUFM', formValid)
       return;
     }
-    // const fd = new FormData()
-    // fd.append('file', this.dataForm.get('coverFile')!.value);
     const data = this.dataForm.value;
-    console.log(data)
     this.bookAdderServ.addNewBook(data)
   }
 

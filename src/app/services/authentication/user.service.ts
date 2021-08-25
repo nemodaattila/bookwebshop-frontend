@@ -159,7 +159,6 @@ export class UserService {
    * @private
    */
   private emitLoggedUserState() {
-    console.log(this.loggedUserServ.getLoggedUserState())
     this.loggedUserState.next(this.loggedUserServ.getLoggedUserState())
   }
 }

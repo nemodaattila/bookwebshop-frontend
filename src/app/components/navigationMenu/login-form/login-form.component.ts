@@ -60,7 +60,6 @@ export class LoginFormComponent implements OnInit {
       return;
     }
     const data = this.userLoginForm.value;
-    console.log(data)
     this.userService.login(data);
   }
 

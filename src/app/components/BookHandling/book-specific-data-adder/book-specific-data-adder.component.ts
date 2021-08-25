@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BookDataAdderService} from "../../../services/book/book-data-adder.service";
 
 @Component({
@@ -6,12 +6,9 @@ import {BookDataAdderService} from "../../../services/book/book-data-adder.servi
   templateUrl: './book-specific-data-adder.component.html',
   styleUrls: ['./book-specific-data-adder.component.css']
 })
-export class BookSpecificDataAdderComponent implements OnInit {
+export class BookSpecificDataAdderComponent {
 
   constructor(private dataAdder: BookDataAdderService) {
-  }
-
-  ngOnInit(): void {
   }
 
   selectIndex: number = 0
@@ -19,12 +16,9 @@ export class BookSpecificDataAdderComponent implements OnInit {
   inputValue: string = '';
 
   addNewParam() {
-    console.log(this.inputValue)
     if (this.inputValue.length > 2) {
       this.dataAdder.addNewData(this.selectIndex, this.inputValue)
-
     }
     this.inputValue = ''
   }
-
 }

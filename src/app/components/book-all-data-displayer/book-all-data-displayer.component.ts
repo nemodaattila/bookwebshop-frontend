@@ -49,7 +49,7 @@ export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
    */
   public tagLength: number = 0;
 
-  //TODO kedvezmény és kedvezménycsoport kiiratása
+  //TODO kedvezménycsoport kiiratása
 
   ngOnInit(): void {
     this.acrSubs = this.acRoute.params.subscribe((value: Params) => {

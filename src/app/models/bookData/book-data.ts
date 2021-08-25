@@ -153,7 +153,6 @@ export class BookData {
    * @param data
    */
   public addPrimaryData(data: { [index: string]: any }) {
-    // console.log(data)
     this.isbn = data.isbn ?? 'UNKNOWN';
     this.title = data.title
     this.typeId = parseInt(data.type_id ?? data.typeId)
@@ -162,7 +161,6 @@ export class BookData {
     this.coverThumbnail = data.cover_thumbnail ?? data.coverThumbnail;
     this.discount = parseInt(data.discount) ?? 0
     this.price = parseInt(data.price) ?? 0;
-    // console.log(this)
   }
 
   /**
@@ -175,7 +173,6 @@ export class BookData {
     this.addSecondaryData(data)
   }
 
-//
   /**
    * fills secondary data of a book
    * @param data

@@ -61,10 +61,7 @@ export class BookSearchService {
    * simple increases to counter
    */
 
-  //TODO rework registration for book search source
-
   registerSearchSourceService(type: string) {
-
     if (this.registeredSourceComponents.indexOf(type) === -1) {
       this.registeredSourceComponents.push(type)
       this.registeredSourceComponentCount++;
@@ -87,7 +84,6 @@ export class BookSearchService {
    * @param value value of criteria
    */
   setCategorySearchCriteria(source: string, type: string | null, value: number | null) {
-    console.log(source)
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
       if (type === 'MainCategory') {
         this.searchParams.delCriteria('Category')
@@ -111,16 +107,12 @@ export class BookSearchService {
    * @param params search parameters
    */
   setSearchCriteria(source: string, params: { [index: string]: any }) {
-    console.log(source)
-
     if (this.registeredSourceComponents.indexOf(source) !== -1) {
-
       for (let key in params) {
         if (typeof params[key] === 'object') {
           this.searchParams.setCriteria(key, {...params[key]})
         } else
           this.searchParams.setCriteria(key, params[key])
-        console.log(this.searchParams)
       }
       this.increaseAnswered()
     }
@@ -194,7 +186,6 @@ export class BookSearchService {
     console.log(isLocal)
     if (!isLocal) {
       this.searchForBooks(params).subscribe(({'success': success, 'data': data}) => {
-        // console.log(success)
         console.log(data)
         if (success) {
           this.isbnListArrived.next({'success': success, 'data': data})

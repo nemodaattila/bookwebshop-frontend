@@ -34,7 +34,6 @@ export class BookMetaDataService implements OnInit {
   private readyState: boolean = false;
 
   constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
-    // localStorage.setItem('metadata','');
     this.checkMetaDataInLocalStorage();
   }
 
@@ -60,7 +59,6 @@ export class BookMetaDataService implements OnInit {
   private checkMetaDataInLocalStorage() {
     let date;
     let metadata = localStorage.getItem('metadata');
-    // metadata = null
     if (metadata) {
       [metadata, date] = JSON.parse(metadata);
       let actTime = parseInt((new Date().getTime() / 1000).toFixed(0))
@@ -81,15 +79,12 @@ export class BookMetaDataService implements OnInit {
    * @private
    */
   private getMetaDataFromServer() {
-    console.log('metaFromServer')
     this.http.get<any>(backendUrl + '\\metadata').subscribe(({'success': success, 'data': data}) => {
       if (success) {
-        // console.log(data)
         this.saveMetaToModel(data);
         this.saveMetaDataToLocalStorage()
         this.readyState = true;
         this.metaDataReady.next(this.metaData)
-        // console.log(this.metaData)
       } else this.messageService.displayFail('BMD', data['errorCode'])
     });
   }
@@ -110,7 +105,6 @@ export class BookMetaDataService implements OnInit {
    */
   private saveMetaToModel(data: any) {
     this.metaData = new BookMetaData(data)
-    console.log(this.metaData)
   }
 
   /**
@@ -174,15 +168,11 @@ export class BookMetaDataService implements OnInit {
 
   getTagsSortedWithSeparatedIndex() {
     let entry = Object.entries(this.getTags());
-    let sorted = entry.sort((a, b) => {
+    return entry.sort((a, b) => {
       {
         return a[1].localeCompare(b[1]);
       }
-
-    });
-    console.log(sorted)
-
-    return sorted
+    })
   }
 
   /**
@@ -212,7 +202,6 @@ export class BookMetaDataService implements OnInit {
   getDiscountAsArray(): Array<[string, number]> {
     let mc = this.metaData.getDiscountType()
     let array: Array<[string, number]> = []
-    console.log(mc)
     for (let key of Object.keys(mc)) {
       array[parseInt(key)] = mc[parseInt(key)]
     }

@@ -51,7 +51,6 @@ export class LoggedUserService {
    */
   setLoggedUser(user: User) {
     this.loggedUser = user
-    console.log(this.loggedUser)
   }
 
   /**
@@ -75,7 +74,6 @@ export class LoggedUserService {
    * @private
    */
   public checkLocalStorageForToken(): boolean {
-    // this.removeLoggedUserAndToken()
     return (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined)
   }
 
@@ -91,7 +89,6 @@ export class LoggedUserService {
 
   public setTokenExpiringTime(time: number) {
     this.tokenExpires = time - Math.floor(Date.now() / 1000)
-    console.log(this.tokenExpires)
   }
 
   public getTokenExpiringTime(): number {

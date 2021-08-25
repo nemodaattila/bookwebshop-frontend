@@ -16,7 +16,6 @@ export class BookDataAdderService {
       type: type,
       data: value
     }
-    console.log(data)
     this.http.post<any>(backendUrl + 'addQuickData', data,
       {headers: new HttpHeaders({'Content-Type': 'text/plain',})}).subscribe(({
                                                                                 'success': success,
@@ -31,8 +30,6 @@ export class BookDataAdderService {
   }
 
   public addNewBook(data: { [index: string]: any }) {
-    // 'multipart/form-data , application/x-www-form-urlencoded'
-    console.log(data.title)
     this.http.post<any>(backendUrl + 'uploadbook', data).subscribe(({
                                                                       'success': success,
                                                                       'data': newData
@@ -40,7 +37,6 @@ export class BookDataAdderService {
       if (!success) {
         this.messageService.displayFail('BUR', newData['errorCode'])
       } else {
-        console.log(newData)
         this.messageService.displaySuccess('BUR', data.title)
       }
     });
