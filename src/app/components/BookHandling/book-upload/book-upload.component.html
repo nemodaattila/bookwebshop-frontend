@@ -2,7 +2,7 @@
   <label>új paraméter hozzáadása</label>
   <app-book-specific-data-adder></app-book-specific-data-adder>
   <h3><label>Új könyv feltöltése</label></h3>
-  <form [formGroup]="dataForm" (ngSubmit)="submit()">
+  <form id="uploadForm" enctype="multipart/form-data" [formGroup]="dataForm" (ngSubmit)="submit()">
     <div><label>Cím:</label><input formControlName="title" type="text"></div>
 
     <div><label>ISBN:</label><input formControlName="isbn" type="text"></div>
@@ -13,7 +13,7 @@
       <datalist id="datalist1">
         <option *ngFor="let item of authorDataList">{{item}}</option>
       </datalist>
-      <button (click)="addAuthor()">Iró hozzádása</button>
+      <button type="button" (click)="addAuthor()">Iró hozzádása</button>
     </div>
 
     <div><label>Típus:</label><select formControlName="type">
@@ -73,7 +73,7 @@
     </div>
 
     <div><label>Súly (g):</label><input formControlName="weight" type="number"></div>
-    <div><label>Méret (mm):</label><input formControlName="weight" type="text"></div>
+    <div><label>Méret (mm):</label><input formControlName="size" type="text"></div>
 
     <div><label>Rövid leirás:</label><textarea rows="6" cols="60" formControlName="description"></textarea></div>
 
@@ -96,7 +96,7 @@
     <div><label>Kedvezmény:</label><input formControlName="discount" type="number" min="0" max="100"></div>
     <div><label>Boritó (url):</label><input formControlName="coverUrl" type="text" (input)="addThumbnailFromUrl()">
     </div>
-    <div><label>Borító (file):</label><input #bc type="file" (change)="addThumbnailFromFile(bc.files!)"></div>
+    <div><label>Borító (file):</label><input #bc type="file" (change)="addThumbnailFromFile($event)"></div>
     <div *ngIf="coverSource!==''"><label></label>
       <img id="coverThumbnail" [src]="coverSource" height="300" width="300">
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BookQuickDataAdderService} from "../../../services/book/book-quick-data-adder.service";
+import {BookDataAdderService} from "../../../services/book/book-data-adder.service";
 
 @Component({
   selector: 'app-book-specific-data-adder',
@@ -8,7 +8,7 @@ import {BookQuickDataAdderService} from "../../../services/book/book-quick-data-
 })
 export class BookSpecificDataAdderComponent implements OnInit {
 
-  constructor(private dataAdder: BookQuickDataAdderService) {
+  constructor(private dataAdder: BookDataAdderService) {
   }
 
   ngOnInit(): void {

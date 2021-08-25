@@ -6,7 +6,7 @@ import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.
 @Injectable({
   providedIn: 'root'
 })
-export class BookQuickDataAdderService {
+export class BookDataAdderService {
 
   constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
   }
@@ -26,6 +26,22 @@ export class BookQuickDataAdderService {
         this.messageService.displayFail('BQDA', data['errorCode'])
       } else {
         this.messageService.displaySuccess('BQDA', value)
+      }
+    });
+  }
+
+  public addNewBook(data: { [index: string]: any }) {
+    // 'multipart/form-data , application/x-www-form-urlencoded'
+    console.log(data.title)
+    this.http.post<any>(backendUrl + 'uploadbook', data).subscribe(({
+                                                                      'success': success,
+                                                                      'data': newData
+                                                                    }) => {
+      if (!success) {
+        this.messageService.displayFail('BUR', newData['errorCode'])
+      } else {
+        console.log(newData)
+        this.messageService.displaySuccess('BUR', data.title)
       }
     });
   }

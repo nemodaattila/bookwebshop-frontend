@@ -31,6 +31,7 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
    * @param next
    */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log(request)
     const auth = this.injector.get(LoggedUserService);
     request = request.clone({
       withCredentials: true
@@ -49,6 +50,7 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
           return;
         }
         console.log(httpEvent);
+        console.log((httpEvent as HttpResponse<any>).body.data)
         if ((httpEvent as any) instanceof HttpResponse) {
           let expTime = (httpEvent as HttpResponse<any>).headers.get('TokenExpirationTime');
           if (expTime !== null) {
@@ -59,6 +61,7 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
         console.log(error)
+        console.log(error.error)
         this.messageService.displayError('BEE', error, error.url as string)
         return throwError(error);
       })

@@ -17,7 +17,7 @@
       <p>Ár: {{bookData.getPrice()}}</p>
       <div *ngIf="bookData.getDiscount() !== 0">
         <p>Kedvezmény: {{bookData.getDiscount()}}</p>
-        <p>Kedvezményes ár: {{(bookData.getPrice() / 100) * (100 - bookData.getPrice())}}</p>
+        <p>Kedvezményes ár: {{(bookData.getPrice() / 100) * (100 - bookData.getDiscount())}}</p>
       </div>
     </section>
   </section>
