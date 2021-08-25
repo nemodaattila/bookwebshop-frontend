@@ -63,7 +63,7 @@ export class LocalLibraryService {
    */
   fillBooksFromLocalStorage() {
     let localLibrary = localStorage.getItem('localLibrary');
-    localLibrary = null
+    // localLibrary = null
     if (localLibrary !== null) {
       this.localLibrary.fillFromLocalStorage(localLibrary)
       this.saveLocalLibraryToLocalStorage();

@@ -33,7 +33,6 @@ import {GlobalMessageDisplayerComponent} from './components/global-message-dipla
 import {BookAllDataDisplayerComponent} from './components/book-all-data-displayer/book-all-data-displayer.component';
 import {DataManagerMenuComponent} from './components/navigationMenu/data-manager-menu/data-manager-menu.component';
 import {BookUploadComponent} from './components/BookHandling/book-upload/book-upload.component';
-import {DataMaintainerGuard} from "./services/authentication/data-maintainer.guard";
 import {BookSpecificDataAdderComponent} from './components/BookHandling/book-specific-data-adder/book-specific-data-adder.component';
 
 @NgModule({

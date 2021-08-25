@@ -3,7 +3,7 @@
   grid-template-columns: 30% 70%;
 }
 
-#indivImageDiv > img {
+#individualImageDiv > img {
   display: block;
 
   margin-top: 1em;
@@ -13,12 +13,12 @@
   height: auto;
 }
 
-#indivDescDiv {
+#individualDescDiv {
 
   margin-right: 10%;
 }
 
-#indivDescDiv label {
+#individualDescDiv label {
   display: inline-block;
   width: 130px;
   text-align: right;
@@ -34,6 +34,3 @@ ul {
   list-style-type: none;
 }
 
-#modifySpan {
-  float: right;
-}

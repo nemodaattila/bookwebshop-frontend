@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {CanActivate, Router, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UserService} from "./user.service";
 import {LoggedUserService} from "./logged-user.service";
@@ -12,17 +12,13 @@ export class DataMaintainerGuard implements CanActivate {
   constructor(private userServ: UserService, private loggedUserServ: LoggedUserService, private router: Router) {
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('DMG')
-    const ch = this.loggedUserServ.getLoggedUserChecked()
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.loggedUserServ.getLoggedUserChecked()) {
       const lu = this.loggedUserServ.getLoggedUserState()
       if (lu) {
         return true
       } else {
-        this.router.navigateByUrl('');
+        void this.router.navigateByUrl('');
         return false
       }
     }
@@ -42,13 +38,9 @@ export class DataMaintainerGuard implements CanActivate {
 
       this.userServ.loggedUserState.subscribe(
         response => {
-          console.log(response)
           resolve(response)
         }, error => {
-          // this.errorMessage = <any>error;
-          // if(this.errorMessage != null){
           reject(error);
-          // }
         }
       );
 

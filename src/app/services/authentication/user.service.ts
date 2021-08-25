@@ -119,7 +119,7 @@ export class UserService {
         this.messageDisplayer.displayFail('ULO', data['errorCode'])
       }
       this.emitLoggedUserState()
-      this.router.navigateByUrl('');
+      void this.router.navigateByUrl('');
     }, () => {
       this.emitLoggedUserState()
     })

@@ -1,4 +1,4 @@
-<div id="indivDescDiv">
+<div>
   <label>új paraméter hozzáadása</label>
   <app-book-specific-data-adder></app-book-specific-data-adder>
   <h3><label>Új könyv feltöltése</label></h3>
@@ -78,7 +78,7 @@
     <div><label>Rövid leirás:</label><textarea rows="6" cols="60" formControlName="description"></textarea></div>
 
     <div>
-      <label>Tagek:</label><input class="notdisplayed" formControlName="tags" type="text" [readonly]="true">
+      <label>Tagek:</label><input class="notDisplayed" formControlName="tags" type="text" [readonly]="true">
     </div>
     <div class="fromLeft">
         <span *ngFor="let opt of tag; index as key">
@@ -98,7 +98,7 @@
     </div>
     <div><label>Borító (file):</label><input #bc type="file" (change)="addThumbnailFromFile($event)"></div>
     <div *ngIf="coverSource!==''"><label></label>
-      <img id="coverThumbnail" [src]="coverSource" height="300" width="300">
+      <img id="coverThumbnail" alt="chosen cover" [src]="coverSource" height="300" width="300">
 
     </div>
     <button type="submit">OK</button>

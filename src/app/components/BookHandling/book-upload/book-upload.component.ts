@@ -42,7 +42,6 @@ export class BookUploadComponent implements OnInit {
   coverThumbnailString: string = '';
   coverSource: string = '';
 
-
   ngOnInit(): void {
     this.initFormGroup()
     this.dataListService.dataListEmitter.subscribe(value => {

@@ -1,18 +1,13 @@
-.twoColumn {
-  display: grid;
-  grid-template-columns: 30% 70%;
-}
-
-#indivDescDiv {
+#individualDescDiv {
 
   margin-right: 10%;
 }
 
-#indivDescDiv div {
+#individualDescDiv div {
   margin: 5px;
 }
 
-#indivDescDiv label {
+#individualDescDiv label {
   display: inline-block;
   width: 200px;
   text-align: right;
@@ -25,15 +20,11 @@ div.fromLeft {
   left: 200px;
 }
 
-.multilineSpan {
-  margin-left: 130px;
-  display: inline-block;
-}
 
 ul {
   list-style-type: none;
 }
 
-.notdisplayed {
+.notDisplayed {
   display: none;
 }
