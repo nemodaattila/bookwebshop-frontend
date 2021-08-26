@@ -34,6 +34,8 @@ import {BookAllDataDisplayerComponent} from './components/book-all-data-displaye
 import {DataManagerMenuComponent} from './components/navigationMenu/data-manager-menu/data-manager-menu.component';
 import {BookUploadComponent} from './components/BookHandling/book-upload/book-upload.component';
 import {BookSpecificDataAdderComponent} from './components/BookHandling/book-specific-data-adder/book-specific-data-adder.component';
+import {IsbnSelectorForModifyComponent} from './components/BookHandling/isbn-selector-for-modify/isbn-selector-for-modify.component';
+import {BookModifierComponent} from './components/BookHandling/book-modifier/book-modifier.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import {BookSpecificDataAdderComponent} from './components/BookHandling/book-spe
     DataManagerMenuComponent,
     BookUploadComponent,
     BookSpecificDataAdderComponent,
+    IsbnSelectorForModifyComponent,
+    BookModifierComponent,
 
   ],
   imports: [

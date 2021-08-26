@@ -30,6 +30,8 @@ export class BookData {
 
   private discountType!: { [index: number]: string }
 
+  private format: number = 1
+
   private languageId!: number
 
   private price!: number
@@ -66,6 +68,10 @@ export class BookData {
 
   getDiscount(): number {
     return this.discount
+  }
+
+  getDiscountTypeID(): number {
+    return Number(Object.keys(this.discountType)[0])
   }
 
   getIsbn(): string {
@@ -148,6 +154,10 @@ export class BookData {
     return this.year
   }
 
+  public getFormat(): number {
+    return this.format
+  }
+
   /**
    * fills the primary data of a book
    * @param data
@@ -180,6 +190,7 @@ export class BookData {
   public addSecondaryData(data: { [index: string]: any }) {
     this.cover = data.cover
     this.discountType = data.discountType ?? ((data.discount_type !== undefined) ? VariableHelperService.arrayToObjectWithIntKey(data.discount_type) : {0: 'None'})
+    this.format = data.format ?? data.format_id
     this.languageId = data.language_id ?? data.languageId
     this.pageNumber = parseInt(data.page_number ?? data.pageNumber)
     this.physicalSize = data.physicalSize ?? data.physical_size ?? undefined

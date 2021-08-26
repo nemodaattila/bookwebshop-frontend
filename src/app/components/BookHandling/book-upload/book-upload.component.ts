@@ -15,9 +15,9 @@ export class BookUploadComponent implements OnInit {
 
   @ViewChild('bc') coverFileElement!: ElementRef;
 
-  constructor(private dataListService: BookCriteriaDataListFillerService,
-              public browserService: ComplexSearchBrowserService, private formService: FormService,
-              private messageServ: GlobalMessageDisplayerService, private bookAdderServ: BookDataAdderService) {
+  constructor(protected dataListService: BookCriteriaDataListFillerService,
+              public browserService: ComplexSearchBrowserService, protected formService: FormService,
+              protected messageServ: GlobalMessageDisplayerService, protected bookAdderServ: BookDataAdderService) {
   }
 
   dataForm!: FormGroup;
@@ -59,7 +59,7 @@ export class BookUploadComponent implements OnInit {
     this.initSelectOptions()
   }
 
-  private initSelectOptions() {
+  protected initSelectOptions() {
     this.category = this.browserService.getGroupedOptions('Category')
     this.format = this.browserService.getGroupedOptions('Format')
     this.tag = this.browserService.getSortedTags()
@@ -68,6 +68,8 @@ export class BookUploadComponent implements OnInit {
 
   boxChecked(checked: boolean, key: number) {
     let tagIDs = this.dataForm['controls']['tags'].value
+    console.log(tagIDs)
+
     let tags = (tagIDs === null) ? [] : tagIDs.split(',')
     if (tags === ['']) tags = []
     if (checked) {
@@ -77,6 +79,7 @@ export class BookUploadComponent implements OnInit {
       tags = tags.filter((e: number) => e !== key)
     }
     tags = [...new Set(tags)]
+    console.log(tags)
     this.dataForm['controls']['tags'].setValue(tags.join(','))
   }
 
@@ -92,6 +95,7 @@ export class BookUploadComponent implements OnInit {
     if (type === 'category')
       return this.category[2][parseInt(group)][parseInt(index)]
     if (type === 'format')
+
       return this.format[2][parseInt(group)][parseInt(index)]
   }
 
@@ -99,9 +103,9 @@ export class BookUploadComponent implements OnInit {
     return name === undefined
   }
 
-  private initFormGroup(): void {
+  protected initFormGroup(): void {
     this.dataForm = new FormGroup({
-      title: new FormControl('test', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
       isbn: new FormControl(),
       author: new FormControl(),
       type: new FormControl(1),

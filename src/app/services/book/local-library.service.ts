@@ -86,10 +86,12 @@ export class LocalLibraryService {
    * @param isbn book isbn to be checked if exists
    * @private
    */
-  private checkIsbnInLocalLibrary(isbn: string) {
+  public checkIsbnInLocalLibrary(isbn: string): boolean {
     if (!this.localLibrary.checkBookInLibrary(isbn)) {
       this.sendRequestForPrimaryData(isbn);
+      return false
     }
+    return true
   }
 
   /**

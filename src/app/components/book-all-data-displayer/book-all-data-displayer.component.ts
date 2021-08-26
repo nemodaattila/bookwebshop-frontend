@@ -5,6 +5,7 @@ import {LocalLibraryService} from "../../services/book/local-library.service";
 import {BookData} from "../../models/bookData/book-data";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {BookMetaDataService} from "../../services/book/book-meta-data.service";
+import {LoggedUserService} from "../../services/authentication/logged-user.service";
 
 @Component({
   selector: 'app-book-all-data-displayer',
@@ -17,7 +18,9 @@ import {BookMetaDataService} from "../../services/book/book-meta-data.service";
  */
 export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
 
-  constructor(public metaService: BookMetaDataService, private sanitizer: DomSanitizer, private acRoute: ActivatedRoute, private router: Router, private localLibrary: LocalLibraryService) {
+  constructor(public metaService: BookMetaDataService, private sanitizer: DomSanitizer,
+              private acRoute: ActivatedRoute, private router: Router,
+              private localLibrary: LocalLibraryService, public loggedUserServ: LoggedUserService) {
   }
 
   /**
@@ -94,6 +97,11 @@ export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
       this.authorIds = aIDs.map(value => parseInt(value))
     }
     this.tagLength = this.bookData?.getTags().length as number
+    console.log(this.bookData)
+  }
+
+  redirectToModify() {
+    void this.router.navigate(['bookmodify', this.isbn])
   }
 
   ngOnDestroy() {

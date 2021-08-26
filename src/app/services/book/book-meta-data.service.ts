@@ -223,4 +223,8 @@ export class BookMetaDataService implements OnInit {
   public getTagNameByID(id: number): string {
     return this.metaData.getTags()[id]
   }
+
+  public getFormatNameByID(typeID: number, formatId: number): string {
+    return this.metaData.getFormat()[typeID][formatId]
+  }
 }

@@ -8,11 +8,15 @@ import {AuthenticationNotLoggedGuard} from "../services/authentication/authentic
 import {BookAllDataDisplayerComponent} from "../components/book-all-data-displayer/book-all-data-displayer.component";
 import {BookUploadComponent} from "../components/BookHandling/book-upload/book-upload.component";
 import {DataMaintainerGuard} from "../services/authentication/data-maintainer.guard";
+import {IsbnSelectorForModifyComponent} from "../components/BookHandling/isbn-selector-for-modify/isbn-selector-for-modify.component";
+import {BookModifierComponent} from "../components/BookHandling/book-modifier/book-modifier.component";
 
 /**
  * routing Path
  */
 const routes: Routes = [
+  {path: 'isbnselformod', component: IsbnSelectorForModifyComponent, canActivate: [DataMaintainerGuard]},
+  {path: 'bookmodify/:isbn', component: BookModifierComponent, canActivate: [DataMaintainerGuard]},
   {path: 'bookupload', component: BookUploadComponent, canActivate: [DataMaintainerGuard]},
   {path: 'bookalldata/:isbn', component: BookAllDataDisplayerComponent, pathMatch: 'full'},
   {path: 'register', component: RegistrationComponent, canActivate: [AuthenticationNotLoggedGuard]},

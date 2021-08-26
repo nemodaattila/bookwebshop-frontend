@@ -1,6 +1,6 @@
 <div class="twoColumn">
   <div id="individualImageDiv">
-    <img alt="{{bookData!.getTitle()}}" [src]="safeImgURl">
+    <img [alt]="bookData!.getTitle()" [src]="safeImgURl">
   </div>
 
   <div id="individualDescDiv">
@@ -50,6 +50,12 @@
 
     <p><label>Kategória: </label>{{metaService.getCategoryNameById(bookData!.getCategoryId())}}</p>
 
+    <p *ngIf="bookData!.getFormat()"><label>Formátum: </label>
+      <span class="searchLabel" [routerLink]="['/browse']"
+            [queryParams]="{Format: bookData!.getFormat()}">{{metaService.getFormatNameByID(bookData.getTypeId(), bookData!.getFormat())}}
+      </span>
+    </p>
+
     <p><label>Célközönség: </label>
       <span class="searchLabel" [routerLink]="['/browse']"
             [queryParams]="{TargetAudience: bookData!.getTargetAudienceId()}">
@@ -69,7 +75,7 @@
       {{bookData!.getWeight()}} g
     </p>
 
-    <p *ngIf="bookData!.getDescription() !== ''"><label>Leírás: </label><span
+    <p *ngIf="bookData!.getDescription() !== undefined"><label>Leírás: </label><span
       class="multilineSpan">{{bookData!.getDescription()}}
     </span>
     </p>
@@ -86,6 +92,8 @@
     <ng-container *ngIf="bookData!.getDiscount()!==0">
       <p><label>Kedvezmény</label>{{bookData!.getDiscount()}}</p>
     </ng-container>
-
+    <div *ngIf="loggedUserServ.getLoggedUserState()">
+      <button (click)="redirectToModify()">Könyv módosítása</button>
+    </div>
   </div>
 </div>
