@@ -1,0 +1,109 @@
+<div id="individualDescDiv">
+  <label>új paraméter hozzáadása</label>
+  <app-book-specific-data-adder></app-book-specific-data-adder>
+  <h3><label>Könyv módosítása</label></h3>
+  <form id="uploadForm" enctype="multipart/form-data" [formGroup]="dataForm" (ngSubmit)="submit()">
+    <div><label>Cím:</label><input formControlName="title" type="text"></div>
+
+    <div><label>ISBN:</label><input formControlName="isbn" type="text"></div>
+    <div><label>Író(k):</label><input formControlName="author" type="text"></div>
+    <div><label>Keress rá íróra:</label><input type="text" list="datalist1" [(ngModel)]="authorSearchValue"
+                                               [ngModelOptions]="{standalone: true}" (input)="passValueToService(0)"
+                                               (click)="setActiveDL(0)">
+      <datalist id="datalist1">
+        <option *ngFor="let item of authorDataList">{{item}}</option>
+      </datalist>
+      <button type="button" (click)="addAuthor()">Iró hozzádása</button>
+    </div>
+
+    <div><label>Típus:</label><select formControlName="type">
+      <ng-container *ngFor="let opt of browserService.getArrayOptions('Type'); index as key">
+        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+      </ng-container>
+    </select>
+    </div>
+    <div><label>Kategória:</label>
+      <select formControlName="category">
+        <optgroup *ngFor="let gr of category[1]" label="{{category[0][gr]}}">
+          <option *ngFor="let key of getItemGroupIndexesByIndex('category',gr)"
+                  value="{{key}}">{{getItemLabel('category', gr, key)}}</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div><label>Kiadó:</label><input type="text" formControlName="publisher" list="datalist2"
+                                     (input)="passValueToService(1)"
+                                     (click)="setActiveDL(1)">
+      <datalist id="datalist2">
+        <option *ngFor="let item of publisherDataList">{{item}}</option>
+      </datalist>
+    </div>
+
+    <div><label>Sorozat:</label><input type="text" formControlName="series" list="datalist3"
+                                       (input)="passValueToService(2)"
+                                       (click)="setActiveDL(2)">
+      <datalist id="datalist3">
+        <option *ngFor="let item of seriesDataList">{{item}}</option>
+      </datalist>
+    </div>
+
+    <div><label>Célközönség:</label><select formControlName="targetAudience">
+      <ng-container *ngFor="let opt of browserService.getArrayOptions('TargetAudience'); index as key">
+        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+      </ng-container>
+    </select>
+    </div>
+
+    <div><label>Nyelv:</label><select formControlName="language">
+      <ng-container *ngFor="let opt of browserService.getArrayOptions('Language'); index as key">
+        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+      </ng-container>
+    </select>
+    </div>
+    <div><label>Kiadás éve:</label><input formControlName="year" type="number"></div>
+    <div><label>Lapok száma:</label><input formControlName="page" type="number"></div>
+
+    <div><label>Format:</label>
+      <select formControlName="format">
+        <optgroup *ngFor="let gr of format[1]" label="{{format[0][gr]}}">
+          <option *ngFor="let key of getItemGroupIndexesByIndex('format',gr)"
+                  value="{{key}}">{{getItemLabel('format', gr, key)}}</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div><label>Súly (g):</label><input formControlName="weight" type="number"></div>
+    <div><label>Méret (mm):</label><input formControlName="size" type="text"></div>
+
+    <div><label>Rövid leirás:</label><textarea rows="6" cols="60" formControlName="description"></textarea></div>
+
+    <div>
+      <label>Tagek:</label><input class="notDisplayed" formControlName="tags" type="text" [readonly]="true">
+    </div>
+    <div class="fromLeft">
+        <span *ngFor="let opt of tag; index as key">
+          <input id="cb{{opt[0]}}" #cb type="checkbox" value="{{opt[0]}}" (change)="boxChecked(cb.checked, opt[0])">
+          {{opt[1]}}
+        </span>
+    </div>
+    <div><label>Ár:</label><input formControlName="price" type="number"></div>
+    <div><label>Kedvezmény kategória:</label><select formControlName="discountType" (change)="changeDiscountValue()">
+      <ng-container *ngFor="let opt of discountTypes; index as key">
+        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt[0]}}</option>
+      </ng-container>
+    </select>
+    </div>
+    <div><label>Kedvezmény:</label><input formControlName="discount" type="number" min="0" max="100"></div>
+    <div><label>Boritó (url):</label><input formControlName="coverUrl" type="text" (input)="addThumbnailFromUrl()">
+    </div>
+    <div><label>Borító (file):</label><input #bc type="file" (change)="addThumbnailFromFile($event)"></div>
+    <div *ngIf="coverSource!==''"><label></label>
+      <img id="coverThumbnail" alt="chosen cover" [src]="coverSource" height="300" width="300">
+    </div>
+    <div><label>Eredeti borító törlése:</label>
+      <input type="checkbox" formControlName="originalCoverDelete">
+
+    </div>
+    <button type="submit">OK</button>
+  </form>
+</div>

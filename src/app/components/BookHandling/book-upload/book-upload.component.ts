@@ -4,7 +4,7 @@ import {BookCriteriaDataListFillerService} from "../../../services/book/book-cri
 import {ComplexSearchBrowserService} from "../../../services/book/complex-search-browser.service";
 import {FormService} from "../../../services/helper/form.service";
 import {GlobalMessageDisplayerService} from "../../../services/helper/global-message-displayer.service";
-import {BookDataAdderService} from "../../../services/book/book-data-adder.service";
+import {BookDataHandlerService} from "../../../services/book/book-data-handler.service";
 
 @Component({
   selector: 'app-book-upload',
@@ -17,7 +17,7 @@ export class BookUploadComponent implements OnInit {
 
   constructor(protected dataListService: BookCriteriaDataListFillerService,
               public browserService: ComplexSearchBrowserService, protected formService: FormService,
-              protected messageServ: GlobalMessageDisplayerService, protected bookAdderServ: BookDataAdderService) {
+              protected messageServ: GlobalMessageDisplayerService, protected bookHandlerServ: BookDataHandlerService) {
   }
 
   dataForm!: FormGroup;
@@ -70,8 +70,8 @@ export class BookUploadComponent implements OnInit {
     let tagIDs = this.dataForm['controls']['tags'].value
     console.log(tagIDs)
 
-    let tags = (tagIDs === null) ? [] : tagIDs.split(',')
-    if (tags === ['']) tags = []
+    let tags = (tagIDs === null || tagIDs === '') ? [] : tagIDs.split(',')
+    console.log(tags)
     if (checked) {
       tags.push(key)
       tags.sort()
@@ -233,7 +233,7 @@ export class BookUploadComponent implements OnInit {
       return;
     }
     const data = this.dataForm.value;
-    this.bookAdderServ.addNewBook(data)
+    this.bookHandlerServ.addNewBook(data)
   }
 
 }

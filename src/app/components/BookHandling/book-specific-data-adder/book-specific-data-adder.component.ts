@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {BookDataAdderService} from "../../../services/book/book-data-adder.service";
+import {BookDataHandlerService} from "../../../services/book/book-data-handler.service";
 
 @Component({
   selector: 'app-book-specific-data-adder',
@@ -8,7 +8,7 @@ import {BookDataAdderService} from "../../../services/book/book-data-adder.servi
 })
 export class BookSpecificDataAdderComponent {
 
-  constructor(private dataAdder: BookDataAdderService) {
+  constructor(private dataAdder: BookDataHandlerService) {
   }
 
   selectIndex: number = 0

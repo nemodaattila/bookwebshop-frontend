@@ -182,4 +182,8 @@ export class LocalLibraryService {
   public getBookData(isbn: string) {
     return this.localLibrary.getBookData(isbn)
   }
+
+  public removeABook(isbn: string) {
+    this.localLibrary.removeABook(isbn)
+  }
 }

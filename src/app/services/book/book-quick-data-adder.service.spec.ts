@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {BookDataAdderService} from './book-data-adder.service';
+import {BookDataHandlerService} from './book-data-handler.service';
 
 describe('BookQuickDataAdderService', () => {
-  let service: BookDataAdderService;
+  let service: BookDataHandlerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BookDataAdderService);
+    service = TestBed.inject(BookDataHandlerService);
   });
 
   it('should be created', () => {

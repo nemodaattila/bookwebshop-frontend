@@ -91,4 +91,8 @@ export class LocalLibraryModel {
   setPrimaryToFalse(isbn: string) {
     this.books[isbn].setPrimaryOnlyToFalse()
   }
+
+  removeABook(isbn: string) {
+    delete (this.books[isbn])
+  }
 }

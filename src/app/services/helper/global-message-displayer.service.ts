@@ -67,9 +67,11 @@ export class GlobalMessageDisplayerService {
    * @param optionalData optional data to be displayed
    */
   displaySuccess(frontendCode: string, optionalData?: string) {
+    console.log(optionalData)
     let frontendMessage = this.messageCodes.getFrontendSuccessMessage(frontendCode)
     let message = ((frontendMessage === undefined) ? frontendCode : frontendMessage);
     message += (optionalData === undefined) ? '' : ' - ' + optionalData
+    console.log(message)
     this.messageEmitter.next([true, message])
   }
 }
