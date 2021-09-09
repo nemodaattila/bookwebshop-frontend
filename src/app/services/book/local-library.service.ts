@@ -95,22 +95,6 @@ export class LocalLibraryService {
   }
 
   /**
-   * request to server for getting a book's primary data
-   * @param isbn
-   * @private
-   */
-  private sendRequestForPrimaryData(isbn: string) {
-    this.getBookPrimaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
-      if (success) {
-        this.localLibrary.addBookPrimaryData(isbn, data)
-        this.saveLocalLibraryToLocalStorage();
-      } else {
-        this.messageService.displayFail('BPD', data['errorCode'])
-      }
-    })
-  }
-
-  /**
    * searches a book by isbn in local-library
    * if exists checks for secondary data
    * if not secondary data exists, sends request to server
@@ -128,6 +112,34 @@ export class LocalLibraryService {
       return {success: false}
     }
     return
+  }
+
+  /**
+   * returns the data data of a book
+   * @param isbn isbn of the book
+   */
+  public getBookData(isbn: string) {
+    return this.localLibrary.getBookData(isbn)
+  }
+
+  public removeABook(isbn: string) {
+    this.localLibrary.removeABook(isbn)
+  }
+
+  /**
+   * request to server for getting a book's primary data
+   * @param isbn
+   * @private
+   */
+  private sendRequestForPrimaryData(isbn: string) {
+    this.getBookPrimaryDataFromServer(isbn).subscribe(({'success': success, 'data': data}) => {
+      if (success) {
+        this.localLibrary.addBookPrimaryData(isbn, data)
+        this.saveLocalLibraryToLocalStorage();
+      } else {
+        this.messageService.displayFail('BPD', data['errorCode'])
+      }
+    })
   }
 
   /**
@@ -173,17 +185,5 @@ export class LocalLibraryService {
     localStorage.setItem('localLibrary', JSON.stringify(this.localLibrary))
     this.readyState = true;
     this.libraryRefreshed.next()
-  }
-
-  /**
-   * returns the data data of a book
-   * @param isbn isbn of the book
-   */
-  public getBookData(isbn: string) {
-    return this.localLibrary.getBookData(isbn)
-  }
-
-  public removeABook(isbn: string) {
-    this.localLibrary.removeABook(isbn)
   }
 }

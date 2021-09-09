@@ -20,22 +20,19 @@ export class BrowseComponent implements OnInit, OnDestroy {
    * passed down to page-navigator component
    */
   public pageNavResetRequestSent: Subject<boolean> = new Subject();
-
-  /**
-   *  subscription for BookSearchService data search request (if quickSearch not empty)
-   * @private
-   */
-  private bookSearchParamRequest = Subscription.EMPTY
-
   /**
    * subscription to activatedRoute
    */
   acrSubs: Subscription = Subscription.EMPTY;
   acr2Subs: Subscription = Subscription.EMPTY;
   /**
+   *  subscription for BookSearchService data search request (if quickSearch not empty)
+   * @private
+   */
+  private bookSearchParamRequest = Subscription.EMPTY
+  /**
    * quickSearch search parameter - comes from ActivatedRoute
    */
-
   /**
    * counts loaded components (subscription + init)
    * @private
@@ -90,6 +87,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.searchWhenReady();
   }
 
+  ngOnDestroy(): void {
+    this.bookSearchParamRequest.unsubscribe()
+    this.searchService.unRegisterSearchService('BC')
+    this.acrSubs.unsubscribe()
+    this.acr2Subs.unsubscribe()
+  }
+
   /**
    * calls for search if subscriptions happened and init happens
    * @private
@@ -99,12 +103,5 @@ export class BrowseComponent implements OnInit, OnDestroy {
     if (this.counter > 2) {
       this.searchService.initSearch()
     }
-  }
-
-  ngOnDestroy(): void {
-    this.bookSearchParamRequest.unsubscribe()
-    this.searchService.unRegisterSearchService('BC')
-    this.acrSubs.unsubscribe()
-    this.acr2Subs.unsubscribe()
   }
 }

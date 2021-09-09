@@ -14,28 +14,24 @@ import {BookData} from "../../models/bookData/book-data";
 export class BookPrimaryDataDisplayerService {
 
   /**
+   * trigger when the data for the actually displayed data is refreshed
+   */
+  public actualBookDataRefreshed = new Subject<null>();
+  /**
    * subscription for the BookMetaData isbn list broadcast
    * @private
    */
   private actualIsbnListSubscription: object = Subscription.EMPTY;
-
   /**
    * subscription for actualised local library signal
    * @private
    */
   private localLibraryRefreshSubscription: any = Subscription.EMPTY;
-
   /**
    * subscription for metadata readiness signal
    * @private
    */
   private metaDataReadySubscription: any = Subscription.EMPTY;
-
-  /**
-   * trigger when the data for the actually displayed data is refreshed
-   */
-  public actualBookDataRefreshed = new Subject<null>();
-
   /**
    * number of results that meets the search criteria of the actual search
    * @private
@@ -60,10 +56,6 @@ export class BookPrimaryDataDisplayerService {
    * @private
    */
   private allReady: Array<number> = [0, 0, 0];
-
-  getActualIsbnList(): Array<string> {
-    return this.actualIsbnList;
-  }
 
   /**
    * subscribes for BookMetaDataService readiness signal
@@ -95,20 +87,15 @@ export class BookPrimaryDataDisplayerService {
     })
   }
 
+  getActualIsbnList(): Array<string> {
+    return this.actualIsbnList;
+  }
+
   /**
    * returns the num of all results
    */
   public getAllCount(): number {
     return this.allFoundCount;
-  }
-
-  /**
-   * aks for prerequisite service readiness property
-   * @private
-   */
-  private checkServiceReadyStates() {
-    this.allReady[0] = (Number(this.metaData.checkReadyState()));
-    this.allReady[1] = (Number(this.localLibrary.checkReadyState()));
   }
 
   /**
@@ -142,6 +129,15 @@ export class BookPrimaryDataDisplayerService {
    */
   public getBookDataByISBN(isbn: string) {
     return this.localLibrary.getBookData(isbn);
+  }
+
+  /**
+   * aks for prerequisite service readiness property
+   * @private
+   */
+  private checkServiceReadyStates() {
+    this.allReady[0] = (Number(this.metaData.checkReadyState()));
+    this.allReady[1] = (Number(this.localLibrary.checkReadyState()));
   }
 
   /**

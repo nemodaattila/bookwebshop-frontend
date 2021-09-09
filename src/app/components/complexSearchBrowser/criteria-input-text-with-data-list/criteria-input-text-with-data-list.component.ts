@@ -13,29 +13,26 @@ import {BookCriteriaDataListFillerService} from "../../../services/book/book-cri
  */
 export class CriteriaInputTextWithDataListComponent implements OnInit {
 
-  constructor(private complexSearch: ComplexSearchBrowserService,
-              private dataListService: BookCriteriaDataListFillerService) {
-  }
-
   /**
    * serial number of the criteria component
    */
   @Input() public id: number = 0;
-
   /**
    * type of linked criteria: Publisher, Author, or Series
    */
   criteriaType: string = '';
-
   /**
    * value of the input text field
    */
   public textValue: string = '';
-
   /**
    * values in the datalist
    */
   public dataList: Array<string> = [];
+
+  constructor(private complexSearch: ComplexSearchBrowserService,
+              private dataListService: BookCriteriaDataListFillerService) {
+  }
 
   ngOnInit(): void {
     this.criteriaType = this.complexSearch.getSelectedCriteria()[this.id]

@@ -8,12 +8,11 @@ import {BookDataHandlerService} from "../../../services/book/book-data-handler.s
 })
 export class BookSpecificDataAdderComponent {
 
+  selectIndex: number = 0
+  inputValue: string = '';
+
   constructor(private dataAdder: BookDataHandlerService) {
   }
-
-  selectIndex: number = 0
-
-  inputValue: string = '';
 
   addNewParam() {
     if (this.inputValue.length > 2) {

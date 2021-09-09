@@ -1,6 +1,6 @@
-<article class="bookArticle" *ngIf="bookData !== undefined">
+<article *ngIf="bookData !== undefined" class="bookArticle">
   <section class="imageSection"><a [routerLink]="['/bookalldata', bookData.getIsbn()]"><img
-    alt="{{bookData.getTitle()}}" [src]="safeImgURl"></a></section>
+    [src]="safeImgURl" alt="{{bookData.getTitle()}}"></a></section>
   <section class="dataSection">
     <section class="infoSection">
       <p>
@@ -8,7 +8,7 @@
           {{ bookData.getAuthorByID(key) }} <span *ngIf="index!==authorIds.length-1">-</span>
         </span>
       </p>
-      <p class="searchLabel" [routerLink]="['/bookalldata', bookData.getIsbn()]">{{bookData.getTitle()}}</p>
+      <p [routerLink]="['/bookalldata', bookData.getIsbn()]" class="searchLabel">{{bookData.getTitle()}}</p>
       <p>{{bookData.getIsbn()}}</p>
       <p>Típus : {{typeString}}</p>
 

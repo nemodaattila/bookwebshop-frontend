@@ -8,15 +8,23 @@ export class BookDataComparator extends BookData {
     comparedData.originalCoverDelete = newData['originalCoverDelete']
     let book = Object.entries(this)
     let newBookKeys = Object.keys(newData)
-    // if (!newData['year']) newData['year']='' check backend null + weight
+    if (newData.author === '') newData.author = 'UNKNOWN';
+    if (newData.publisher === '') newData.publisher = 'UNKNOWN';
+    if (!newData['year']) newData['year'] = 0
+    console.log(newData)
+    // check backend null + weight
     if (!newData['price']) newData['price'] = 0
     for (let [name, value] of book) {
       if (newBookKeys.find((value) => value === name) !== undefined) {
         if (value != newData[name]) {
           switch (name) {
             case 'author':
-              if (Object.values(value).sort().toString() !== newData[name])
-                comparedData[name] = newData[name];
+              let o = (Object.values(value)).sort()
+              let n = newData[name].split(',')
+              if (JSON.stringify(o) === JSON.stringify(n)) break
+              console.log([o, n]);
+              console.log([o.filter(x => !n.includes(x)), n.filter((x: unknown) => !o.includes(x))])
+              comparedData[name] = [o.filter(x => !n.includes(x)), n.filter((x: unknown) => !o.includes(x))];
               break
             case 'discountType':
               if (Number(Object.keys(value)[0]) != newData[name])

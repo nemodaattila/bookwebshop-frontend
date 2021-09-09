@@ -1,4 +1,4 @@
-<div class="fixed" *ngIf="hasMessage">
+<div *ngIf="hasMessage" class="fixed">
   <div [ngClass]="success ? 'success' : 'error'">
     <pre>{{message}}</pre>
   </div>

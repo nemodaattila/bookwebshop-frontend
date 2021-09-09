@@ -12,28 +12,25 @@ import {ComplexSearchBrowserService} from "../../../services/book/complex-search
  */
 export class CriteriaSelectInputComponent implements OnInit {
 
-  constructor(private complexSearch: ComplexSearchBrowserService) {
-  }
-
   /**
    * serial number of the component
    */
   @Input() public id: number = 0;
-
   /**
    * criteria type of the select component e.g. price, targetAudience
    */
   criteriaType: string = '';
-
   /**
    * value of the select field's selected Option
    */
   public selectedOption: number = 1;
-
   /**
    * possible options for the select field
    */
   public options: Array<string> = []
+
+  constructor(private complexSearch: ComplexSearchBrowserService) {
+  }
 
   /**
    * receives options for the select field

@@ -3,8 +3,8 @@
     <app-criteria-selector [id]="key"></app-criteria-selector>
   </div>
   <div>
-    <input type="button" value="Új kritéria" (click)="addNewCriteria()">
+    <input (click)="addNewCriteria()" type="button" value="Új kritéria">
   </div>
-  <input type="button" value="Keresés" (click)="initSearch()">
+  <input (click)="initSearch()" type="button" value="Keresés">
   <div class="errorText">{{errorText}}</div>
 </div>

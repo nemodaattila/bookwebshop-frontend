@@ -14,35 +14,31 @@ import {Subscription} from "rxjs";
  */
 export class GlobalMessageDisplayerComponent implements OnInit {
 
-  constructor(private messageService: GlobalMessageDisplayerService) {
-  }
-
   /**
    * there is a message to be displayed
    */
   public hasMessage: boolean = false;
-
   /**
    * true if method finished successfully (green background) or failed (red background)
    */
   public success: boolean = false;
-
   /**
    * message to be displayed
    */
   public message: string = '';
-
   /**
    * subscription to GlobalMessageDisplayerService, listens for messages
    * @private
    */
   private messageSubs = Subscription.EMPTY;
-
   /**
    * timeout for deleting message
    * @private
    */
   private timeOut: any
+
+  constructor(private messageService: GlobalMessageDisplayerService) {
+  }
 
   ngOnInit(): void {
     this.messageSubs = this.messageService.messageEmitter.subscribe(value => {

@@ -132,16 +132,6 @@ export class BookSearchService {
   }
 
   /**
-   * increases the counter for components that registered as source, when they answered for
-   * parameter call
-   * @private
-   */
-  private increaseAnswered() {
-    this.answeredRegisteredComponentCount++;
-    this.checkRegisterSourceCount()
-  }
-
-  /**
    * init search process
    * send search parameter collecting signal
    * @param setDefault
@@ -169,6 +159,38 @@ export class BookSearchService {
     if (this.registeredSourceComponentCount === this.answeredRegisteredComponentCount) {
       this.createAndSendRequest()
     }
+  }
+
+  /**
+   * returns the set number of result per page
+   */
+  getQuantityPerPage() {
+    return this.searchParams.getLimit()
+  }
+
+  /**
+   * sets the property of order, order dir and search limit in the model
+   * checks if parameter source is registered
+   * @param source code string of source
+   * @param order order attribute
+   * @param orderDir directory of order
+   * @param limit number of results to be displayed
+   */
+  setOrderAndLimit(source: string, order: string, orderDir: string, limit: number) {
+    if (this.registeredSourceComponents.indexOf(source) !== -1) {
+      this.searchParams.setOrderAndLimit(order, orderDir, limit);
+      this.increaseAnswered()
+    }
+  }
+
+  /**
+   * increases the counter for components that registered as source, when they answered for
+   * parameter call
+   * @private
+   */
+  private increaseAnswered() {
+    this.answeredRegisteredComponentCount++;
+    this.checkRegisterSourceCount()
   }
 
   /**
@@ -208,28 +230,6 @@ export class BookSearchService {
       'Content-Type': 'text/plain',
     });
     return this.http.post<any>(backendUrl + '\\booklist', searchParams, {headers: headers});
-  }
-
-  /**
-   * returns the set number of result per page
-   */
-  getQuantityPerPage() {
-    return this.searchParams.getLimit()
-  }
-
-  /**
-   * sets the property of order, order dir and search limit in the model
-   * checks if parameter source is registered
-   * @param source code string of source
-   * @param order order attribute
-   * @param orderDir directory of order
-   * @param limit number of results to be displayed
-   */
-  setOrderAndLimit(source: string, order: string, orderDir: string, limit: number) {
-    if (this.registeredSourceComponents.indexOf(source) !== -1) {
-      this.searchParams.setOrderAndLimit(order, orderDir, limit);
-      this.increaseAnswered()
-    }
   }
 
   /**

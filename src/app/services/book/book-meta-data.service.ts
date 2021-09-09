@@ -15,18 +15,16 @@ import {GlobalMessageDisplayerService} from "../helper/global-message-displayer.
 export class BookMetaDataService implements OnInit {
 
   /**
-   * model for storing metadata
-   * @private
-   */
-  private metaData: BookMetaData = new BookMetaData([]);
-
-  /**
    * subject for notifying about the readiness of the metadata
    * triggers if metadata arrived from server
    * OR metadata loaded form localstorage
    */
   public metaDataReady = new Subject<BookMetaData>();
-
+  /**
+   * model for storing metadata
+   * @private
+   */
+  private metaData: BookMetaData = new BookMetaData([]);
   /**
    * shows if metadata is loaded
    * @private
@@ -46,65 +44,6 @@ export class BookMetaDataService implements OnInit {
    */
   public checkReadyState(): boolean {
     return this.readyState;
-  }
-
-  /**
-   * checks if metadata exists in localstorage
-   * if true ,checks it's date
-   * if it's not older than one day, saves to model
-   * in every other case
-   * it's calls a http request function (getMetaDataFromServer)
-   * @private
-   */
-  private checkMetaDataInLocalStorage() {
-    let date;
-    let metadata = localStorage.getItem('metadata');
-    if (metadata) {
-      [metadata, date] = JSON.parse(metadata);
-      let actTime = parseInt((new Date().getTime() / 1000).toFixed(0))
-      let metaDataTimeStamp = (actTime - date)
-      if (metaDataTimeStamp > 3600000) {
-        this.getMetaDataFromServer()
-      } else
-        this.saveMetaToModel(metadata)
-      this.readyState = true
-      this.metaDataReady.next(this.metaData);
-    } else
-      this.getMetaDataFromServer()
-  }
-
-  /**
-   * sends a http request to the server, saves the result to the model, and
-   * send a trigger to notify the components about it
-   * @private
-   */
-  private getMetaDataFromServer() {
-    this.http.get<any>(backendUrl + '\\metadata').subscribe(({'success': success, 'data': data}) => {
-      if (success) {
-        this.saveMetaToModel(data);
-        this.saveMetaDataToLocalStorage()
-        this.readyState = true;
-        this.metaDataReady.next(this.metaData)
-      } else this.messageService.displayFail('BMD', data['errorCode'])
-    });
-  }
-
-  /**
-   * saves the metadata model to localstorage
-   * @private
-   */
-  private saveMetaDataToLocalStorage() {
-    let date = parseInt((new Date().getTime() / 1000).toFixed(0))
-    localStorage.setItem('metadata', JSON.stringify([this.metaData, date]))
-  }
-
-  /**
-   * saves the metadata to a new BookMetaData model
-   * @param data metadata
-   * @private
-   */
-  private saveMetaToModel(data: any) {
-    this.metaData = new BookMetaData(data)
   }
 
   /**
@@ -226,5 +165,64 @@ export class BookMetaDataService implements OnInit {
 
   public getFormatNameByID(typeID: number, formatId: number): string {
     return this.metaData.getFormat()[typeID][formatId]
+  }
+
+  /**
+   * checks if metadata exists in localstorage
+   * if true ,checks it's date
+   * if it's not older than one day, saves to model
+   * in every other case
+   * it's calls a http request function (getMetaDataFromServer)
+   * @private
+   */
+  private checkMetaDataInLocalStorage() {
+    let date;
+    let metadata = localStorage.getItem('metadata');
+    if (metadata) {
+      [metadata, date] = JSON.parse(metadata);
+      let actTime = parseInt((new Date().getTime() / 1000).toFixed(0))
+      let metaDataTimeStamp = (actTime - date)
+      if (metaDataTimeStamp > 3600000) {
+        this.getMetaDataFromServer()
+      } else
+        this.saveMetaToModel(metadata)
+      this.readyState = true
+      this.metaDataReady.next(this.metaData);
+    } else
+      this.getMetaDataFromServer()
+  }
+
+  /**
+   * sends a http request to the server, saves the result to the model, and
+   * send a trigger to notify the components about it
+   * @private
+   */
+  private getMetaDataFromServer() {
+    this.http.get<any>(backendUrl + '\\metadata').subscribe(({'success': success, 'data': data}) => {
+      if (success) {
+        this.saveMetaToModel(data);
+        this.saveMetaDataToLocalStorage()
+        this.readyState = true;
+        this.metaDataReady.next(this.metaData)
+      } else this.messageService.displayFail('BMD', data['errorCode'])
+    });
+  }
+
+  /**
+   * saves the metadata model to localstorage
+   * @private
+   */
+  private saveMetaDataToLocalStorage() {
+    let date = parseInt((new Date().getTime() / 1000).toFixed(0))
+    localStorage.setItem('metadata', JSON.stringify([this.metaData, date]))
+  }
+
+  /**
+   * saves the metadata to a new BookMetaData model
+   * @param data metadata
+   * @private
+   */
+  private saveMetaToModel(data: any) {
+    this.metaData = new BookMetaData(data)
   }
 }

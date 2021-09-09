@@ -16,6 +16,9 @@ export class LoggedUserService {
 
   private loggedUserChecked: boolean = false
 
+  constructor() {
+  }
+
   setLoggedUserChecked(value: boolean) {
     this.loggedUserChecked = value;
   }
@@ -30,9 +33,6 @@ export class LoggedUserService {
    */
   public getLoggedUser(): User | undefined {
     return this.loggedUser
-  }
-
-  constructor() {
   }
 
   /**

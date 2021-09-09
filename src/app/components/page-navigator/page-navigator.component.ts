@@ -14,31 +14,27 @@ import {PageNavigatorModel} from "../../models/service/page-navigator-model";
 export class PageNavigatorComponent implements OnInit, OnDestroy {
 
   /**
+   * model class for the PageNavigator
+   */
+  public navModel: PageNavigatorModel
+  /**
+   * fake array for displaying page links
+   */
+  public fakeCountArray: Array<any> = []
+  /**
+   * trigger for resetting the page number for zero, comes through parent component
+   */
+  @Input() pageResetRequest: Subject<boolean> = new Subject<boolean>();
+  /**
    * subscription for the BookSearchService's parameter collector call
    * @private
    */
   private bookSearchParamRequest = Subscription.EMPTY
-
   /**
    * subscribing for the BookSearchService's isbn list broadcast
    * @private
    */
   private actualIsbnListSubscription: Subscription = Subscription.EMPTY;
-
-  /**
-   * model class for the PageNavigator
-   */
-  public navModel: PageNavigatorModel
-
-  /**
-   * fake array for displaying page links
-   */
-  public fakeCountArray: Array<any> = []
-
-  /**
-   * trigger for resetting the page number for zero, comes through parent component
-   */
-  @Input() pageResetRequest: Subject<boolean> = new Subject<boolean>();
 
   /**
    * creates PageNavigatorModel

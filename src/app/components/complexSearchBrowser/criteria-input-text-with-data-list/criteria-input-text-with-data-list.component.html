@@ -1,4 +1,4 @@
-<input type="text" list="datalist" [(ngModel)]="textValue" (ngModelChange)="passValueToService()">
+<input (ngModelChange)="passValueToService()" [(ngModel)]="textValue" list="datalist" type="text">
 <datalist id="datalist">
   <option *ngFor="let item of dataList">{{item}}</option>
 </datalist>

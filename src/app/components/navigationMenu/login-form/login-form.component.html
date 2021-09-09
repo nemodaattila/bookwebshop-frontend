@@ -1,4 +1,4 @@
-<form id="loginForm" [formGroup]="userLoginForm" (ngSubmit)="submitLoginForm()">
+<form (ngSubmit)="submitLoginForm()" [formGroup]="userLoginForm" id="loginForm">
   <div class="cssTable">
     <span class="cssRow">
       <label for='lgnName'>Felhasználónév:</label>
@@ -6,8 +6,8 @@
 
     </span>
     <span class="cssRow">
-      <span><input type="text" id="lgnName" formControlName="name"></span>
-      <span><input type="password" id="lgnPwd" formControlName="password"></span>
+      <span><input formControlName="name" id="lgnName" type="text"></span>
+      <span><input formControlName="password" id="lgnPwd" type="password"></span>
       <span><button type="submit">Login</button></span>
     </span>
     <span class="cssRow">

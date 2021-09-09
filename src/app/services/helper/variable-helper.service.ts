@@ -9,16 +9,6 @@ export class VariableHelperService {
   constructor() {
   }
 
-  public createUserFromHttpResponse(response: { [index: string]: any }) {
-    console.log(response)
-    let user = new User();
-    user.setUserName(response['userName']);
-    user.setEmail(response['email'])
-    user.setAuthenticationLevel(response['authorizationLevel'])
-    return user;
-
-  }
-
   /**
    * converts an array to object
    * @param array
@@ -30,5 +20,15 @@ export class VariableHelperService {
       obj[index] = value
     });
     return obj;
+  }
+
+  public createUserFromHttpResponse(response: { [index: string]: any }) {
+    console.log(response)
+    let user = new User();
+    user.setUserName(response['userName']);
+    user.setEmail(response['email'])
+    user.setAuthenticationLevel(response['authorizationLevel'])
+    return user;
+
   }
 }

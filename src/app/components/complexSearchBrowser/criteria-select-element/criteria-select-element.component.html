@@ -1,4 +1,4 @@
-<select [(ngModel)]="selectedCriteria" (change)="changeSelectedCriteria()">
+<select (change)="changeSelectedCriteria()" [(ngModel)]="selectedCriteria">
   <ng-container *ngFor="let crit of getCriteriaTypes() | keyvalue">
     <option [ngValue]="crit.key">{{crit.value}}</option>
   </ng-container>

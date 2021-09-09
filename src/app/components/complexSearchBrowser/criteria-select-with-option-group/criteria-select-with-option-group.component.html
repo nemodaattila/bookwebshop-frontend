@@ -1,4 +1,4 @@
-<select [(ngModel)]="selectedOption" (change)="valueSelected()">
+<select (change)="valueSelected()" [(ngModel)]="selectedOption">
   <optgroup *ngFor="let gr of groupIndex" label="{{getGroupByIndex(gr)}}">
     <option *ngFor="let key of getItemGroupIndexesByIndex(gr)"
             value="{{key}}">{{key}} {{getItemLabel(gr, key)}}</option>

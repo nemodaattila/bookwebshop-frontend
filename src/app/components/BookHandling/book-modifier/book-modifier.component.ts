@@ -20,17 +20,16 @@ import {BookDataComparator} from "../../../models/bookData/book-data-comparator"
 })
 export class BookModifierComponent extends BookUploadComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  book?: BookData;
+  acrSubs: Subscription = Subscription.EMPTY
+  libRefresh: Subscription = Subscription.EMPTY
+
   constructor(private localLibrary: LocalLibraryService, private acRoute: ActivatedRoute, private router: Router, protected dataListService: BookCriteriaDataListFillerService,
               public browserService: ComplexSearchBrowserService, protected formService: FormService,
               protected messageServ: GlobalMessageDisplayerService, protected bookHandlerServ: BookDataHandlerService
     , private domSanitizer: DomSanitizer,) {
     super(dataListService, browserService, formService, messageServ, bookHandlerServ)
   }
-
-  book?: BookData;
-
-  acrSubs: Subscription = Subscription.EMPTY
-  libRefresh: Subscription = Subscription.EMPTY
 
   ngOnInit(): void {
     this.acRoute.params.subscribe((params) => {
@@ -79,33 +78,6 @@ export class BookModifierComponent extends BookUploadComponent implements OnInit
     this.coverSource = this.domSanitizer.bypassSecurityTrustResourceUrl(this.book!.getCoverThumbnail()) as string
   }
 
-  protected initFormGroup(): void {
-    this.dataForm = new FormGroup({
-      title: new FormControl(this.book?.getTitle(), [Validators.required]),
-      isbn: new FormControl(this.book?.getIsbn()),
-      author: new FormControl(this.getConcatedAuthors()),
-      type: new FormControl(this.book?.getTypeId()),
-      category: new FormControl(this.book?.getCategoryId()),
-      publisher: new FormControl(this.book?.getPublisher()),
-      series: new FormControl(this.book?.getSeries()),
-      targetAudience: new FormControl(this.book?.getTargetAudienceId()),
-      language: new FormControl(this.book?.getLanguageID()),
-      year: new FormControl(this.book?.getYear()),
-      page: new FormControl(this.book?.getPageNumber()),
-      format: new FormControl(this.book?.getFormat()),
-      weight: new FormControl(this.book?.getWeight()),
-      size: new FormControl(this.book?.getPhysicalSize()),
-      description: new FormControl(this.book?.getDescription()),
-      tags: new FormControl(this.book?.getTags().join(',')),
-      price: new FormControl(this.book?.getPrice()),
-      discount: new FormControl(this.book?.getDiscount()),
-      discountType: new FormControl(this.book?.getDiscountTypeID()),
-      coverUrl: new FormControl(),
-      coverFile: new FormControl(),
-      originalCoverDelete: new FormControl(false)
-    });
-  }
-
   checkTagBoxes() {
 
     for (let key of this.book!.getTags()) {
@@ -137,10 +109,11 @@ export class BookModifierComponent extends BookUploadComponent implements OnInit
       return;
     }
     const data = this.dataForm.value;
+
     console.log(data)
     let compData = this.compareNewDataWithOriginal(data)
     console.log(compData)
-    if (Object.keys(compData).length > 2) {
+    if (Object.keys(compData).length > 2 || compData.originalCoverDelete) {
 
       this.bookHandlerServ.modifyBook(compData)
     }
@@ -164,5 +137,35 @@ export class BookModifierComponent extends BookUploadComponent implements OnInit
     this.checkTagBoxes()
   }
 
+  removeBook() {
+    this.bookHandlerServ.removeBook(this.book?.getIsbn())
+  }
+
+  protected initFormGroup(): void {
+    this.dataForm = new FormGroup({
+      title: new FormControl(this.book?.getTitle(), [Validators.required]),
+      isbn: new FormControl(this.book?.getIsbn()),
+      author: new FormControl(this.getConcatedAuthors()),
+      type: new FormControl(this.book?.getTypeId()),
+      category: new FormControl(this.book?.getCategoryId()),
+      publisher: new FormControl(this.book?.getPublisher()),
+      series: new FormControl(this.book?.getSeries()),
+      targetAudience: new FormControl(this.book?.getTargetAudienceId()),
+      language: new FormControl(this.book?.getLanguageID()),
+      year: new FormControl(this.book?.getYear()),
+      page: new FormControl(this.book?.getPageNumber()),
+      format: new FormControl(this.book?.getFormat()),
+      weight: new FormControl(this.book?.getWeight()),
+      size: new FormControl(this.book?.getPhysicalSize()),
+      description: new FormControl(this.book?.getDescription()),
+      tags: new FormControl(this.book?.getTags().join(',')),
+      price: new FormControl(this.book?.getPrice()),
+      discount: new FormControl(this.book?.getDiscount()),
+      discountType: new FormControl(this.book?.getDiscountTypeID()),
+      coverUrl: new FormControl(),
+      coverFile: new FormControl(),
+      originalCoverDelete: new FormControl(false)
+    });
+  }
 }
 

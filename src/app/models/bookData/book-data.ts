@@ -1,7 +1,6 @@
 /**
  * contains data for a book
  */
-import {VariableHelperService} from "../../services/helper/variable-helper.service";
 
 export class BookData {
 
@@ -53,6 +52,14 @@ export class BookData {
   private weight!: number;
 
   private year: number = 0;
+
+  /**
+   * sets the creationTime parameter
+   * @param creationTime
+   */
+  constructor(creationTime?: number) {
+    this.creationTime = creationTime ?? new Date().getTime();
+  }
 
   getAuthor(): { [index: number]: string } {
     return this.author;
@@ -112,14 +119,6 @@ export class BookData {
 
   getWeight(): number | undefined {
     return this.weight
-  }
-
-  /**
-   * sets the creationTime parameter
-   * @param creationTime
-   */
-  constructor(creationTime?: number) {
-    this.creationTime = creationTime ?? new Date().getTime();
   }
 
   public primaryDataOnly(): boolean {
@@ -189,7 +188,9 @@ export class BookData {
    */
   public addSecondaryData(data: { [index: string]: any }) {
     this.cover = data.cover
-    this.discountType = data.discountType ?? ((data.discount_type !== undefined) ? VariableHelperService.arrayToObjectWithIntKey(data.discount_type) : {0: 'None'})
+    console.log(data.discount_type)
+    console.log(data.discountType)
+    this.discountType = data.discountType ?? ((data.discount_type !== undefined) ? (data.discount_type) : {0: 'None'})
     this.format = data.format ?? data.format_id
     this.languageId = data.language_id ?? data.languageId
     this.pageNumber = parseInt(data.page_number ?? data.pageNumber)

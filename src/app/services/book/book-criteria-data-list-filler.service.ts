@@ -12,13 +12,13 @@ import {Subject} from "rxjs";
  */
 export class BookCriteriaDataListFillerService {
 
-  constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
-  }
-
   /**
    * emits result
    */
   dataListEmitter = new Subject()
+
+  constructor(private http: HttpClient, private messageService: GlobalMessageDisplayerService) {
+  }
 
   /**
    * sends request to server for datalist options

@@ -10,6 +10,9 @@ import {Subscription} from "rxjs";
 })
 export class IsbnSelectorForModifyComponent implements OnInit, OnDestroy {
 
+  refreshSubs: Subscription = Subscription.EMPTY
+  isbn: string = ''
+
   constructor(private localLibrary: LocalLibraryService, private router: Router) {
   }
 
@@ -19,10 +22,6 @@ export class IsbnSelectorForModifyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-
-  refreshSubs: Subscription = Subscription.EMPTY
-
-  isbn: string = ''
 
   onClick() {
     if (this.isbn.length > 3) {

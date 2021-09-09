@@ -2,23 +2,24 @@
   <label>új paraméter hozzáadása</label>
   <app-book-specific-data-adder></app-book-specific-data-adder>
   <h3><label>Új könyv feltöltése</label></h3>
-  <form id="uploadForm" enctype="multipart/form-data" [formGroup]="dataForm" (ngSubmit)="submit()">
+  <form (ngSubmit)="submit()" [formGroup]="dataForm" enctype="multipart/form-data" id="uploadForm">
     <div><label>Cím:</label><input formControlName="title" type="text"></div>
 
     <div><label>ISBN:</label><input formControlName="isbn" type="text"></div>
     <div><label>Író(k):</label><input formControlName="author" type="text"></div>
-    <div><label>Keress rá íróra:</label><input type="text" list="datalist1" [(ngModel)]="authorSearchValue"
-                                               [ngModelOptions]="{standalone: true}" (input)="passValueToService(0)"
-                                               (click)="setActiveDL(0)">
+    <div><label>Keress rá íróra:</label><input (click)="setActiveDL(0)" (input)="passValueToService(0)"
+                                               [(ngModel)]="authorSearchValue"
+                                               [ngModelOptions]="{standalone: true}" list="datalist1"
+                                               type="text">
       <datalist id="datalist1">
         <option *ngFor="let item of authorDataList">{{item}}</option>
       </datalist>
-      <button type="button" (click)="addAuthor()">Iró hozzádása</button>
+      <button (click)="addAuthor()" type="button">Iró hozzádása</button>
     </div>
 
     <div><label>Típus:</label><select formControlName="type">
       <ng-container *ngFor="let opt of browserService.getArrayOptions('Type'); index as key">
-        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+        <option *ngIf="!isEmpty(opt)" value="{{key}}">{{opt}}</option>
       </ng-container>
     </select>
     </div>
@@ -31,17 +32,18 @@
       </select>
     </div>
 
-    <div><label>Kiadó:</label><input type="text" formControlName="publisher" list="datalist2"
-                                     (input)="passValueToService(1)"
-                                     (click)="setActiveDL(1)">
+    <div><label>Kiadó:</label><input (click)="setActiveDL(1)" (input)="passValueToService(1)"
+                                     formControlName="publisher"
+                                     list="datalist2"
+                                     type="text">
       <datalist id="datalist2">
         <option *ngFor="let item of publisherDataList">{{item}}</option>
       </datalist>
     </div>
 
-    <div><label>Sorozat:</label><input type="text" formControlName="series" list="datalist3"
-                                       (input)="passValueToService(2)"
-                                       (click)="setActiveDL(2)">
+    <div><label>Sorozat:</label><input (click)="setActiveDL(2)" (input)="passValueToService(2)" formControlName="series"
+                                       list="datalist3"
+                                       type="text">
       <datalist id="datalist3">
         <option *ngFor="let item of seriesDataList">{{item}}</option>
       </datalist>
@@ -49,14 +51,14 @@
 
     <div><label>Célközönség:</label><select formControlName="targetAudience">
       <ng-container *ngFor="let opt of browserService.getArrayOptions('TargetAudience'); index as key">
-        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+        <option *ngIf="!isEmpty(opt)" value="{{key}}">{{opt}}</option>
       </ng-container>
     </select>
     </div>
 
     <div><label>Nyelv:</label><select formControlName="language">
       <ng-container *ngFor="let opt of browserService.getArrayOptions('Language'); index as key">
-        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt}}</option>
+        <option *ngIf="!isEmpty(opt)" value="{{key}}">{{opt}}</option>
       </ng-container>
     </select>
     </div>
@@ -75,30 +77,30 @@
     <div><label>Súly (g):</label><input formControlName="weight" type="number"></div>
     <div><label>Méret (mm):</label><input formControlName="size" type="text"></div>
 
-    <div><label>Rövid leirás:</label><textarea rows="6" cols="60" formControlName="description"></textarea></div>
+    <div><label>Rövid leirás:</label><textarea cols="60" formControlName="description" rows="6"></textarea></div>
 
     <div>
-      <label>Tagek:</label><input class="notDisplayed" formControlName="tags" type="text" [readonly]="true">
+      <label>Tagek:</label><input [readonly]="true" class="notDisplayed" formControlName="tags" type="text">
     </div>
     <div class="fromLeft">
         <span *ngFor="let opt of tag; index as key">
-          <input #cb type="checkbox" value="{{opt[0]}}" (change)="boxChecked(cb.checked, opt[0])">
+          <input #cb (change)="boxChecked(cb.checked, opt[0])" type="checkbox" value="{{opt[0]}}">
           {{opt[1]}}
         </span>
     </div>
     <div><label>Ár:</label><input formControlName="price" type="number"></div>
-    <div><label>Kedvezmény kategória:</label><select formControlName="discountType" (change)="changeDiscountValue()">
+    <div><label>Kedvezmény kategória:</label><select (change)="changeDiscountValue()" formControlName="discountType">
       <ng-container *ngFor="let opt of discountTypes; index as key">
-        <option value="{{key}}" *ngIf="!isEmpty(opt)">{{opt[0]}}</option>
+        <option *ngIf="!isEmpty(opt)" value="{{key}}">{{opt[0]}}</option>
       </ng-container>
     </select>
     </div>
-    <div><label>Kedvezmény:</label><input formControlName="discount" type="number" min="0" max="100"></div>
-    <div><label>Boritó (url):</label><input formControlName="coverUrl" type="text" (input)="addThumbnailFromUrl()">
+    <div><label>Kedvezmény:</label><input formControlName="discount" max="100" min="0" type="number"></div>
+    <div><label>Boritó (url):</label><input (input)="addThumbnailFromUrl()" formControlName="coverUrl" type="text">
     </div>
-    <div><label>Borító (file):</label><input #bc type="file" (change)="addThumbnailFromFile($event)"></div>
+    <div><label>Borító (file):</label><input #bc (change)="addThumbnailFromFile($event)" type="file"></div>
     <div *ngIf="coverSource!==''"><label></label>
-      <img id="coverThumbnail" alt="chosen cover" [src]="coverSource" height="300" width="300">
+      <img [src]="coverSource" alt="chosen cover" height="300" id="coverThumbnail" width="300">
 
     </div>
     <button type="submit">OK</button>

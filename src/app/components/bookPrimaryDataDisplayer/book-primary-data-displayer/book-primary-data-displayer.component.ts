@@ -14,20 +14,18 @@ import {Subscription} from "rxjs";
 export class BookPrimaryDataDisplayerComponent implements OnInit, OnDestroy {
 
   /**
-   * event listener for isbn list -> displayerService
-   * @private
-   */
-  private isbnListener: any = Subscription.EMPTY;
-
-  /**
    * list of isbn of books actually displayed
    */
   public isbnList: Array<string> = [];
-
   /**
    * count of all books that meets search criteria
    */
   public allFound: number = Infinity;
+  /**
+   * event listener for isbn list -> displayerService
+   * @private
+   */
+  private isbnListener: any = Subscription.EMPTY;
 
   /**
    * subscribes for service, when actual books' (from isbn list) data are loaded

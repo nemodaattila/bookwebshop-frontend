@@ -16,33 +16,29 @@ import {BookSearchService} from "../../services/book/book-search.service";
 export class SearchOrderAndCountHandlerComponent implements OnDestroy {
 
   /**
+   * event request for resetting page number to 0 (in PageNavigator)
+   */
+  @Output() pageResetRequest: EventEmitter<null> = new EventEmitter<null>();
+  /**
    * subscription for the BookSearchService's parameter collector call
    * @private
    */
   private bookSearchParamRequest = Subscription.EMPTY
-
   /**
    * method of ordering : e.g : title price
    * @private
    */
   private orderType: string = 'Title';
-
   /**
    * direction of ordering: ASC or DESC
    * @private
    */
   private direction: string = 'ASC';
-
   /**
    * umber of displayed search results (e.g. 10, 50)
    * @private
    */
   private quantity: number = 10;
-
-  /**
-   * event request for resetting page number to 0 (in PageNavigator)
-   */
-  @Output() pageResetRequest: EventEmitter<null> = new EventEmitter<null>();
 
   /**
    * registers in BookSearchService's parameter source

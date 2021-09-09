@@ -41,6 +41,8 @@ export class BookDataHandlerService {
         this.messageService.displayFail('BUR', newData['errorCode'])
       } else {
         this.messageService.displaySuccess('BUR', data.title)
+        console.log(data)
+        void this.router.navigate(['bookalldata', newData.isbn])
       }
     });
   }
@@ -55,7 +57,7 @@ export class BookDataHandlerService {
         this.messageService.displayFail('BMR', newData['errorCode'])
       } else {
         this.messageService.displaySuccess('BMR', data.originalIsbn)
-        this.localLibrary.removeABook(newData.isbn)
+        this.localLibrary.removeABook(data.originalIsbn)
         this.localLibrary.checkIsbnInLocalLibrary(newData.isbn)
 
         this.localLibrary.libraryRefreshed.subscribe(() => {
@@ -65,4 +67,18 @@ export class BookDataHandlerService {
     });
   }
 
+  removeBook(isbn: string | undefined) {
+    this.http.delete<any>(backendUrl + 'deletebook/' + isbn).subscribe(({
+                                                                          'success': success,
+                                                                          'data': newData
+                                                                        }) => {
+      if (!success) {
+        this.messageService.displayFail('BD', newData['errorCode'])
+      } else {
+        this.messageService.displaySuccess('BD', isbn)
+        this.localLibrary.removeABook(isbn as string)
+        void this.router.navigate(['browse'])
+      }
+    });
+  }
 }

@@ -13,18 +13,17 @@ import {ComplexSearchBrowserService} from "../../../services/book/complex-search
  */
 export class CriteriaSelectElementComponent implements OnInit {
 
-  constructor(private complexSearchService: ComplexSearchBrowserService) {
-  }
-
   /**
    * serial number of the criteria component
    */
   @Input() public id: number = 0;
-
   /**
    * index/name of the chosen criteria
    */
   public selectedCriteria: string = ''
+
+  constructor(private complexSearchService: ComplexSearchBrowserService) {
+  }
 
   /**
    * retrieves all criteria type from service

@@ -14,32 +14,27 @@ import {BookDataHandlerService} from "../../../services/book/book-data-handler.s
 export class BookUploadComponent implements OnInit {
 
   @ViewChild('bc') coverFileElement!: ElementRef;
+  dataForm!: FormGroup;
+  authorSearchValue: string = ''
+  dataListNames: Array<string> = ['author', 'publisher', 'series'];
+  activeDatalist!: number;
+  public authorDataList: Array<string> = [];
+  public publisherDataList: Array<string> = [];
+  public seriesDataList: Array<string> = [];
+  public category: Array<any> = []
+  public format: Array<any> = []
+  public tag: Array<any> = []
+  public discountTypes: Array<[string, number]> = []
+  coverThumbnailString: string = '';
+  coverSource: string = '';
+  formErrorMessages = {
+    title: {required: 'BUN'},
+  };
 
   constructor(protected dataListService: BookCriteriaDataListFillerService,
               public browserService: ComplexSearchBrowserService, protected formService: FormService,
               protected messageServ: GlobalMessageDisplayerService, protected bookHandlerServ: BookDataHandlerService) {
   }
-
-  dataForm!: FormGroup;
-
-  authorSearchValue: string = ''
-  dataListNames: Array<string> = ['author', 'publisher', 'series'];
-
-  activeDatalist!: number;
-
-  public authorDataList: Array<string> = [];
-  public publisherDataList: Array<string> = [];
-  public seriesDataList: Array<string> = [];
-
-  public category: Array<any> = []
-  public format: Array<any> = []
-
-  public tag: Array<any> = []
-
-  public discountTypes: Array<[string, number]> = []
-
-  coverThumbnailString: string = '';
-  coverSource: string = '';
 
   ngOnInit(): void {
     this.initFormGroup()
@@ -57,13 +52,6 @@ export class BookUploadComponent implements OnInit {
       }
     })
     this.initSelectOptions()
-  }
-
-  protected initSelectOptions() {
-    this.category = this.browserService.getGroupedOptions('Category')
-    this.format = this.browserService.getGroupedOptions('Format')
-    this.tag = this.browserService.getSortedTags()
-    this.discountTypes = this.browserService.getDiscountTypes()
   }
 
   boxChecked(checked: boolean, key: number) {
@@ -102,36 +90,6 @@ export class BookUploadComponent implements OnInit {
   isEmpty(name: any) {
     return name === undefined
   }
-
-  protected initFormGroup(): void {
-    this.dataForm = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      isbn: new FormControl(),
-      author: new FormControl(),
-      type: new FormControl(1),
-      category: new FormControl(1),
-      publisher: new FormControl(),
-      series: new FormControl(),
-      targetAudience: new FormControl(51),
-      language: new FormControl(1),
-      year: new FormControl(),
-      page: new FormControl(),
-      format: new FormControl(1),
-      weight: new FormControl(),
-      size: new FormControl(),
-      description: new FormControl(),
-      tags: new FormControl(),
-      price: new FormControl(0),
-      discount: new FormControl(0),
-      discountType: new FormControl(0),
-      coverUrl: new FormControl(),
-      coverFile: new FormControl()
-    });
-  }
-
-  formErrorMessages = {
-    title: {required: 'BUN'},
-  };
 
   setActiveDL(num: number) {
     this.activeDatalist = num
@@ -234,6 +192,39 @@ export class BookUploadComponent implements OnInit {
     }
     const data = this.dataForm.value;
     this.bookHandlerServ.addNewBook(data)
+  }
+
+  protected initSelectOptions() {
+    this.category = this.browserService.getGroupedOptions('Category')
+    this.format = this.browserService.getGroupedOptions('Format')
+    this.tag = this.browserService.getSortedTags()
+    this.discountTypes = this.browserService.getDiscountTypes()
+  }
+
+  protected initFormGroup(): void {
+    this.dataForm = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      isbn: new FormControl(),
+      author: new FormControl(),
+      type: new FormControl(1),
+      category: new FormControl(1),
+      publisher: new FormControl(),
+      series: new FormControl(),
+      targetAudience: new FormControl(51),
+      language: new FormControl(1),
+      year: new FormControl(),
+      page: new FormControl(),
+      format: new FormControl(1),
+      weight: new FormControl(),
+      size: new FormControl(),
+      description: new FormControl(),
+      tags: new FormControl(),
+      price: new FormControl(0),
+      discount: new FormControl(0),
+      discountType: new FormControl(0),
+      coverUrl: new FormControl(),
+      coverFile: new FormControl()
+    });
   }
 
 }

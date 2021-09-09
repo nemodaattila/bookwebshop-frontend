@@ -15,15 +15,10 @@ import {GlobalMessageDisplayerService} from "../../../services/helper/global-mes
  */
 export class LoginFormComponent implements OnInit {
 
-  constructor(private router: Router, private formService: FormService, private userService: UserService,
-              private messageServ: GlobalMessageDisplayerService) {
-  }
-
   /**
    * login form
    */
   userLoginForm!: FormGroup;
-
   /**
    * possible error messages connected to  form validation
    */
@@ -32,22 +27,15 @@ export class LoginFormComponent implements OnInit {
     password: {required: 'UPR', minlength: 'UPML'}
   };
 
+  constructor(private router: Router, private formService: FormService, private userService: UserService,
+              private messageServ: GlobalMessageDisplayerService) {
+  }
+
   /**
    * form initialization and error subscribing
    */
   ngOnInit(): void {
     this.initFormGroup();
-  }
-
-  /**
-   * form initialization
-   * @private
-   */
-  private initFormGroup(): void {
-    this.userLoginForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
-    });
   }
 
   /**
@@ -61,6 +49,17 @@ export class LoginFormComponent implements OnInit {
     }
     const data = this.userLoginForm.value;
     this.userService.login(data);
+  }
+
+  /**
+   * form initialization
+   * @private
+   */
+  private initFormGroup(): void {
+    this.userLoginForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+    });
   }
 
 }

@@ -20,16 +20,6 @@ export class LocalLibraryModel {
   }
 
   /**
-   * creates an empty object based on isbn
-   * @param isbn isbn of the book
-   * @param creationTime a Date() value
-   * @private
-   */
-  private createNewBook(isbn: string, creationTime?: number) {
-    this.books[isbn] = new BookData(creationTime)
-  }
-
-  /**
    * creates a new book and adds primary data
    * @param isbn isbn of the book
    * @param data primary data for the book
@@ -53,18 +43,6 @@ export class LocalLibraryModel {
         this.fillOne(isbn, localLibrary[isbn])
       }
     }
-  }
-
-  /**
-   * creates and saves a book originating from localstorage
-   * @param isbn isbn of bool
-   * @param data data of book
-   * @private
-   */
-  private fillOne(isbn: string, data: any) {
-    this.createNewBook(isbn, data.creationTime)
-    this.books[isbn].fillDataFromLocalStorage(data)
-
   }
 
   /**
@@ -94,5 +72,27 @@ export class LocalLibraryModel {
 
   removeABook(isbn: string) {
     delete (this.books[isbn])
+  }
+
+  /**
+   * creates an empty object based on isbn
+   * @param isbn isbn of the book
+   * @param creationTime a Date() value
+   * @private
+   */
+  private createNewBook(isbn: string, creationTime?: number) {
+    this.books[isbn] = new BookData(creationTime)
+  }
+
+  /**
+   * creates and saves a book originating from localstorage
+   * @param isbn isbn of bool
+   * @param data data of book
+   * @private
+   */
+  private fillOne(isbn: string, data: any) {
+    this.createNewBook(isbn, data.creationTime)
+    this.books[isbn].fillDataFromLocalStorage(data)
+
   }
 }

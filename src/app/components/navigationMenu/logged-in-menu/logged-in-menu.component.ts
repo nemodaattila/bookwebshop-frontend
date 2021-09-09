@@ -9,15 +9,13 @@ import {User} from "../../../models/user/user";
 })
 export class LoggedInMenuComponent implements OnInit, OnDestroy {
 
-  constructor(private userService: UserService) {
-  }
-
   loggedUser!: User;
   tokenExpirationTime: number = 600
-
   tokenExpirationString: string = '';
-
   timer: any
+
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.loggedUser = <User>this.userService.getLoggedUser();

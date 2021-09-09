@@ -1,6 +1,6 @@
 <div>
   <div *ngFor="let opt of sortedTagIndexes; index as key">
     <label>{{this.sortedTags[key]}}</label>
-    <input #cb type="checkbox" value="{{key}}" (change)="boxChecked(cb.checked, opt)">
+    <input #cb (change)="boxChecked(cb.checked, opt)" type="checkbox" value="{{key}}">
   </div>
 </div>

@@ -16,32 +16,27 @@ import {BookMetaData} from "../../../models/bookData/book-meta-data";
 export class BookThemeCategoryBrowserComponent implements OnDestroy {
 
   /**
+   * eventEmitter for signaling the pageNavigator for reset
+   */
+  @Output() pageResetRequest: EventEmitter<null> = new EventEmitter<null>();
+  /**
+   * object containing main categories by id number, passed from BookMetaDataService
+   */
+  public mainCategory: { [index: number]: string } = {};
+  /**
+   * indexes of the mainCategory in array
+   */
+  public mainCategoryIndex: Array<string> = [];
+  /**
    * subscription for getting meta data from book metaDataService
    * @private
    */
   private metaSubscription = Subscription.EMPTY
-
   /**
    * subscription for the BookSearchService's parameter collection
    * @private
    */
   private bookSearchParamRequest = Subscription.EMPTY
-
-  /**
-   * eventEmitter for signaling the pageNavigator for reset
-   */
-  @Output() pageResetRequest: EventEmitter<null> = new EventEmitter<null>();
-
-  /**
-   * object containing main categories by id number, passed from BookMetaDataService
-   */
-  public mainCategory: { [index: number]: string } = {};
-
-  /**
-   * indexes of the mainCategory in array
-   */
-  public mainCategoryIndex: Array<string> = [];
-
   /**
    * object containing subcategories by id number, grouped by main category, passed from BookMetaDataService
    * @private
@@ -72,41 +67,6 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy {
       this.passParameterToBookSearchService()
     })
     this.checkServiceReady();
-  }
-
-  /**
-   * checks that the data for metaDateService is loaded
-   * if true fills the category parameters
-   * @private
-   */
-  private checkServiceReady() {
-    if (this.metaDateService.checkReadyState()) {
-      this.setCategories(this.metaDateService.getCategories())
-    }
-  }
-
-  /**
-   * passes search parameters to BookSearchService, triggered by subscription event
-   * @private
-   */
-  private passParameterToBookSearchService() {
-    if (this.bookSearchParameter.length !== 0) {
-      this.bookSearch.setCategorySearchCriteria("BTCB", this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
-    } else {
-      this.bookSearch.setCategorySearchCriteria("BTCB", null, null)
-    }
-  }
-
-  /**
-   * fills category data form data passed from BookMetaDataService
-   * creates category index array
-   * @param metaData BookMetaData or object with only main and subcategory
-   * @private
-   */
-  private setCategories(metaData: BookMetaData | any) {
-    this.mainCategory = metaData.mainCategory ?? metaData.getMainCategory()
-    this.subCategory = metaData.subCategory ?? metaData.getSubCategory()
-    this.mainCategoryIndex = (Object.keys(this.mainCategory))
   }
 
   /**
@@ -142,6 +102,41 @@ export class BookThemeCategoryBrowserComponent implements OnDestroy {
     this.metaSubscription.unsubscribe();
     this.bookSearchParamRequest.unsubscribe()
     this.bookSearch.unRegisterSearchService("BTCB")
+  }
+
+  /**
+   * checks that the data for metaDateService is loaded
+   * if true fills the category parameters
+   * @private
+   */
+  private checkServiceReady() {
+    if (this.metaDateService.checkReadyState()) {
+      this.setCategories(this.metaDateService.getCategories())
+    }
+  }
+
+  /**
+   * passes search parameters to BookSearchService, triggered by subscription event
+   * @private
+   */
+  private passParameterToBookSearchService() {
+    if (this.bookSearchParameter.length !== 0) {
+      this.bookSearch.setCategorySearchCriteria("BTCB", this.bookSearchParameter[0] as string, this.bookSearchParameter[1] as number)
+    } else {
+      this.bookSearch.setCategorySearchCriteria("BTCB", null, null)
+    }
+  }
+
+  /**
+   * fills category data form data passed from BookMetaDataService
+   * creates category index array
+   * @param metaData BookMetaData or object with only main and subcategory
+   * @private
+   */
+  private setCategories(metaData: BookMetaData | any) {
+    this.mainCategory = metaData.mainCategory ?? metaData.getMainCategory()
+    this.subCategory = metaData.subCategory ?? metaData.getSubCategory()
+    this.mainCategoryIndex = (Object.keys(this.mainCategory))
   }
 
 }

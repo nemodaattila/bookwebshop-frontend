@@ -27,7 +27,7 @@
         <span>
           <label for="quickSearch">Egyszerű keresés (író vagy cím):&nbsp;</label>
           <input [(ngModel)]="inputValue" id="quickSearch" type="text">
-          <input type="submit" value="keresés" (click)="quickSearch()">
+          <input (click)="quickSearch()" type="submit" value="keresés">
         </span>
         <a id="detSearchLink" routerLink="detailedSearch">Részletes keresés</a>
     </span>

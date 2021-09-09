@@ -13,18 +13,17 @@ import {ComplexSearchBrowserService} from "../../../services/book/complex-search
  */
 export class CriteriaSelectorComponent implements OnInit {
 
-  constructor(public complexSearchService: ComplexSearchBrowserService) {
-  }
-
   /**
    * serial number of the container
    */
   @Input() public id: number = 0;
-
   /**
    * type of the selected criteria input i.e: number, text, textWithDataList
    */
   public selectedCriteriaInputType?: string = 'text'
+
+  constructor(public complexSearchService: ComplexSearchBrowserService) {
+  }
 
   /**
    * receives the criteria type from service

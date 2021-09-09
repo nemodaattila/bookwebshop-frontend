@@ -12,18 +12,17 @@ import {ComplexSearchBrowserService} from "../../../services/book/complex-search
  */
 export class CriteriaInputTextComponent implements OnInit {
 
-  constructor(public complexSearchService: ComplexSearchBrowserService) {
-  }
-
   /**
    * serial number of the criteria component
    */
   @Input() public id: number = 0;
-
   /**
    * value of the input field
    */
   public textValue: string = '';
+
+  constructor(public complexSearchService: ComplexSearchBrowserService) {
+  }
 
   ngOnInit(): void {
     this.complexSearchService.setOneSelectedCriteriaValue(this.id, this.textValue)

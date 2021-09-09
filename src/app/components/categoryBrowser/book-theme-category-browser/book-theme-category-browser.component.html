@@ -1,9 +1,9 @@
 <div class="catNav">
-  <div class="searchLabel" (click)="initAllSearch()">Összes</div>
+  <div (click)="initAllSearch()" class="searchLabel">Összes</div>
   <div *ngFor="let cat of mainCategoryIndex; index as key">
-    <app-main-category-browser [mainCategoryID]="key+1" [label]="mainCategory[key+1]"
-                               [subcategories]="getSubCategoryById(key+1)"
-                               (searchNotify)="onSubComponentNotify($event)">
+    <app-main-category-browser (searchNotify)="onSubComponentNotify($event)" [label]="mainCategory[key+1]"
+                               [mainCategoryID]="key+1"
+                               [subcategories]="getSubCategoryById(key+1)">
     </app-main-category-browser>
   </div>
 </div>

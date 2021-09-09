@@ -14,24 +14,18 @@ import {ComplexSearchBrowserService} from "../../../services/book/complex-search
  */
 export class CriteriaSelectWithOptionGroupComponent implements OnInit {
 
-  constructor(private complexSearch: ComplexSearchBrowserService) {
-  }
-
   /**
    * serial number for component
    */
   @Input() public id: number = 0;
-
   /**
    * criteria type of the component (Format or SubCategory)
    */
   criteriaType: string = '';
-
   /**
    * labels for optionGroups
    */
   public group: { [index: number]: string } = {}
-
   /**
    * indexes of option groups
    */
@@ -44,6 +38,9 @@ export class CriteriaSelectWithOptionGroupComponent implements OnInit {
    * value of the selected option
    */
   public selectedOption: number = 1;
+
+  constructor(private complexSearch: ComplexSearchBrowserService) {
+  }
 
   ngOnInit(): void {
     this.criteriaType = this.complexSearch.getSelectedCriteria()[this.id]

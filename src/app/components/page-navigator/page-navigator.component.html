@@ -1,14 +1,14 @@
 <span class="navMain">
 <ul *ngIf="navModel.getAllCount()!==0">
-  <li class="navButton" *ngIf="navModel.getActualPage()!==1" (click)="nextPrevClicked(-1)">Előző</li>
+  <li (click)="nextPrevClicked(-1)" *ngIf="navModel.getActualPage()!==1" class="navButton">Előző</li>
   <li *ngFor="let num of fakeCountArray; index as key">
-    <span class="navButton" (click)="pageNumberClicked((key+1))"
-          *ngIf="navModel.getActualPage() !== (key+1); else actualPage">{{key + 1}}</span>
+    <span (click)="pageNumberClicked((key+1))" *ngIf="navModel.getActualPage() !== (key+1); else actualPage"
+          class="navButton">{{key + 1}}</span>
     <ng-template #actualPage>
       <span class="actualPage"> {{key + 1}}</span>
     </ng-template>
   </li>
-  <li class="navButton" *ngIf=" navModel.getActualPage()!==navModel.getPageNumber()" (click)="nextPrevClicked(1)">Következő</li>
+  <li (click)="nextPrevClicked(1)" *ngIf=" navModel.getActualPage()!==navModel.getPageNumber()" class="navButton">Következő</li>
 </ul>
 </span>
 <span>Összes találat: {{navModel.getAllCount()}} db</span>

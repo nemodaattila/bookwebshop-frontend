@@ -49,19 +49,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   /**
-   * initiates form
-   * @private
-   */
-  private initFormGroup(): void {
-    this.userRegisterForm = new FormGroup({
-      userName: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      rePassword: new FormControl('', [Validators.required, Validators.minLength(8)])
-    });
-  }
-
-  /**
    * submit event of the form
    * validates form data
    * if valid starts registration process
@@ -81,6 +68,19 @@ export class RegistrationComponent implements OnInit {
         this.userService.register(data);
       }
     }
+  }
+
+  /**
+   * initiates form
+   * @private
+   */
+  private initFormGroup(): void {
+    this.userRegisterForm = new FormGroup({
+      userName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      rePassword: new FormControl('', [Validators.required, Validators.minLength(8)])
+    });
   }
 
 }

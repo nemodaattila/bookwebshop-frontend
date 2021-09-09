@@ -13,25 +13,23 @@ import {BookMetaDataService} from "../../../services/book/book-meta-data.service
  */
 export class CriteriaMultipleCheckBoxComponent {
 
-  constructor(private complexSearch: ComplexSearchBrowserService, private metaService: BookMetaDataService) {
-    this.sortTags(this.metaService.getTags())
-  }
-
   /**
    * serial number of the component
    */
   @Input() public id: number = 0;
-
   /**
    * all tags sorted alphabetically
    */
   public sortedTags: Array<string> = []
-
   /**
    * all tag indexes (linked to tags), sorting linked to sortedTags
    */
   public sortedTagIndexes: Array<number> = []
   private selectedIndexes: Array<number> = []
+
+  constructor(private complexSearch: ComplexSearchBrowserService, private metaService: BookMetaDataService) {
+    this.sortTags(this.metaService.getTags())
+  }
 
   /**
    * based off an indexed object (tags), creates 2 array: 1 for tags and 1 for indexes, both intended to be sorted by
@@ -58,24 +56,6 @@ export class CriteriaMultipleCheckBoxComponent {
   }
 
   /**
-   * sorts both sortedTags and sortedTagIndexes array by sortedTags alphabetically
-   * @private
-   */
-  private sortArrays() {
-    if (this.sortedTags.length > 1) {
-      let toBeSortedIndex = this.sortedTags.length - 1
-      let toBeSortedValue = this.sortedTags[toBeSortedIndex]
-      let index = toBeSortedIndex - 1
-      while (index >= 0 && (toBeSortedValue < this.sortedTags[index])) {
-        [this.sortedTags[toBeSortedIndex], this.sortedTags[index]] = [this.sortedTags[index], this.sortedTags[toBeSortedIndex]];
-        [this.sortedTagIndexes[toBeSortedIndex], this.sortedTagIndexes[index]] = [this.sortedTagIndexes[index], this.sortedTagIndexes[toBeSortedIndex]]
-        toBeSortedIndex = index
-        index--;
-      }
-    }
-  }
-
-  /**
    * function for a checkbox check/uncheck click event,
    * pushes/ takes away data into/from selectedIndexes Array
    * check-> puts tag index number into array, uncheck -> removes number from array
@@ -93,5 +73,23 @@ export class CriteriaMultipleCheckBoxComponent {
       this.selectedIndexes.splice(inSelectedIndex, 1)
     }
     this.complexSearch.setOneSelectedCriteriaValue(this.id, this.selectedIndexes as Array<number>)
+  }
+
+  /**
+   * sorts both sortedTags and sortedTagIndexes array by sortedTags alphabetically
+   * @private
+   */
+  private sortArrays() {
+    if (this.sortedTags.length > 1) {
+      let toBeSortedIndex = this.sortedTags.length - 1
+      let toBeSortedValue = this.sortedTags[toBeSortedIndex]
+      let index = toBeSortedIndex - 1
+      while (index >= 0 && (toBeSortedValue < this.sortedTags[index])) {
+        [this.sortedTags[toBeSortedIndex], this.sortedTags[index]] = [this.sortedTags[index], this.sortedTags[toBeSortedIndex]];
+        [this.sortedTagIndexes[toBeSortedIndex], this.sortedTagIndexes[index]] = [this.sortedTagIndexes[index], this.sortedTagIndexes[toBeSortedIndex]]
+        toBeSortedIndex = index
+        index--;
+      }
+    }
   }
 }

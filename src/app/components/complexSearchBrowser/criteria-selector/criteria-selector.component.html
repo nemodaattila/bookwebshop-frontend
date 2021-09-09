@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="margin">
-    <input type="button" value="Kritéria törlése" *ngIf="id > 0" (click)="deleteCriteria(id)">
+    <input (click)="deleteCriteria(id)" *ngIf="id > 0" type="button" value="Kritéria törlése">
   </div>
 </div>

@@ -14,6 +14,10 @@ import {MessageCodes} from "../../models/service/message-codes";
 export class GlobalMessageDisplayerService {
 
   /**
+   * emits message [success/fail, message]
+   */
+  messageEmitter = new Subject<[boolean, string]>()
+  /**
    * model class which contains error messages
    * @private
    */
@@ -21,11 +25,6 @@ export class GlobalMessageDisplayerService {
 
   constructor() {
   }
-
-  /**
-   * emits message [success/fail, message]
-   */
-  messageEmitter = new Subject<[boolean, string]>()
 
   /**
    * displays messages after request fail (http response is 200 but the requested, operation failed,
@@ -62,7 +61,7 @@ export class GlobalMessageDisplayerService {
   }
 
   /**
-   * displys data on successful operation , i.e: succesful login
+   * displays data on successful operation , i.e: successful login
    * @param frontendCode code of the frontend operation
    * @param optionalData optional data to be displayed
    */
@@ -71,7 +70,6 @@ export class GlobalMessageDisplayerService {
     let frontendMessage = this.messageCodes.getFrontendSuccessMessage(frontendCode)
     let message = ((frontendMessage === undefined) ? frontendCode : frontendMessage);
     message += (optionalData === undefined) ? '' : ' - ' + optionalData
-    console.log(message)
     this.messageEmitter.next([true, message])
   }
 }

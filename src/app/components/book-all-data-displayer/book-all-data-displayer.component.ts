@@ -18,39 +18,34 @@ import {LoggedUserService} from "../../services/authentication/logged-user.servi
  */
 export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
 
-  constructor(public metaService: BookMetaDataService, private sanitizer: DomSanitizer,
-              private acRoute: ActivatedRoute, private router: Router,
-              private localLibrary: LocalLibraryService, public loggedUserServ: LoggedUserService) {
-  }
-
+  acrSubs: Subscription = Subscription.EMPTY;
+  refreshSubs: Subscription = Subscription.EMPTY;
+  /**
+   * data of the book
+   */
+  public bookData!: BookData
+  /**
+   * safe string of the book cover
+   */
+  public safeImgURl?: SafeResourceUrl;
+  /**
+   * ids of authors in arra form
+   */
+  public authorIds: Array<number> = []
+  /**
+   * count of tags
+   */
+  public tagLength: number = 0;
   /**
    * isbn of the book
    * @private
    */
   private isbn: string = '';
 
-  acrSubs: Subscription = Subscription.EMPTY;
-  refreshSubs: Subscription = Subscription.EMPTY;
-
-  /**
-   * data of the book
-   */
-  public bookData!: BookData
-
-  /**
-   * safe string of the book cover
-   */
-  public safeImgURl?: SafeResourceUrl;
-
-  /**
-   * ids of authors in arra form
-   */
-  public authorIds: Array<number> = []
-
-  /**
-   * count of tags
-   */
-  public tagLength: number = 0;
+  constructor(public metaService: BookMetaDataService, private sanitizer: DomSanitizer,
+              private acRoute: ActivatedRoute, private router: Router,
+              private localLibrary: LocalLibraryService, public loggedUserServ: LoggedUserService) {
+  }
 
   //TODO kedvezménycsoport kiiratása
 
@@ -64,6 +59,15 @@ export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
     this.refreshSubs = this.localLibrary.libraryRefreshed.subscribe(() => {
       this.getBookData();
     })
+  }
+
+  redirectToModify() {
+    void this.router.navigate(['bookmodify', this.isbn])
+  }
+
+  ngOnDestroy() {
+    this.acrSubs.unsubscribe()
+    this.refreshSubs.unsubscribe()
   }
 
   /**
@@ -89,6 +93,7 @@ export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
    * @private
    */
   private fineData() {
+    console.log(this.bookData)
     if (this.bookData?.getCover() !== undefined) {
       this.safeImgURl = this.sanitizer.bypassSecurityTrustResourceUrl(this.bookData.getCover());
     }
@@ -98,14 +103,5 @@ export class BookAllDataDisplayerComponent implements OnInit, OnDestroy {
     }
     this.tagLength = this.bookData?.getTags().length as number
     console.log(this.bookData)
-  }
-
-  redirectToModify() {
-    void this.router.navigate(['bookmodify', this.isbn])
-  }
-
-  ngOnDestroy() {
-    this.acrSubs.unsubscribe()
-    this.refreshSubs.unsubscribe()
   }
 }

@@ -13,6 +13,47 @@ import {BookMetaDataService} from "./book-meta-data.service";
 export class ComplexSearchBrowserService {
 
   /**
+   * array of selected criteria (through components)
+   */
+  selectedCriteria: Array<string> = [];
+  /**
+   * values linked to selectedCriteria
+   */
+  selectedCriteriaValues: Array<string | number | Array<number> | null> = [];
+  /**
+   * criteria types with select input type
+   */
+  selectInput: Array<string> = ['Type', 'MainCategory', 'TargetAudience', 'Language', 'Pages', 'Price', 'Discount'];
+  /**
+   * criteria types with select input type with option group
+   */
+  selectWithOptionGroup: Array<string> = ['Category', 'Format']
+  /**
+   * criteria types with text input
+   */
+  textInput: Array<string> = ['ISBN', 'Title'];
+  /**
+   * criteria type with number input
+   */
+  numberInput: Array<string> = ['Year'];
+  /**
+   * criteria type with text input implemented with datalist
+   */
+  textInputWithDatalist: Array<string> = ['Author', 'Series', 'Publisher']
+  /**
+   * criteria type not displayed in criteria type selector' options (CriteriaSelectElementComponent),
+   * in the second and further selectors
+   */
+  public ignoredSelectableCriteria: Array<string> = []
+  /**
+   * select options for selected criteria types
+   */
+  public arrayOptions: { [index: string]: Array<string> } = {
+    Discount: ['0', '1-5', '6-15', '16-30', '31-50', '51-'],
+    Pages: ['0-100', '101-250', '251-500', '501-1000', '1000-'],
+    Price: ['0-1000', '1001-3000', '3001-6000', '6001-10000', '10000-']
+  }
+  /**
    * types of criteria key: name, value: label
    * @private
    */
@@ -34,57 +75,6 @@ export class ComplexSearchBrowserService {
     Price: "Teljes Ár",
     Type: "Típus",
   };
-
-  /**
-   * array of selected criteria (through components)
-   */
-  selectedCriteria: Array<string> = [];
-
-  /**
-   * values linked to selectedCriteria
-   */
-  selectedCriteriaValues: Array<string | number | Array<number> | null> = [];
-
-  /**
-   * criteria types with select input type
-   */
-  selectInput: Array<string> = ['Type', 'MainCategory', 'TargetAudience', 'Language', 'Pages', 'Price', 'Discount'];
-
-  /**
-   * criteria types with select input type with option group
-   */
-  selectWithOptionGroup: Array<string> = ['Category', 'Format']
-
-  /**
-   * criteria types with text input
-   */
-  textInput: Array<string> = ['ISBN', 'Title'];
-
-  /**
-   * criteria type with number input
-   */
-  numberInput: Array<string> = ['Year'];
-
-  /**
-   * criteria type with text input implemented with datalist
-   */
-  textInputWithDatalist: Array<string> = ['Author', 'Series', 'Publisher']
-
-  /**
-   * criteria type not displayed in criteria type selector' options (CriteriaSelectElementComponent),
-   * in the second and further selectors
-   */
-  public ignoredSelectableCriteria: Array<string> = []
-
-  /**
-   * select options for selected criteria types
-   */
-  public arrayOptions: { [index: string]: Array<string> } = {
-    Discount: ['0', '1-5', '6-15', '16-30', '31-50', '51-'],
-    Pages: ['0-100', '101-250', '251-500', '501-1000', '1000-'],
-    Price: ['0-1000', '1001-3000', '3001-6000', '6001-10000', '10000-']
-  }
-
   /**
    * subscription for BookSearchService's data query request
    * @private
@@ -295,19 +285,6 @@ export class ComplexSearchBrowserService {
   }
 
   /**
-   * passes data (search criteria types and values) to the BookSearchService
-   * @private
-   */
-  private passParameterToBookSearchService() {
-    let params: { [index: string]: any } = {};
-    for (let key in this.selectedCriteria) {
-      if (this.selectedCriteria.hasOwnProperty(key))
-        params[this.selectedCriteria[key]] = this.selectedCriteriaValues[key]
-    }
-    this.bookSearch.setSearchCriteria("CSB", params)
-  }
-
-  /**
    * registers to BookSearchService as source object
    * registers to BookSearchService for search data call
    */
@@ -337,6 +314,19 @@ export class ComplexSearchBrowserService {
         return false
     }
     return true
+  }
+
+  /**
+   * passes data (search criteria types and values) to the BookSearchService
+   * @private
+   */
+  private passParameterToBookSearchService() {
+    let params: { [index: string]: any } = {};
+    for (let key in this.selectedCriteria) {
+      if (this.selectedCriteria.hasOwnProperty(key))
+        params[this.selectedCriteria[key]] = this.selectedCriteriaValues[key]
+    }
+    this.bookSearch.setSearchCriteria("CSB", params)
   }
 
 }
